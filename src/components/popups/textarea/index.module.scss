@@ -1,0 +1,26 @@
+.index {
+  padding: 16px;
+  border-radius: 12px;
+  width: 66vw;
+  background: var(--base-color);
+  border: 1px solid var(--gray-1);
+
+  .input {
+    margin: 12px 0;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .submit {
+      margin-left: 12px;
+    }
+  }
+}
+

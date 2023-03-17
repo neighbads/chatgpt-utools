@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { Storage } from '../shared/storage'
 import { chatgptStore } from '../stores/chatgpt'
 import { Message } from './message'
@@ -10,7 +10,12 @@ export class Conversation {
   createdAt: number
   updatedAt: number
 
-  constructor(opts?: { id?: string; name?: string; createdAt?: number; updatedAt?: number }) {
+  constructor(opts?: {
+    id?: string
+    name?: string
+    createdAt?: number
+    updatedAt?: number
+  }) {
     this.id = opts?.id || Date.now() + ''
     this.name = opts?.name || '新会话'
     this.createdAt = opts?.createdAt || Date.now()
@@ -54,7 +59,7 @@ export class Conversation {
   }
 
   private _sendMessage = async (
-    userMessage: Message,
+    lastMessage: Message,
     chatgptMessage: Message
   ) => {
     this.updatedAt = Date.now()
@@ -63,9 +68,9 @@ export class Conversation {
       this.loading = true
       const { prompt } = Storage.getConfig()
 
-      await chatgptStore.sendMessage(userMessage.text, {
-        parentMessageId: userMessage.parentMessageId,
-        messageId: userMessage.id,
+      await chatgptStore.sendMessage(lastMessage.text, {
+        parentMessageId: lastMessage.parentMessageId,
+        messageId: lastMessage.id,
         systemMessage: prompt.trim() !== '' ? prompt.trim() : undefined,
         onProgress: ({ text }) => {
           text = text.trim()
@@ -77,7 +82,7 @@ export class Conversation {
       chatgptMessage.state = 'done'
 
       if (this.messages.length === 2 && this.name === '新会话') {
-        this.generateTitle(userMessage.text)
+        this.generateTitle(lastMessage.text)
       }
     } catch (err: any) {
       chatgptMessage.state = 'fail'
@@ -112,14 +117,44 @@ export class Conversation {
   }
 
   resendMessage = async () => {
-    const userMessage = this.messages[this.messages.length - 2]
-    const chatgptMessage = this.messages[this.messages.length - 1]
-    chatgptMessage.state = 'sending'
-    chatgptMessage.text = ''
-    chatgptMessage.createdAt = Date.now()
-    chatgptMessage.failedReason = undefined
+    let lastMessage = this.messages[this.messages.length - 2]
+    let chatgptMessage = this.messages[this.messages.length - 1]
+    if (lastMessage === undefined) {
+      lastMessage = chatgptMessage
+      chatgptMessage = new Message({
+        role: 'assistant',
+        state: 'sending',
+        text: '',
+        createdAt: Date.now(),
+        parentMessageId: lastMessage.id,
+        conversationId: this.id,
+      })
+      this.messages.push(chatgptMessage)
+    } else {
+      chatgptMessage.state = 'sending'
+      chatgptMessage.text = ''
+      chatgptMessage.createdAt = Date.now()
+      chatgptMessage.failedReason = undefined
+    }
+
     chatgptMessage.flushDb()
-    this._sendMessage(userMessage, chatgptMessage)
+    this._sendMessage(lastMessage, chatgptMessage)
+  }
+
+  /**
+   * 删除指定位置消息，并把父子关系转移到下一条消息
+   * @param index
+   */
+  removeMessage = (index: number) => {
+    const message = this.messages[index]
+    const nextMessage = this.messages[index + 1]
+    if (nextMessage) {
+      nextMessage.parentMessageId = message.parentMessageId
+      nextMessage.flushDb()
+    }
+    this.messages.splice(index, 1)
+    Storage.removeMessage(message.id)
+    this.flushDb()
   }
 
   flushDb = () => {

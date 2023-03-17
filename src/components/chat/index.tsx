@@ -2,18 +2,20 @@ import { CopyOutlined, LoadingOutlined, SyncOutlined } from '@ant-design/icons'
 import { message as AntMessage, Spin } from 'antd'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import 'katex/dist/katex.min.css'
 import { FC, useLayoutEffect, useRef } from 'react'
+import { Item, Menu, useContextMenu } from 'react-contexify'
 import ReactMarkdown from 'react-markdown'
-import RemarkMathPlugin from 'remark-math';
-import rehypeKatex from 'rehype-katex'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import rehypeKatex from 'rehype-katex'
+import RemarkMathPlugin from 'remark-math'
 import { Message } from '../../models/message'
 import { copyToClipboard } from '../../shared/func/copyToClipboard'
+import { isNil } from '../../shared/func/isNil'
 import { withObserver } from '../../shared/func/withObserver'
 import { appStore } from '../../stores/app'
 import styles from './index.module.scss'
-import 'katex/dist/katex.min.css'
 
 type ChatMessage = Pick<
   Message,
@@ -23,14 +25,27 @@ type ChatMessage = Pick<
 interface ChatProps {
   messages: ChatMessage[]
   onRetry?: (message: ChatMessage) => void
+  onDel?: (index: number) => void
+  onModifyText?: (index: number) => void
 }
 
 export const Chat: FC<ChatProps> = (props) => {
-  const { messages, onRetry } = props
+  const { messages, onRetry, onDel, onModifyText } = props
+  const messageRef = useRef<number>()
   const recordRef = useRef({
     first: true,
     lastMessageLength: messages.length,
     lastScrollHeight: 0,
+  })
+
+  const handleCopy = () => {
+    if (messageRef.current === undefined) return
+    copyToClipboard(messages[messageRef.current].text || '')
+    AntMessage.success('已复制到剪贴板')
+  }
+
+  const { show } = useContextMenu({
+    id: 'messageMenu',
   })
 
   useLayoutEffect(() => {
@@ -51,8 +66,8 @@ export const Chat: FC<ChatProps> = (props) => {
         if (record.lastScrollHeight === container.scrollHeight) return
         if (
           container.scrollHeight -
-          container.offsetHeight -
-          container.scrollTop <
+            container.offsetHeight -
+            container.scrollTop <
           120
         ) {
           container.scrollTo({
@@ -70,7 +85,7 @@ export const Chat: FC<ChatProps> = (props) => {
       id="chat-container"
       className={clsx(styles.index, appStore.isDark && styles.dark)}
     >
-      {messages.map((message) => {
+      {messages.map((message, i) => {
         let text = message.text
         if (message.state === 'fail' && text.length === 0) {
           text = message.failedReason || ''
@@ -93,7 +108,13 @@ export const Chat: FC<ChatProps> = (props) => {
             id={message.id}
           >
             <div className={styles.bubbleWrap}>
-              <div className={styles.bubble}>
+              <div
+                className={styles.bubble}
+                onContextMenu={(event) => {
+                  messageRef.current = i
+                  show({ event })
+                }}
+              >
                 {text === '' ? (
                   <p>
                     <SyncOutlined spin />
@@ -185,6 +206,14 @@ export const Chat: FC<ChatProps> = (props) => {
           </div>
         )
       })}
+
+      <Menu id="messageMenu" theme={appStore.isDark ? 'dark' : 'light'}>
+        <Item onClick={handleCopy}>复制</Item>
+        <Item onClick={() => onDel && onDel(messageRef.current!)}>删除</Item>
+        <Item onClick={() => onModifyText && onModifyText(messageRef.current!)}>
+          修改
+        </Item>
+      </Menu>
     </div>
   ))
 }

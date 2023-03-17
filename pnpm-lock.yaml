@@ -19,6 +19,7 @@ specifiers:
   clsx: ^1.2.1
   dayjs: ^1.11.6
   https-proxy-agent: ^5.0.1
+  katex: ^0.16.4
   mitt: ^3.0.0
   mobx: ^6.6.2
   mobx-react-lite: ^3.4.0
@@ -33,6 +34,8 @@ specifiers:
   react-dom: ^18.2.0
   react-markdown: ^8.0.5
   react-syntax-highlighter: ^15.5.0
+  rehype-katex: ^6.0.2
+  remark-math: ^5.1.1
   rollup: ^3.19.1
   rollup-plugin-copy: ^3.4.0
   sass: ^1.55.0
@@ -50,6 +53,7 @@ dependencies:
   clsx: 1.2.1
   dayjs: 1.11.7
   https-proxy-agent: 5.0.1
+  katex: 0.16.4
   mitt: 3.0.0
   mobx: 6.7.0
   mobx-react-lite: 3.4.0_jofyzmwkboewm6mjrhi25mngky
@@ -64,6 +68,8 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-markdown: 8.0.5_3stiutgnnbnfnf3uowm5cip22i
   react-syntax-highlighter: 15.5.0_react@18.2.0
+  rehype-katex: r2.cnpmjs.org/rehype-katex/6.0.2
+  remark-math: r2.cnpmjs.org/remark-math/5.1.1
 
 devDependencies:
   '@rollup/plugin-commonjs': 24.0.1_rollup@3.19.1
@@ -1185,8 +1191,42 @@ packages:
     dependencies:
       function-bind: 1.1.1
 
+  /hast-util-from-parse5/7.1.2:
+    resolution: {integrity: sha512-Nz7FfPBuljzsN3tCQ4kCBKqdNhQE2l0Tn+X1ubgKBPRoiDIu1mL08Cfw4k7q71+Duyaw7DXDN+VTAp4Vh3oCOw==}
+    dependencies:
+      '@types/hast': r2.cnpmjs.org/@types/hast/2.3.4
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+      hastscript: 7.2.0
+      property-information: 6.2.0
+      vfile: 5.3.6
+      vfile-location: 4.1.0
+      web-namespaces: r2.cnpmjs.org/web-namespaces/2.0.1
+    dev: false
+
+  /hast-util-is-element/2.1.3:
+    resolution: {integrity: sha512-O1bKah6mhgEq2WtVMk+Ta5K7pPMqsBBlmzysLdcwKVrqzZQ0CHqUPiIVspNhAG1rvxpvJjtGee17XfauZYKqVA==}
+    dependencies:
+      '@types/hast': r2.cnpmjs.org/@types/hast/2.3.4
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+    dev: false
+
   /hast-util-parse-selector/2.2.5:
     resolution: {integrity: sha512-7j6mrk/qqkSehsM92wQjdIgWM2/BW61u/53G6xmC8i1OmEdKLHbk419QKQUjz6LglWsfqoiHmyMRkP1BGjecNQ==}
+    dev: false
+
+  /hast-util-parse-selector/3.1.1:
+    resolution: {integrity: sha512-jdlwBjEexy1oGz0aJ2f4GKMaVKkA9jwjr4MjAAI22E5fM/TXVZHuS5OpONtdeIkRKqAaryQ2E9xNQxijoThSZA==}
+    dependencies:
+      '@types/hast': r2.cnpmjs.org/@types/hast/2.3.4
+    dev: false
+
+  /hast-util-to-text/3.1.2:
+    resolution: {integrity: sha512-tcllLfp23dJJ+ju5wCCZHVpzsQQ43+moJbqVX3jNWPB7z/KFC4FyZD6R7y94cHL6MQ33YtMZL8Z0aIXXI4XFTw==}
+    dependencies:
+      '@types/hast': r2.cnpmjs.org/@types/hast/2.3.4
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+      hast-util-is-element: 2.1.3
+      unist-util-find-after: 4.0.1
     dev: false
 
   /hast-util-whitespace/2.0.1:
@@ -1201,6 +1241,16 @@ packages:
       hast-util-parse-selector: 2.2.5
       property-information: 5.6.0
       space-separated-tokens: 1.1.5
+    dev: false
+
+  /hastscript/7.2.0:
+    resolution: {integrity: sha512-TtYPq24IldU8iKoJQqvZOuhi5CyCQRAbvDOX0x1eW6rsHSxa/1i2CCiptNTotGHJ3VoHRGmqiv6/D3q113ikkw==}
+    dependencies:
+      '@types/hast': r2.cnpmjs.org/@types/hast/2.3.4
+      comma-separated-tokens: 2.0.3
+      hast-util-parse-selector: 3.1.1
+      property-information: 6.2.0
+      space-separated-tokens: 2.0.2
     dev: false
 
   /highlight.js/10.7.3:
@@ -1322,6 +1372,20 @@ packages:
       string-convert: 0.2.1
     dev: false
 
+  /katex/0.15.6:
+    resolution: {integrity: sha512-UpzJy4yrnqnhXvRPhjEuLA4lcPn6eRngixW7Q3TJErjg3Aw2PuLFBzTkdUb89UtumxjhHTqL3a5GDGETMSwgJA==}
+    hasBin: true
+    dependencies:
+      commander: r2.cnpmjs.org/commander/8.3.0
+    dev: false
+
+  /katex/0.16.4:
+    resolution: {integrity: sha512-WudRKUj8yyBeVDI4aYMNxhx5Vhh2PjpzQw1GRu/LVGqL4m1AxwD1GcUp0IMbdJaf5zsjtj8ghP0DOQRYhroNkw==}
+    hasBin: true
+    dependencies:
+      commander: r2.cnpmjs.org/commander/8.3.0
+    dev: false
+
   /keyv/4.5.2:
     resolution: {integrity: sha512-5MHbFaKn8cNSmVW7BYnijeAVlE4cYA/SVkifVgrh7yotnfhKmjuXpDKjrABLnT0SfHWV21P8ow07OGfRrNDg8g==}
     dependencies:
@@ -1338,6 +1402,10 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       p-locate: r2.cnpmjs.org/p-locate/6.0.0
+    dev: false
+
+  /longest-streak/3.1.0:
+    resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
     dev: false
 
   /loose-envify/1.4.0:
@@ -1388,6 +1456,21 @@ packages:
       - supports-color
     dev: false
 
+  /mdast-util-math/2.0.2:
+    resolution: {integrity: sha512-8gmkKVp9v6+Tgjtq6SYx9kGPpTf6FVYRa53/DLh479aldR9AyP48qeVOgNZ5X7QUK7nOy4yw7vg6mbiGcs9jWQ==}
+    dependencies:
+      '@types/mdast': r2.cnpmjs.org/@types/mdast/3.0.10
+      longest-streak: 3.1.0
+      mdast-util-to-markdown: 1.5.0
+    dev: false
+
+  /mdast-util-phrasing/3.0.1:
+    resolution: {integrity: sha512-WmI1gTXUBJo4/ZmSk79Wcb2HcjPJBzM1nlI/OUWA8yk2X9ik3ffNbBGsU+09BFmXaL1IBb9fiuvq6/KMiNycSg==}
+    dependencies:
+      '@types/mdast': r2.cnpmjs.org/@types/mdast/3.0.10
+      unist-util-is: 5.2.0
+    dev: false
+
   /mdast-util-to-hast/12.3.0:
     resolution: {integrity: sha512-pits93r8PhnIoU4Vy9bjW39M2jJ6/tdHyja9rrot9uujkN7UTU9SDnE6WNJz/IGyQk3XHX6yNNtrBH6cQzm8Hw==}
     dependencies:
@@ -1399,6 +1482,19 @@ packages:
       unist-util-generated: 2.0.1
       unist-util-position: 4.0.4
       unist-util-visit: 4.1.2
+    dev: false
+
+  /mdast-util-to-markdown/1.5.0:
+    resolution: {integrity: sha512-bbv7TPv/WC49thZPg3jXuqzuvI45IL2EVAr/KxF0BSdHsU0ceFHOmwQn6evxAh1GaoK/6GQ1wp4R4oW2+LFL/A==}
+    dependencies:
+      '@types/mdast': r2.cnpmjs.org/@types/mdast/3.0.10
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+      longest-streak: 3.1.0
+      mdast-util-phrasing: 3.0.1
+      mdast-util-to-string: 3.1.1
+      micromark-util-decode-string: r2.cnpmjs.org/micromark-util-decode-string/1.0.2
+      unist-util-visit: 4.1.2
+      zwitch: 2.0.4
     dev: false
 
   /mdast-util-to-string/3.1.1:
@@ -2454,6 +2550,15 @@ packages:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
     dev: false
 
+  /rehype-parse/8.0.4:
+    resolution: {integrity: sha512-MJJKONunHjoTh4kc3dsM1v3C9kGrrxvA3U8PxZlP2SjH8RNUSrb+lF7Y0KVaUDnGH2QZ5vAn7ulkiajM9ifuqg==}
+    dependencies:
+      '@types/hast': r2.cnpmjs.org/@types/hast/2.3.4
+      hast-util-from-parse5: 7.1.2
+      parse5: r2.cnpmjs.org/parse5/6.0.1
+      unified: 10.1.2
+    dev: false
+
   /remark-parse/10.0.1:
     resolution: {integrity: sha512-1fUyHr2jLsVOkhbvPRBJ5zTKZZyD6yZzYaWCS6BPBdQ8vEMBCH+9zNCDA6tET/zHCi/jLqjCWtlJZUPk+DbnFw==}
     dependencies:
@@ -2644,6 +2749,13 @@ packages:
       vfile: 5.3.6
     dev: false
 
+  /unist-util-find-after/4.0.1:
+    resolution: {integrity: sha512-QO/PuPMm2ERxC6vFXEPtmAutOopy5PknD+Oq64gGwxKtk4xwo9Z97t9Av1obPmGU0IyTa6EKYUfTrK2QJS3Ozw==}
+    dependencies:
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+      unist-util-is: 5.2.0
+    dev: false
+
   /unist-util-generated/2.0.1:
     resolution: {integrity: sha512-qF72kLmPxAw0oN2fwpWIqbXAVyEqUzDHMsbtPvOudIlUzXYFIeQIuxXQCRCFh22B7cixvU0MG7m3MW8FTq/S+A==}
     dev: false
@@ -2656,6 +2768,13 @@ packages:
     resolution: {integrity: sha512-kUBE91efOWfIVBo8xzh/uZQ7p9ffYRtUbMRZBNFYwf0RK8koUMx6dGUfwylLOKmaT2cs4wSW96QoYUSXAyEtpg==}
     dependencies:
       '@types/unist': 2.0.6
+    dev: false
+
+  /unist-util-remove-position/4.0.2:
+    resolution: {integrity: sha512-TkBb0HABNmxzAcfLf4qsIbFbaPDvMO6wa3b3j4VcEzFVaw1LBKwnW4/sRJ/atSLSzoIg41JWEdnE7N6DIhGDGQ==}
+    dependencies:
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+      unist-util-visit: 4.1.2
     dev: false
 
   /unist-util-stringify-position/3.0.3:
@@ -2697,6 +2816,13 @@ packages:
       diff: 5.1.0
       kleur: 4.1.5
       sade: 1.8.1
+    dev: false
+
+  /vfile-location/4.1.0:
+    resolution: {integrity: sha512-YF23YMyASIIJXpktBa4vIGLJ5Gs88UB/XePgqPmTa7cDA+JeO3yclbpheQYCHjVHBn/yePzrXuygIL+xbvRYHw==}
+    dependencies:
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+      vfile: 5.3.6
     dev: false
 
   /vfile-message/3.1.3:
@@ -2764,6 +2890,10 @@ packages:
     engines: {node: '>=0.4'}
     dev: false
 
+  /zwitch/2.0.4:
+    resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
+    dev: false
+
   r2.cnpmjs.org/@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz}
     name: '@nodelib/fs.scandir'
@@ -2809,10 +2939,38 @@ packages:
       '@types/node': 18.11.19
     dev: true
 
+  r2.cnpmjs.org/@types/hast/2.3.4:
+    resolution: {integrity: sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/@types/hast/-/hast-2.3.4.tgz}
+    name: '@types/hast'
+    version: 2.3.4
+    dependencies:
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+    dev: false
+
+  r2.cnpmjs.org/@types/katex/0.11.1:
+    resolution: {integrity: sha512-DUlIj2nk0YnJdlWgsFuVKcX27MLW0KbKmGVoUHmFr+74FYYNUDAaj9ZqTADvsbE8rfxuVmSFc7KczYn5Y09ozg==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/@types/katex/-/katex-0.11.1.tgz}
+    name: '@types/katex'
+    version: 0.11.1
+    dev: false
+
+  r2.cnpmjs.org/@types/mdast/3.0.10:
+    resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/@types/mdast/-/mdast-3.0.10.tgz}
+    name: '@types/mdast'
+    version: 3.0.10
+    dependencies:
+      '@types/unist': r2.cnpmjs.org/@types/unist/2.0.6
+    dev: false
+
   r2.cnpmjs.org/@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.1.tgz}
     name: '@types/normalize-package-data'
     version: 2.4.1
+    dev: false
+
+  r2.cnpmjs.org/@types/unist/2.0.6:
+    resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/@types/unist/-/unist-2.0.6.tgz}
+    name: '@types/unist'
+    version: 2.0.6
     dev: false
 
   r2.cnpmjs.org/agent-base/6.0.2:
@@ -2881,6 +3039,13 @@ packages:
     name: colorette
     version: 1.4.0
     dev: true
+
+  r2.cnpmjs.org/commander/8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/commander/-/commander-8.3.0.tgz}
+    name: commander
+    version: 8.3.0
+    engines: {node: '>= 12'}
+    dev: false
 
   r2.cnpmjs.org/commondir/1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/commondir/-/commondir-1.0.1.tgz}
@@ -3091,6 +3256,15 @@ packages:
       graceful-fs: 4.2.10
     dev: true
 
+  r2.cnpmjs.org/katex/0.13.24:
+    resolution: {integrity: sha512-jZxYuKCma3VS5UuxOx/rFV1QyGSl3Uy/i0kTJF3HgQ5xMinCQVF8Zd4bMY/9aI9b9A2pjIBOsjSSm68ykTAr8w==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/katex/-/katex-0.13.24.tgz}
+    name: katex
+    version: 0.13.24
+    hasBin: true
+    dependencies:
+      commander: r2.cnpmjs.org/commander/8.3.0
+    dev: false
+
   r2.cnpmjs.org/lines-and-columns/1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz}
     name: lines-and-columns
@@ -3112,6 +3286,69 @@ packages:
     version: 1.4.1
     engines: {node: '>= 8'}
     dev: true
+
+  r2.cnpmjs.org/micromark-extension-math/2.0.2:
+    resolution: {integrity: sha512-cFv2B/E4pFPBBFuGgLHkkNiFAIQv08iDgPH2HCuR2z3AUgMLecES5Cq7AVtwOtZeRrbA80QgMUk8VVW0Z+D2FA==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/micromark-extension-math/-/micromark-extension-math-2.0.2.tgz}
+    name: micromark-extension-math
+    version: 2.0.2
+    dependencies:
+      '@types/katex': r2.cnpmjs.org/@types/katex/0.11.1
+      katex: r2.cnpmjs.org/katex/0.13.24
+      micromark-factory-space: r2.cnpmjs.org/micromark-factory-space/1.0.0
+      micromark-util-character: r2.cnpmjs.org/micromark-util-character/1.1.0
+      micromark-util-symbol: r2.cnpmjs.org/micromark-util-symbol/1.0.1
+      micromark-util-types: r2.cnpmjs.org/micromark-util-types/1.0.2
+      uvu: 0.5.6
+    dev: false
+
+  r2.cnpmjs.org/micromark-factory-space/1.0.0:
+    resolution: {integrity: sha512-qUmqs4kj9a5yBnk3JMLyjtWYN6Mzfcx8uJfi5XAveBniDevmZasdGBba5b4QsvRcAkmvGo5ACmSUmyGiKTLZew==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/micromark-factory-space/-/micromark-factory-space-1.0.0.tgz}
+    name: micromark-factory-space
+    version: 1.0.0
+    dependencies:
+      micromark-util-character: r2.cnpmjs.org/micromark-util-character/1.1.0
+      micromark-util-types: r2.cnpmjs.org/micromark-util-types/1.0.2
+    dev: false
+
+  r2.cnpmjs.org/micromark-util-character/1.1.0:
+    resolution: {integrity: sha512-agJ5B3unGNJ9rJvADMJ5ZiYjBRyDpzKAOk01Kpi1TKhlT1APx3XZk6eN7RtSz1erbWHC2L8T3xLZ81wdtGRZzg==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/micromark-util-character/-/micromark-util-character-1.1.0.tgz}
+    name: micromark-util-character
+    version: 1.1.0
+    dependencies:
+      micromark-util-symbol: r2.cnpmjs.org/micromark-util-symbol/1.0.1
+      micromark-util-types: r2.cnpmjs.org/micromark-util-types/1.0.2
+    dev: false
+
+  r2.cnpmjs.org/micromark-util-decode-numeric-character-reference/1.0.0:
+    resolution: {integrity: sha512-OzO9AI5VUtrTD7KSdagf4MWgHMtET17Ua1fIpXTpuhclCqD8egFWo85GxSGvxgkGS74bEahvtM0WP0HjvV0e4w==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/micromark-util-decode-numeric-character-reference/-/micromark-util-decode-numeric-character-reference-1.0.0.tgz}
+    name: micromark-util-decode-numeric-character-reference
+    version: 1.0.0
+    dependencies:
+      micromark-util-symbol: r2.cnpmjs.org/micromark-util-symbol/1.0.1
+    dev: false
+
+  r2.cnpmjs.org/micromark-util-decode-string/1.0.2:
+    resolution: {integrity: sha512-DLT5Ho02qr6QWVNYbRZ3RYOSSWWFuH3tJexd3dgN1odEuPNxCngTCXJum7+ViRAd9BbdxCvMToPOD/IvVhzG6Q==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/micromark-util-decode-string/-/micromark-util-decode-string-1.0.2.tgz}
+    name: micromark-util-decode-string
+    version: 1.0.2
+    dependencies:
+      decode-named-character-reference: 1.0.2
+      micromark-util-character: r2.cnpmjs.org/micromark-util-character/1.1.0
+      micromark-util-decode-numeric-character-reference: r2.cnpmjs.org/micromark-util-decode-numeric-character-reference/1.0.0
+      micromark-util-symbol: r2.cnpmjs.org/micromark-util-symbol/1.0.1
+    dev: false
+
+  r2.cnpmjs.org/micromark-util-symbol/1.0.1:
+    resolution: {integrity: sha512-oKDEMK2u5qqAptasDAwWDXq0tG9AssVwAx3E9bBF3t/shRIGsWIRG+cGafs2p/SnDSOecnt6hZPCE2o6lHfFmQ==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/micromark-util-symbol/-/micromark-util-symbol-1.0.1.tgz}
+    name: micromark-util-symbol
+    version: 1.0.1
+    dev: false
+
+  r2.cnpmjs.org/micromark-util-types/1.0.2:
+    resolution: {integrity: sha512-DCfg/T8fcrhrRKTPjRrw/5LLvdGV7BHySf/1LOZx7TzWZdYRjogNtyNq885z3nNallwr3QUKARjqvHqX1/7t+w==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/micromark-util-types/-/micromark-util-types-1.0.2.tgz}
+    name: micromark-util-types
+    version: 1.0.2
+    dev: false
 
   r2.cnpmjs.org/mimic-fn/4.0.0:
     resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/mimic-fn/-/mimic-fn-4.0.0.tgz}
@@ -3183,6 +3420,12 @@ packages:
       lines-and-columns: r2.cnpmjs.org/lines-and-columns/1.2.4
     dev: false
 
+  r2.cnpmjs.org/parse5/6.0.1:
+    resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/parse5/-/parse5-6.0.1.tgz}
+    name: parse5
+    version: 6.0.1
+    dev: false
+
   r2.cnpmjs.org/path-exists/5.0.0:
     resolution: {integrity: sha512-RjhtfwJOxzcFmNOi6ltcbcu4Iu+FL3zEj83dk4kAS+fVpTxXLO1b38RvJgT/0QwvV/L3aY9TAnyv0EOqW4GoMQ==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/path-exists/-/path-exists-5.0.0.tgz}
     name: path-exists
@@ -3221,6 +3464,32 @@ packages:
     name: queue-microtask
     version: 1.2.3
     dev: true
+
+  r2.cnpmjs.org/rehype-katex/6.0.2:
+    resolution: {integrity: sha512-C4gDAlS1+l0hJqctyiU64f9CvT00S03qV1T6HiMzbSuLBgWUtcqydWHY9OpKrm0SpkK16FNd62CDKyWLwV2ppg==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/rehype-katex/-/rehype-katex-6.0.2.tgz}
+    name: rehype-katex
+    version: 6.0.2
+    dependencies:
+      '@types/hast': r2.cnpmjs.org/@types/hast/2.3.4
+      '@types/katex': r2.cnpmjs.org/@types/katex/0.11.1
+      hast-util-to-text: 3.1.2
+      katex: 0.15.6
+      rehype-parse: 8.0.4
+      unified: 10.1.2
+      unist-util-remove-position: 4.0.2
+      unist-util-visit: 4.1.2
+    dev: false
+
+  r2.cnpmjs.org/remark-math/5.1.1:
+    resolution: {integrity: sha512-cE5T2R/xLVtfFI4cCePtiRn+e6jKMtFDR3P8V3qpv8wpKjwvHoBA4eJzvX+nVrnlNy0911bdGmuspCSwetfYHw==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/remark-math/-/remark-math-5.1.1.tgz}
+    name: remark-math
+    version: 5.1.1
+    dependencies:
+      '@types/mdast': r2.cnpmjs.org/@types/mdast/3.0.10
+      mdast-util-math: 2.0.2
+      micromark-extension-math: r2.cnpmjs.org/micromark-extension-math/2.0.2
+      unified: 10.1.2
+    dev: false
 
   r2.cnpmjs.org/require-from-string/2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/require-from-string/-/require-from-string-2.0.2.tgz}
@@ -3310,6 +3579,12 @@ packages:
     dependencies:
       spdx-correct: 3.2.0
       spdx-expression-parse: r2.cnpmjs.org/spdx-expression-parse/3.0.1
+    dev: false
+
+  r2.cnpmjs.org/web-namespaces/2.0.1:
+    resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==, registry: https://r.cnpmjs.org/, tarball: https://r2.cnpmjs.org/web-namespaces/-/web-namespaces-2.0.1.tgz}
+    name: web-namespaces
+    version: 2.0.1
     dev: false
 
   r2.cnpmjs.org/wrappy/1.0.2:

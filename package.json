@@ -16,6 +16,7 @@
     "clsx": "^1.2.1",
     "dayjs": "^1.11.6",
     "https-proxy-agent": "^5.0.1",
+    "katex": "^0.16.4",
     "mitt": "^3.0.0",
     "mobx": "^6.6.2",
     "mobx-react-lite": "^3.4.0",

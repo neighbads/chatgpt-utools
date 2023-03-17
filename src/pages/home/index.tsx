@@ -72,6 +72,10 @@ export function Page() {
                   }
                 })}
                 onRetry={homeStore.conversation.resendMessage}
+                onDel={homeStore.conversation.removeMessage}
+                onModifyText={(index) =>
+                  homeStore.conversation?.messages[index].onModifyText()
+                }
               />
               {homeStore.conversation.messages.length === 0 &&
                 homeStore.stores.recommendTopic.topics.length > 0 && (

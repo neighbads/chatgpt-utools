@@ -1,5 +1,6 @@
 import { ChatMessage } from '@libeilong/chatgpt'
 import { makeAutoObservable } from 'mobx'
+import { openTextArea } from '../components/popups/textarea'
 import { Storage } from '../shared/storage'
 
 export type MessageState = 'sending' | 'fail' | 'done'
@@ -44,6 +45,17 @@ export class Message implements ChatMessage {
   flushDb = () => {
     Storage.setMessage(this)
     return this
+  }
+
+  onModifyText = async () => {
+    const text = await openTextArea({
+      title: '修改消息内容',
+      defaultValue: this.text,
+    })
+    if (text) {
+      this.text = text
+      this.flushDb()
+    }
   }
 }
 
