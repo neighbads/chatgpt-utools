@@ -20,7 +20,7 @@ export const InputArea = () => {
     >
       <div className={styles.index}>
         <textarea
-          placeholder={`输入 "/" 选择消息模板`}
+          placeholder={`输入 / 选择消息模板`}
           ref={store.inputRef}
           className={styles.input}
           value={store.value}
