@@ -104,7 +104,7 @@ export class Conversation {
       conversationId: this.id,
       parentMessageId: lastMessage?.id,
     }).flushDb()
-    let chatgptMessage = new Message({
+    let responseMessage = new Message({
       role: 'assistant',
       text: '',
       createdAt: now + 1,
@@ -112,16 +112,16 @@ export class Conversation {
       parentMessageId: userMessage.id,
       conversationId: this.id,
     }).flushDb()
-    this.messages.push(userMessage, chatgptMessage)
-    this._sendMessage(userMessage, chatgptMessage)
+    this.messages.push(userMessage, responseMessage)
+    this._sendMessage(userMessage, responseMessage)
   }
 
   resendMessage = async () => {
     let lastMessage = this.messages[this.messages.length - 2]
-    let chatgptMessage = this.messages[this.messages.length - 1]
+    let responseMessage = this.messages[this.messages.length - 1]
     if (lastMessage === undefined) {
-      lastMessage = chatgptMessage
-      chatgptMessage = new Message({
+      lastMessage = responseMessage
+      responseMessage = new Message({
         role: 'assistant',
         state: 'sending',
         text: '',
@@ -129,16 +129,16 @@ export class Conversation {
         parentMessageId: lastMessage.id,
         conversationId: this.id,
       })
-      this.messages.push(chatgptMessage)
+      this.messages.push(responseMessage)
     } else {
-      chatgptMessage.state = 'sending'
-      chatgptMessage.text = ''
-      chatgptMessage.createdAt = Date.now()
-      chatgptMessage.failedReason = undefined
+      responseMessage.state = 'sending'
+      responseMessage.text = ''
+      responseMessage.createdAt = Date.now()
+      responseMessage.failedReason = undefined
     }
 
-    chatgptMessage.flushDb()
-    this._sendMessage(lastMessage, chatgptMessage)
+    responseMessage.flushDb()
+    this._sendMessage(lastMessage, responseMessage)
   }
 
   /**
@@ -154,7 +154,6 @@ export class Conversation {
     }
     this.messages.splice(index, 1)
     Storage.removeMessage(message.id)
-    this.flushDb()
   }
 
   flushDb = () => {

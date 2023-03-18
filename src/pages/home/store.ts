@@ -49,12 +49,6 @@ export const homeStore = new (class {
     conversation.flushDb()
   }
 
-  onOpenTemplate = async () => {
-    const value = await openTemplatePopup()
-    if (!value) return
-    this.conversation?.sendMessage(value)
-  }
-
   destory = () => {
     this.conversation = undefined
   }
