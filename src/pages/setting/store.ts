@@ -18,11 +18,13 @@ export class Store {
     this.baseConfig = {
       ...Storage.getConfig(),
       apiKey: Storage.getApiKey(),
+      apiBaseUrl: Storage.getApiBaseUrl(),
     }
   }
 
   baseConfig: IConfig & {
     apiKey: string
+    apiBaseUrl: string
   }
 
   saveBaseConfig = () => {
@@ -47,6 +49,7 @@ export class Store {
       proxy,
     })
     Storage.setApiKey(this.baseConfig.apiKey)
+    Storage.setApiBaseUrl(this.baseConfig.apiBaseUrl)
     chatgptStore.reinit()
     message.success('成功')
   }
