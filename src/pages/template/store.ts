@@ -9,6 +9,28 @@ export class Store {
     makeAutoObservable(this)
   }
 
+  keyword = ''
+
+  _keyword = ''
+
+  get renderTemplates() {
+    return this.templates.filter((it) =>
+      `${it.title} ${it.template}`.includes(this._keyword)
+    )
+  }
+
+  timer?: NodeJS.Timeout
+
+  setKeyword = (keyword: string) => {
+    this.keyword = keyword
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+    this.timer = setTimeout(() => {
+      this._keyword = keyword
+    }, 300)
+  }
+
   templates: Template[] = []
 
   onCreate = () => {

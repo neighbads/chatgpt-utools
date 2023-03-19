@@ -27,7 +27,7 @@ export class Conversation {
   private initialized = false
 
   get lastMessage() {
-    return this.messages[this.messages.length - 1]
+    return this.messages[this.messages.length - 1] as Message | undefined
   }
 
   init = () => {
@@ -81,6 +81,7 @@ export class Conversation {
         this.generateTitle(lastMessage.text)
       }
     } catch (err: any) {
+      if (responseMessage.state === 'done') return
       responseMessage.state = 'fail'
       responseMessage.failedReason = err.message
     } finally {
@@ -134,6 +135,17 @@ export class Conversation {
 
     responseMessage.flushDb()
     this._sendMessage(lastMessage, responseMessage)
+  }
+
+  stopMessage = () => {
+    const responseMessage = this.messages[this.messages.length - 1]
+    if (responseMessage?.isWaiting) {
+      if (responseMessage.text === '') {
+        responseMessage.text = '中断回复'
+      }
+      responseMessage.state = 'done'
+      responseMessage.flushDb()
+    }
   }
 
   /**
