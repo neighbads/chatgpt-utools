@@ -4,7 +4,7 @@
 
 欢迎 start ✨
 
-[![ppK3XlD.png](https://s1.ax1x.com/2023/03/11/ppK3XlD.png)](https://imgse.com/i/ppK3XlD)
+[![pptFBSU.png](https://s1.ax1x.com/2023/03/19/pptFBSU.png)](https://imgse.com/i/pptFBSU)
 
 ## 安装
 
@@ -16,8 +16,7 @@
 
 ## 部分界面
 
-[![ppu4SL4.png](https://s1.ax1x.com/2023/03/10/ppu4SL4.png)](https://imgse.com/i/ppu4SL4)
 
-[![ppuhzyF.png](https://s1.ax1x.com/2023/03/10/ppuhzyF.png)](https://imgse.com/i/ppuhzyF)
-
-[![ppK3OSO.png](https://s1.ax1x.com/2023/03/11/ppK3OSO.png)](https://imgse.com/i/ppK3OSO)
+[![pptFaF0.png](https://s1.ax1x.com/2023/03/19/pptFaF0.png)](https://imgse.com/i/pptFaF0)
+[![pptFwWT.png](https://s1.ax1x.com/2023/03/19/pptFwWT.png)](https://imgse.com/i/pptFwWT)
+[![pptFdYV.png](https://s1.ax1x.com/2023/03/19/pptFdYV.png)](https://imgse.com/i/pptFdYV)
