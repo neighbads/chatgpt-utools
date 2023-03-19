@@ -26,11 +26,24 @@ export class Store {
   }
 
   saveBaseConfig = () => {
-    const config = objectPick(toJS(this.baseConfig), 'all', {
-      filter: (val) => {
-        return !isNil(val) && val !== ''
-      },
-    })
+    const config = objectPick(
+      toJS(this.baseConfig),
+      [
+        'model',
+        'apiBaseUrl',
+        'prompt',
+        'max_tokens',
+        'temperature',
+        'top_p',
+        'presence_penalty',
+        'frequency_penalty',
+      ],
+      {
+        filter: (val) => {
+          return !isNil(val) && val !== ''
+        },
+      }
+    )
 
     const proxy = objectPick(
       toJS(this.baseConfig.proxy || ({} as IConfig['proxy']))!,
