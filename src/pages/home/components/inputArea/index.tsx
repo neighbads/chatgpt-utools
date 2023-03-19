@@ -11,7 +11,10 @@ export const InputArea = () => {
       open={store.templateVisible}
       menu={{
         items: store.templates.map((it, index) => ({
-          style: store.templateIndex === index ? { background: 'var(--gray-0)' } : {},
+          style:
+            store.templateIndex === index
+              ? { background: 'var(--gray-0)' }
+              : {},
           key: it.id!,
           label: it.title,
           onClick: () => store.useTemplate(it),
@@ -50,11 +53,13 @@ export const InputArea = () => {
             }
           }}
         />
-        <div className={styles.submitWrap}>
-          <Button size="small" type="primary" onClick={store.onSubmit}>
-            发送
-          </Button>
-        </div>
+        {store.value.length > 0 && (
+          <div className={styles.submitWrap}>
+            <Button size="small" type="primary" onClick={store.onSubmit}>
+              发送
+            </Button>
+          </div>
+        )}
       </div>
     </Dropdown>
   ))

@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 import { Storage } from '../shared/storage'
 import { chatgptStore } from '../stores/chatgpt'
 import { Message } from './message'
@@ -26,8 +26,6 @@ export class Conversation {
 
   private initialized = false
 
-  private loading = false
-
   get lastMessage() {
     return this.messages[this.messages.length - 1]
   }
@@ -40,7 +38,6 @@ export class Conversation {
 
   check = () => {
     if (!this.lastMessage) return
-    if (this.loading) throw Error('请等待上一条消息回复完成')
     if (this.lastMessage.state === 'sending') {
       throw Error('请等待上一条消息回复完成')
     } else if (this.lastMessage.state === 'fail') {
@@ -60,12 +57,11 @@ export class Conversation {
 
   private _sendMessage = async (
     lastMessage: Message,
-    chatgptMessage: Message
+    responseMessage: Message
   ) => {
     this.updatedAt = Date.now()
     this.flushDb()
     try {
-      this.loading = true
       const { prompt } = Storage.getConfig()
 
       await chatgptStore.sendMessage(lastMessage.text, {
@@ -74,22 +70,21 @@ export class Conversation {
         systemMessage: prompt.trim() !== '' ? prompt.trim() : undefined,
         onProgress: ({ text }) => {
           text = text.trim()
-          if (!text) return
-          chatgptMessage.text = text
-          chatgptMessage.flushDb()
+          if (!text || !responseMessage.isWaiting) return
+          responseMessage.text = text
+          responseMessage.flushDb()
         },
       })
-      chatgptMessage.state = 'done'
+      responseMessage.state = 'done'
 
       if (this.messages.length === 2 && this.name === '新会话') {
         this.generateTitle(lastMessage.text)
       }
     } catch (err: any) {
-      chatgptMessage.state = 'fail'
-      chatgptMessage.failedReason = err.message
+      responseMessage.state = 'fail'
+      responseMessage.failedReason = err.message
     } finally {
-      chatgptMessage.flushDb()
-      this.loading = false
+      responseMessage.flushDb()
     }
   }
 
@@ -152,8 +147,9 @@ export class Conversation {
       nextMessage.parentMessageId = message.parentMessageId
       nextMessage.flushDb()
     }
+    message.deletedAt = Date.now()
+    message.flushDb()
     this.messages.splice(index, 1)
-    Storage.removeMessage(message.id)
   }
 
   flushDb = () => {
