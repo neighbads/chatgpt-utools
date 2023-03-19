@@ -16,10 +16,10 @@ export const chatgptStore = new (class {
     if (this.client) return
 
     const apiKey = Storage.getApiKey()
-    const apiBaseUrl = Storage.getApiBaseUrl()
     const config = Storage.getConfig()
 
     const completionParams = objectPick(config, [
+      'model',
       'temperature',
       'top_p',
       'presence_penalty',
@@ -28,11 +28,8 @@ export const chatgptStore = new (class {
 
     this.client = window.preload.getChatGPTClient({
       apiKey,
-      apiBaseUrl,
-      completionParams: {
-        model: config.model,
-        ...completionParams,
-      },
+      apiBaseUrl: config.apiBaseUrl,
+      completionParams: completionParams,
       maxModelTokens: config.max_tokens,
       proxy: config.proxy?.open ? config.proxy : undefined,
       getMessageById: async (id: string) => Storage.getMessage(id),
