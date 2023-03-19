@@ -68,6 +68,11 @@ export class Store {
     }
   }
 
+  onEscape = () => {
+    if (this.templateVisible) this.templateVisible = false
+    else this.value = ''
+  }
+
   useTemplate = (template: Template) => {
     this.value = template.template
     this.templateVisible = false

@@ -34,6 +34,7 @@ export const InputArea = () => {
             if (store.isCompositionStarted) {
               return
             }
+
             if (event.key === 'Enter') {
               if (store.templateVisible) {
                 event.preventDefault()
@@ -50,6 +51,9 @@ export const InputArea = () => {
             } else if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
               event.preventDefault()
               store.onArrowKey(event.key as any)
+            } else if (event.key === 'Escape' && store.value !== '') {
+              event.stopPropagation()
+              store.onEscape()
             }
           }}
         />
