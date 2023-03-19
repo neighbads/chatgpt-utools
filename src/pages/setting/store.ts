@@ -1,3 +1,4 @@
+import { isNil, objectPick } from '@libeilong/func'
 import { message } from 'antd'
 import { makeAutoObservable, toJS } from 'mobx'
 import { Storage } from '../../shared/storage'
@@ -25,15 +26,25 @@ export class Store {
   }
 
   saveBaseConfig = () => {
+    const config = objectPick(toJS(this.baseConfig), 'all', {
+      filter: (val) => {
+        return !isNil(val) && val !== ''
+      },
+    })
+
+    const proxy = objectPick(
+      toJS(this.baseConfig.proxy || ({} as IConfig['proxy']))!,
+      ['host', 'port', 'open'],
+      {
+        filter: (val) => {
+          return !isNil(val) && val !== ''
+        },
+      }
+    )
+
     Storage.setConfig({
-      model: this.baseConfig.model,
-      prompt: this.baseConfig.prompt,
-      proxy: toJS(this.baseConfig.proxy),
-      max_tokens: this.baseConfig.max_tokens,
-      temperature: this.baseConfig.temperature,
-      top_p: this.baseConfig.top_p,
-      presence_penalty: this.baseConfig.presence_penalty,
-      frequency_penalty: this.baseConfig.frequency_penalty,
+      ...config,
+      proxy,
     })
     Storage.setApiKey(this.baseConfig.apiKey)
     chatgptStore.reinit()

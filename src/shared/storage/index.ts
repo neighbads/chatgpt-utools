@@ -19,16 +19,15 @@ export class Storage {
       id: it.id,
       name: it.name,
       createdAt: it.createdAt,
-      updatedAt: it.updatedAt
+      updatedAt: it.updatedAt,
     })
   }
 
   static getConversations() {
     const conversations = utools.db.allDocs(`c-`)
-    return conversations
-      .map(({ value }: any) => {
-        return new Conversation(value)
-      })
+    return conversations.map(({ value }: any) => {
+      return new Conversation(value)
+    })
   }
 
   static removeConversation(id: string) {
@@ -68,10 +67,12 @@ export class Storage {
   }
 
   static getConfig(): IConfig {
-    return Object.assign({}, DefaultConfig, utools.dbStorage.getItem('config'))
+    const config = utools.dbStorage.getItem('config')
+    const proxy = Object.assign({}, DefaultConfig.proxy, config?.proxy)
+    return Object.assign({}, DefaultConfig, config, { proxy })
   }
 
-  static setConfig(config: IConfig) {
+  static setConfig(config: Partial<IConfig>) {
     utools.dbStorage.setItem('config', config)
   }
 

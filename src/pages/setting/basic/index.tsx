@@ -55,6 +55,7 @@ export function BasicSetting() {
                   value: it,
                 }
               })}
+              defaultValue={Models[0]}
               onChange={(val) => (root.baseConfig.model = val)}
             />
           </Form.Item>
@@ -66,7 +67,7 @@ export function BasicSetting() {
               max={4090}
               value={root.baseConfig.max_tokens}
               onChange={(value) => {
-                if (value) root.baseConfig.max_tokens = value
+                root.baseConfig.max_tokens = value ?? undefined
               }}
             />
           </Form.Item>
@@ -94,7 +95,7 @@ export function BasicSetting() {
                 step={0.1}
                 value={root.baseConfig.temperature}
                 onChange={(value) => {
-                  if (value) root.baseConfig.temperature = value
+                  root.baseConfig.temperature = value ?? undefined
                 }}
               />
             </Form.Item>
@@ -107,7 +108,7 @@ export function BasicSetting() {
                 step={0.1}
                 value={root.baseConfig.top_p}
                 onChange={(value) => {
-                  if (value) root.baseConfig.top_p = value
+                  root.baseConfig.top_p = value ?? undefined
                 }}
               />
             </Form.Item>
@@ -120,7 +121,7 @@ export function BasicSetting() {
                 step={0.1}
                 value={root.baseConfig.presence_penalty}
                 onChange={(value) => {
-                  if (value) root.baseConfig.presence_penalty = value
+                  root.baseConfig.presence_penalty = value ?? undefined
                 }}
               />
             </Form.Item>
@@ -133,7 +134,7 @@ export function BasicSetting() {
                 step={0.1}
                 value={root.baseConfig.frequency_penalty}
                 onChange={(value) => {
-                  if (value) root.baseConfig.frequency_penalty = value
+                  root.baseConfig.frequency_penalty = value ?? undefined
                 }}
               />
             </Form.Item>
