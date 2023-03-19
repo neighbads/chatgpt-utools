@@ -24,7 +24,7 @@ export function Page() {
 
   useEffect(() => {
     if (query.text) {
-      homeStore.createConversation()
+      homeStore.getDefaultConversation()
       homeStore.conversation?.sendMessage(query.text)
     }
   }, [query])

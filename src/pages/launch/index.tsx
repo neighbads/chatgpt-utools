@@ -27,11 +27,6 @@ function _Page() {
           </Button>
         </div>
       </div>
-      <div className={styles.footer}>
-        <Button type="link" onClick={appStore.openApiKeyUrl}>
-          好耶！这些网站免费提供 ChatGPT 服务！
-        </Button>
-      </div>
     </div>
   ))
 }

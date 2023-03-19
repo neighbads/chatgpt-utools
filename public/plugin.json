@@ -2,40 +2,40 @@
   "main": "./index.html",
   "preload": "./preload.js",
   "logo": "./logo.png",
-  "pluginName": "MossGPT",
-  "description": "强如 Moss 的对话 AI",
-  "author": "lblblong",
-  "homepage": "https://github.com/lblblong",
-  "version": "0.0.2",
+  "pluginName": "ChatGPT",
+  "description": "ChatGPT AI 对话",
+  "author": "neighbads",
+  "homepage": "https://github.com/neighbads",
+  "version": "1.0.1",
   "platform": ["win32", "darwin", "linux"],
   "development": { "main": "http://127.0.0.1:5173" },
   "features": [
     {
-      "code": "moss",
-      "explain": "这是 Moss 的回答",
-      "cmds": ["Moss", "MossGPT", "ChatGPT", "Chat"]
+      "code": "chatgpt",
+      "explain": "ChatGPT AI 对话",
+      "cmds": ["Ai", "ChatGPT", "Chat", "GPT"]
     },
     {
       "code": "text",
-      "explain": "问问 Moss",
+      "explain": "ChatGPT 对话",
       "cmds": [
         {
           "type": "over",
-          "label": "问问 Moss",
+          "label": "ChatGPT 对话",
           "minLength": 1,
-          "maxLength": 500
+          "maxLength": 5000
         }
       ]
     },
     {
       "code": "translation",
-      "explain": "Moss 翻译",
+      "explain": "ChatGPT 翻译",
       "cmds": [
         {
           "type": "over",
-          "label": "Moss 翻译",
+          "label": "ChatGPT 翻译",
           "minLength": 1,
-          "maxLength": 3000
+          "maxLength": 5000
         }
       ]
     }

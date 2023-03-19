@@ -8,10 +8,23 @@ export const chatStore = new (class {
   }
 
   private initialized = false
+  public defaultConversation?: Conversation
 
   init = () => {
     if (this.initialized) return
     this.conversations = Storage.getConversations()
+
+    this.defaultConversation = this.conversations.find(
+      (conversation) => conversation.name === '默认会话'
+    )
+    if (!this.defaultConversation) {
+      const conversation = new Conversation({
+        name: '默认会话',
+      }).flushDb()
+      this.conversations.unshift(conversation)
+      this.defaultConversation = conversation
+    }
+
     this.initialized = true
   }
 

@@ -20,6 +20,14 @@ export const homeStore = new (class {
 
   conversation?: Conversation
 
+  getDefaultConversation() {
+    this.conversation = chatStore.defaultConversation
+    if (!this.conversation) {
+      return
+    }
+    this.conversation.init()
+  }
+
   setConversation = (conversation: Conversation) => {
     this.conversation = conversation
     this.conversation.init()

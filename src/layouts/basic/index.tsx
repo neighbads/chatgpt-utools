@@ -34,7 +34,7 @@ export const BasicLayout = () => {
     {
       icon: 'github',
       onClick: () =>
-        utools.shellOpenExternal('https://github.com/lblblong/mossgpt-utools'),
+        utools.shellOpenExternal('https://github.com/neighbads/chatgpt-utools'),
       active: false,
     },
   ]
