@@ -37,27 +37,20 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    .bubbleWrap {
-      display: inline-flex;
-      align-items: center;
+    .bubble {
       max-width: 100%;
-      .bubble {
-        border-radius: 8px;
-        padding: 0 12px;
-        word-break: break-all;
-        width: 100%;
-        p {
-          margin: 8px 0;
-          line-height: 1.8;
-        }
-        img {
-          max-width: 100%;
-        }
+      border-radius: 10px;
+      padding: 0 12px;
+      word-break: break-all;
+      p {
+        margin: 8px 0;
+        line-height: 1.8;
+      }
+      img {
+        max-width: 100%;
       }
     }
-    .time {
-      padding: 0 6px;
-      height: 20px;
+    .footerBar {
       display: flex;
       align-items: center;
       font-size: 12px;
@@ -65,13 +58,18 @@
       max-width: 100%;
       overflow: hidden;
       gap: 12px;
-      .state {
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      > * {
+        margin: 8px 0;
       }
     }
+  }
+  .systemMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    color: var(--gray-3);
+    font-size: 12px;
   }
   .user {
     .bubble {
@@ -83,12 +81,6 @@
     .bubble {
       background: #fff;
       color: #333;
-    }
-    .retryAction {
-      padding-left: 8px;
-      &:hover {
-        color: var(--color-primary);
-      }
     }
   }
 }

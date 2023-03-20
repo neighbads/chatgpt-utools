@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { makeAutoObservable } from 'mobx'
 import { Storage } from '../shared/storage'
 import { chatgptStore } from '../stores/chatgpt'
@@ -22,6 +23,31 @@ export class Conversation {
     this.updatedAt = opts?.updatedAt || opts?.createdAt || Date.now()
 
     makeAutoObservable(this)
+  }
+
+  get renderMessages() {
+    if (this.messages.length === 0) return []
+    // 按时间区间插入系统消息：时间间隔超过 5 分钟
+    return this.messages.reduce((res, cur) => {
+      const getTime = () => {
+        const today = dayjs().format('YYYY-MM-DD')
+        const curDay = dayjs(cur.createdAt).format('YYYY-MM-DD')
+        if (today === curDay) {
+          return dayjs(cur.createdAt).format('HH:mm:ss')
+        }
+        return dayjs(cur.createdAt).format('YYYY-MM-DD HH:mm:ss')
+      }
+      const last = res[res.length - 1] as Message
+      if (res.length === 0 || cur.createdAt - last.createdAt > 5 * 60 * 1000) {
+        res.push({
+          role: 'system',
+          text: getTime(),
+        })
+      }
+
+      res.push(cur)
+      return res
+    }, [] as (Message | { role: 'system'; text: string })[])
   }
 
   private initialized = false

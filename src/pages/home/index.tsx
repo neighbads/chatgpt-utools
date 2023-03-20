@@ -62,16 +62,17 @@ export function Page() {
             <div className={styles.top}>
               <Chat
                 key={homeStore.conversation.id}
-                messages={homeStore.conversation.messages.map((it) => {
-                  return {
-                    id: it.id,
-                    self: it.self,
-                    state: it.state,
-                    text: it.text,
-                    createdAt: it.createdAt,
-                    failedReason: it.failedReason,
-                  }
-                })}
+                messages={homeStore.conversation.renderMessages}
+                // messages={homeStore.conversation.messages.map((it) => {
+                //   return {
+                //     id: it.id,
+                //     self: it.self,
+                //     state: it.state,
+                //     text: it.text,
+                //     createdAt: it.createdAt,
+                //     failedReason: it.failedReason,
+                //   }
+                // })}
                 onRetry={homeStore.conversation.resendMessage}
                 onDel={homeStore.conversation.removeMessage}
                 onModifyText={(index) =>
