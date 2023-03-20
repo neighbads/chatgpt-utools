@@ -15,6 +15,8 @@ export const DefaultConfig: IConfig = {
     open: false,
     host: undefined,
     port: undefined,
+    username: undefined,
+    password: undefined,
   },
 }
 

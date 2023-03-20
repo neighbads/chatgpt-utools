@@ -11,5 +11,8 @@ export interface IConfig {
     host?: string
     port?: string
     open: boolean
+    username?: string
+    password?: string
   }
 }
+

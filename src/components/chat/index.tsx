@@ -68,7 +68,7 @@ export const Chat: FC<ChatProps> = (props) => {
           container.scrollHeight -
             container.offsetHeight -
             container.scrollTop <
-          120
+          150
         ) {
           container.scrollTo({
             top: container.scrollHeight,
@@ -180,8 +180,9 @@ export const Chat: FC<ChatProps> = (props) => {
               )}
             </div>
             <div className={styles.footerBar}>
-              {messages.length === i + 1 && message.state !== 'sending' && (
+              {messages.length === i + 1 && (
                 <Button
+                  disabled={message.state === 'sending'}
                   type="link"
                   size="small"
                   onClick={() => onRetry && onRetry(message)}

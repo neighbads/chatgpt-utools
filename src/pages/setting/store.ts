@@ -47,7 +47,7 @@ export class Store {
 
     const proxy = objectPick(
       toJS(this.baseConfig.proxy || ({} as IConfig['proxy']))!,
-      ['host', 'port', 'open'],
+      ['host', 'port', 'open', 'username', 'password'],
       {
         filter: (val) => {
           return !isNil(val) && val !== ''

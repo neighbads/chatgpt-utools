@@ -1,9 +1,10 @@
-import { Button, FloatButton } from 'antd'
+import { Button } from 'antd'
 import clsx from 'clsx'
 import { useCallback, useEffect, useRef } from 'react'
 import emptyImage from '../../assets/images/undraw_Online_messaging_re_qft3.png'
 import { Chat } from '../../components/chat'
 import { Icon } from '../../components/icon'
+import { Message } from '../../models/message'
 import { withObserver } from '../../shared/func/withObserver'
 import { useQuery } from '../../shared/hooks/useQuery'
 import { appStore } from '../../stores/app'
@@ -62,17 +63,21 @@ export function Page() {
             <div className={styles.top}>
               <Chat
                 key={homeStore.conversation.id}
-                messages={homeStore.conversation.renderMessages}
-                // messages={homeStore.conversation.messages.map((it) => {
-                //   return {
-                //     id: it.id,
-                //     self: it.self,
-                //     state: it.state,
-                //     text: it.text,
-                //     createdAt: it.createdAt,
-                //     failedReason: it.failedReason,
-                //   }
-                // })}
+                messages={homeStore.conversation.renderMessages.map((it) => {
+                  if (it instanceof Message) {
+                    return {
+                      id: it.id,
+                      self: it.self,
+                      state: it.state,
+                      text: it.text,
+                      role: it.role,
+                      createdAt: it.createdAt,
+                      failedReason: it.failedReason,
+                    }
+                  } else {
+                    return it
+                  }
+                })}
                 onRetry={homeStore.conversation.resendMessage}
                 onDel={homeStore.conversation.removeMessage}
                 onModifyText={(index) =>
