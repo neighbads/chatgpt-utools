@@ -1,8 +1,4 @@
-import {
-  CopyOutlined,
-  ReloadOutlined,
-  SyncOutlined
-} from '@ant-design/icons'
+import { CopyOutlined, ReloadOutlined, SyncOutlined } from '@ant-design/icons'
 import { Button, message as AntMessage } from 'antd'
 import clsx from 'clsx'
 import 'katex/dist/katex.min.css'
@@ -184,7 +180,7 @@ export const Chat: FC<ChatProps> = (props) => {
               )}
             </div>
             <div className={styles.footerBar}>
-              {messages.length === i + 1 && (
+              {messages.length === i + 1 && message.state !== 'sending' && (
                 <Button
                   type="link"
                   size="small"
