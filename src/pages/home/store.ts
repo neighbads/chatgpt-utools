@@ -23,6 +23,7 @@ export const homeStore = new (class {
   setConversation = (conversation: Conversation) => {
     this.conversation = conversation
     this.conversation.init()
+    this.stores.input.focus()
   }
 
   createConversation = () => {
