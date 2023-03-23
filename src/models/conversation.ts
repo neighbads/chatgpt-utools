@@ -178,7 +178,8 @@ export class Conversation {
    * 删除指定位置消息，并把父子关系转移到下一条消息
    * @param index
    */
-  removeMessage = (index: number) => {
+  removeMessage = (id: string) => {
+    const index = this.messages.findIndex((m) => m.id === id)
     const message = this.messages[index]
     const nextMessage = this.messages[index + 1]
     if (nextMessage) {

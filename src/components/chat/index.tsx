@@ -15,23 +15,23 @@ import { withObserver } from '../../shared/func/withObserver'
 import { appStore } from '../../stores/app'
 import styles from './index.module.scss'
 
-type ChatMessage =
-  | Pick<
-      Message,
-      'self' | 'id' | 'state' | 'text' | 'createdAt' | 'failedReason' | 'role'
-    >
-  | { role: 'system'; text: string }
+type _Message = Pick<
+  Message,
+  'self' | 'id' | 'state' | 'text' | 'createdAt' | 'failedReason' | 'role'
+>
+
+type ChatMessage = _Message | { role: 'system'; text: string }
 
 interface ChatProps {
   messages: ChatMessage[]
   onRetry?: (message: ChatMessage) => void
-  onDel?: (index: number) => void
-  onModifyText?: (index: number) => void
+  onDel?: (id: string) => void
+  onModifyText?: (id: string) => void
 }
 
 export const Chat: FC<ChatProps> = (props) => {
   const { messages, onRetry, onDel, onModifyText } = props
-  const messageRef = useRef<number>()
+  const messageRef = useRef<_Message>()
   const recordRef = useRef({
     first: true,
     lastMessageLength: messages.length,
@@ -40,7 +40,7 @@ export const Chat: FC<ChatProps> = (props) => {
 
   const handleCopy = () => {
     if (messageRef.current === undefined) return
-    copyToClipboard(messages[messageRef.current].text || '')
+    copyToClipboard(messageRef.current.text || '')
     AntMessage.success('已复制到剪贴板')
   }
 
@@ -100,7 +100,7 @@ export const Chat: FC<ChatProps> = (props) => {
         }
         return (
           <div
-            key={i}
+            key={message.id}
             className={clsx(
               styles.item,
               message.self ? styles.user : styles.chatgpt
@@ -112,7 +112,7 @@ export const Chat: FC<ChatProps> = (props) => {
             <div
               className={styles.bubble}
               onContextMenu={(event) => {
-                messageRef.current = i
+                messageRef.current = message
                 show({ event })
               }}
             >
@@ -201,8 +201,10 @@ export const Chat: FC<ChatProps> = (props) => {
 
       <Menu id="messageMenu" theme={appStore.isDark ? 'dark' : 'light'}>
         <Item onClick={handleCopy}>复制</Item>
-        <Item onClick={() => onDel && onDel(messageRef.current!)}>删除</Item>
-        <Item onClick={() => onModifyText && onModifyText(messageRef.current!)}>
+        <Item onClick={() => onDel && onDel(messageRef.current!.id)}>删除</Item>
+        <Item
+          onClick={() => onModifyText && onModifyText(messageRef.current!.id)}
+        >
           修改
         </Item>
       </Menu>

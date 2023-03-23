@@ -80,8 +80,10 @@ export function Page() {
                 })}
                 onRetry={homeStore.conversation.resendMessage}
                 onDel={homeStore.conversation.removeMessage}
-                onModifyText={(index) =>
-                  homeStore.conversation?.messages[index].onModifyText()
+                onModifyText={(id) =>
+                  homeStore.conversation?.messages
+                    .find((m) => m.id === id)
+                    ?.onModifyText()
                 }
               />
               {homeStore.conversation?.lastMessage?.isWaiting && (
