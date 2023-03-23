@@ -42,7 +42,7 @@ export const InputArea = () => {
                 return
               }
 
-              if (event.shiftKey) {
+              if (event.shiftKey || event.ctrlKey) {
                 return
               } else {
                 event.preventDefault()
