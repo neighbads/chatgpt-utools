@@ -180,7 +180,7 @@ export const Chat: FC<ChatProps> = (props) => {
               )}
             </div>
             <div className={styles.footerBar}>
-              {messages.length === i + 1 && (
+              {messages.length === i + 1 && !message.self && (
                 <Button
                   disabled={message.state === 'sending'}
                   type="link"
