@@ -39,6 +39,13 @@ export const Chat: FC<ChatProps> = (props) => {
   })
 
   const handleCopy = () => {
+    const selectionText = window.getSelection()?.toString()
+    if (selectionText?.trim()) {
+      copyToClipboard(selectionText?.trim())
+      AntMessage.success('已复制到剪贴板')
+      return
+    }
+
     if (messageRef.current === undefined) return
     copyToClipboard(messageRef.current.text || '')
     AntMessage.success('已复制到剪贴板')
