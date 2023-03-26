@@ -89,7 +89,7 @@ export function BasicSetting() {
         <>
           <Form.Item
             label="API_URL"
-            tooltip="适用于使用自建的反向代理服务器，示例：https://api.my-openai.com"
+            tooltip="适用于使用自建的反向代理服务器，示例：https://api.my-openai.com/v1"
           >
             <Input
               value={root.baseConfig.apiBaseUrl}
