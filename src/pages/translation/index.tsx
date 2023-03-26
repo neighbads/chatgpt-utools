@@ -1,5 +1,5 @@
 import { ArrowRightOutlined, RetweetOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Button, Checkbox, Space } from 'antd'
 import { useEffect } from 'react'
 import { withObserver } from '../../shared/func/withObserver'
 import { useQuery } from '../../shared/hooks/useQuery'
@@ -36,9 +36,31 @@ export function Page() {
           </span>
           {translationStore.config.targetLang}
         </div>
-        <Button icon={<RetweetOutlined />} onClick={translationStore.reverse}>
-          翻转
-        </Button>
+        <Space>
+          <Button
+            size="small"
+            type="link"
+            icon={<RetweetOutlined />}
+            onClick={translationStore.reverse}
+          >
+            翻转
+          </Button>
+          <Checkbox
+            checked={translationStore.autoMode}
+            onChange={({ target }) =>
+              translationStore.setAutoMode(target.checked)
+            }
+          >
+            自动
+          </Checkbox>
+          <Button
+            disabled={translationStore.autoMode}
+            type="primary"
+            onClick={translationStore.start}
+          >
+            翻译
+          </Button>
+        </Space>
       </div>
 
       <div className={styles.targetBox}>

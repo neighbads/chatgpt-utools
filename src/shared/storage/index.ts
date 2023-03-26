@@ -1,4 +1,8 @@
-import { DefaultConfig, DefaultTemplates } from '../../constance'
+import {
+  DefaultAutoTranslation,
+  DefaultConfig,
+  DefaultTemplates,
+} from '../../constance'
 import { Conversation } from '../../models/conversation'
 import { Message } from '../../models/message'
 import { Template } from '../../models/template'
@@ -149,6 +153,15 @@ export class Storage {
     const value = utools.dbStorage.getItem('autoTitle')
     if (isNil(value)) return true
     return value
+  }
+
+  static setAutoTranslation(value: boolean) {
+    utools.dbStorage.setItem('autoTranslation', value)
+  }
+
+  static getAutoTranslation(): boolean {
+    const value = utools.dbStorage.getItem('autoTranslation')
+    return isNil(value) ? DefaultAutoTranslation : value
   }
 }
 

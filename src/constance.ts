@@ -2,6 +2,8 @@ import { IConfig } from './types'
 
 export const Models = ['gpt-3.5-turbo-0301', 'gpt-3.5-turbo']
 
+export const DefaultAutoTranslation = true
+
 export const DefaultConfig: IConfig = {
   model: undefined,
   apiBaseUrl: undefined,
