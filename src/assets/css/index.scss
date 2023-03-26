@@ -6,6 +6,19 @@
   &::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb--background-color);
     border-color: var(--scrollbar-thumb--border-color);
+    &:active,
+    &:hover {
+      background-color: var(--scrollbar-thumb-active--background-color);
+    }
+  }
+}
+
+.scrollbar {
+  background: var(--scrollbar-thumb--background-color);
+  border-radius: 5px;
+  &:active,
+  &:hover {
+    background-color: var(--scrollbar-thumb-active--background-color);
   }
 }
 

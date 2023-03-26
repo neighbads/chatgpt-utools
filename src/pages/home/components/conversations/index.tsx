@@ -1,8 +1,9 @@
-import { PlusCircleOutlined, PlusSquareOutlined } from '@ant-design/icons'
+import { PlusCircleOutlined } from '@ant-design/icons'
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { Item, Menu, useContextMenu } from 'react-contexify'
 import 'react-contexify/ReactContexify.css'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { Conversation } from '../../../../models/conversation'
 import { withObserver } from '../../../../shared/func/withObserver'
 import { appStore } from '../../../../stores/app'
@@ -25,7 +26,13 @@ export const Conversations = () => {
         <PlusCircleOutlined />
         <span style={{ paddingLeft: 4 }}>新建会话</span>
       </div>
-      <div className={styles.list}>
+      <Scrollbars
+        autoHide
+        className={styles.list}
+        renderThumbVertical={(props) => (
+          <div {...props} className="scrollbar" />
+        )}
+      >
         {chatStore.sortedConversations.map((it) => {
           return (
             <div
@@ -44,7 +51,7 @@ export const Conversations = () => {
             </div>
           )
         })}
-      </div>
+      </Scrollbars>
 
       <Menu id="conversationMenu" theme={appStore.isDark ? 'dark' : 'light'}>
         <Item

@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import 'katex/dist/katex.min.css'
 import { FC, ReactNode, useLayoutEffect, useRef } from 'react'
 import { Item, Menu, useContextMenu } from 'react-contexify'
+import { Scrollbars } from 'react-custom-scrollbars'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -32,10 +33,10 @@ interface ChatProps {
 export const Chat: FC<ChatProps> = (props) => {
   const { messages, onRetry, onDel, onModifyText } = props
   const messageRef = useRef<_Message>()
+  const scrollRef = useRef<Scrollbars>(null)
   const recordRef = useRef({
     first: true,
     lastMessageLength: messages.length,
-    lastScrollHeight: 0,
   })
 
   const handleCopy = () => {
@@ -56,166 +57,164 @@ export const Chat: FC<ChatProps> = (props) => {
   })
 
   useLayoutEffect(() => {
-    const container = document.getElementById('chat-container')!
     const record = recordRef.current
+    const scroll = scrollRef.current
+    if (!scroll) return
 
     if (record.first) {
-      container.scrollTop = container.scrollHeight
       record.first = false
+      scroll.scrollToBottom()
     } else {
       if (record.lastMessageLength < messages.length) {
         record.lastMessageLength = messages.length
-        container.scrollTo({
-          top: container.scrollHeight,
-          behavior: 'smooth',
-        })
+        scroll.scrollToBottom()
       } else {
-        if (record.lastScrollHeight === container.scrollHeight) return
-        if (
-          container.scrollHeight -
-            container.offsetHeight -
-            container.scrollTop <
-          150
-        ) {
-          container.scrollTo({
-            top: container.scrollHeight,
-            behavior: 'smooth',
-          })
+        const clientHeight = scroll.getClientHeight()
+        const scrollTop = scroll.getScrollTop()
+        const scrollHeight = scroll.getScrollHeight()
+        if (scrollHeight - clientHeight - scrollTop < 80) {
+          scroll.scrollToBottom()
         }
       }
     }
-    record.lastScrollHeight = container.scrollHeight
   }, [messages])
 
   return withObserver(() => (
-    <div
-      id="chat-container"
+    <Scrollbars
+      ref={scrollRef}
+      autoHide
       className={clsx(styles.index, appStore.isDark && styles.dark)}
+      renderThumbVertical={(props) => <div {...props} className="scrollbar" />}
     >
-      {messages.map((message, i) => {
-        if (message.role === 'system') {
-          return (
-            <div className={styles.systemMessage} key={i}>
-              {message.text}
-            </div>
-          )
-        }
+      <div className={styles.container}>
+        {messages.map((message, i) => {
+          if (message.role === 'system') {
+            return (
+              <div className={styles.systemMessage} key={i}>
+                {message.text}
+              </div>
+            )
+          }
 
-        let text: string | ReactNode = message.text
-        if (message.state === 'fail' && message.text.length === 0) {
-          text = <p style={{ color: 'red' }}>{message.failedReason || ''}</p>
-        }
-        return (
-          <div
-            key={message.id}
-            className={clsx(
-              styles.item,
-              message.self ? styles.user : styles.chatgpt
-            )}
-            style={{
-              alignItems: message.self ? 'flex-end' : 'flex-start',
-            }}
-          >
+          let text: string | ReactNode = message.text
+          if (message.state === 'fail' && message.text.length === 0) {
+            text = <p style={{ color: 'red' }}>{message.failedReason || ''}</p>
+          }
+          return (
             <div
-              className={styles.bubble}
-              onContextMenu={(event) => {
-                messageRef.current = message
-                show({ event })
+              key={message.id}
+              className={clsx(
+                styles.item,
+                message.self ? styles.user : styles.chatgpt
+              )}
+              style={{
+                alignItems: message.self ? 'flex-end' : 'flex-start',
               }}
             >
-              {typeof text !== 'string' ? (
-                text
-              ) : text === '' ? (
-                <p>
-                  <SyncOutlined spin />
-                </p>
-              ) : message.self ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: `<p>${text.replace(/[\r\n]/g, '<br>')}</p>`,
-                  }}
-                ></div>
-              ) : (
-                <ReactMarkdown
-                  remarkPlugins={[RemarkMathPlugin]}
-                  rehypePlugins={[rehypeKatex]}
-                  components={{
-                    code({ node, inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || '') || []
-                      return !inline && match ? (
-                        <div className={styles.codeBox}>
-                          <SyntaxHighlighter
-                            children={String(children).replace(/\n$/, '')}
-                            style={theme as any}
-                            customStyle={{
-                              borderRadius: 8,
-                              background: appStore.isDark
-                                ? '#000000'
-                                : '#1E1E1E',
-                            }}
-                            language={match[1] || 'javascript'}
-                            PreTag="div"
-                            {...props}
-                          />
-                          <div
-                            className={styles.copyBtn}
-                            onClick={async () => {
-                              try {
-                                await copyToClipboard(String(children).trim())
-                                AntMessage.success('复制成功')
-                              } catch (err: any) {
-                                AntMessage.error(err.message)
-                              }
-                            }}
-                          >
-                            <CopyOutlined />
+              <div
+                className={styles.bubble}
+                onContextMenu={(event) => {
+                  messageRef.current = message
+                  show({ event })
+                }}
+              >
+                {typeof text !== 'string' ? (
+                  text
+                ) : text === '' ? (
+                  <p>
+                    <SyncOutlined spin />
+                  </p>
+                ) : message.self ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: `<p>${text.replace(/[\r\n]/g, '<br>')}</p>`,
+                    }}
+                  ></div>
+                ) : (
+                  <ReactMarkdown
+                    remarkPlugins={[RemarkMathPlugin]}
+                    rehypePlugins={[rehypeKatex]}
+                    components={{
+                      code({ node, inline, className, children, ...props }) {
+                        const match =
+                          /language-(\w+)/.exec(className || '') || []
+                        return !inline && match ? (
+                          <div className={styles.codeBox}>
+                            <SyntaxHighlighter
+                              children={String(children).replace(/\n$/, '')}
+                              style={theme as any}
+                              customStyle={{
+                                borderRadius: 8,
+                                background: appStore.isDark
+                                  ? '#000000'
+                                  : '#1E1E1E',
+                              }}
+                              language={match[1] || 'javascript'}
+                              PreTag="div"
+                              {...props}
+                            />
+                            <div
+                              className={styles.copyBtn}
+                              onClick={async () => {
+                                try {
+                                  await copyToClipboard(String(children).trim())
+                                  AntMessage.success('复制成功')
+                                } catch (err: any) {
+                                  AntMessage.error(err.message)
+                                }
+                              }}
+                            >
+                              <CopyOutlined />
+                            </div>
                           </div>
-                        </div>
-                      ) : (
-                        <span
-                          className={clsx(className, styles.inlineCode)}
-                          {...props}
-                        >
-                          {children}
-                        </span>
-                      )
-                    },
-                  }}
-                >
-                  {text}
-                </ReactMarkdown>
-              )}
+                        ) : (
+                          <span
+                            className={clsx(className, styles.inlineCode)}
+                            {...props}
+                          >
+                            {children}
+                          </span>
+                        )
+                      },
+                    }}
+                  >
+                    {text}
+                  </ReactMarkdown>
+                )}
+              </div>
+              <div className={styles.footerBar}>
+                {messages.length === i + 1 && !message.self && (
+                  <Button
+                    disabled={message.state === 'sending'}
+                    type="link"
+                    size="small"
+                    onClick={() => onRetry && onRetry(message)}
+                    style={{
+                      fontSize: 12,
+                    }}
+                    icon={<ReloadOutlined />}
+                  >
+                    重新生成
+                  </Button>
+                )}
+              </div>
             </div>
-            <div className={styles.footerBar}>
-              {messages.length === i + 1 && !message.self && (
-                <Button
-                  disabled={message.state === 'sending'}
-                  type="link"
-                  size="small"
-                  onClick={() => onRetry && onRetry(message)}
-                  style={{
-                    fontSize: 12,
-                  }}
-                  icon={<ReloadOutlined />}
-                >
-                  重新生成
-                </Button>
-              )}
-            </div>
-          </div>
-        )
-      })}
+          )
+        })}
 
-      <Menu id="messageMenu" theme={appStore.isDark ? 'dark' : 'light'}>
-        <Item onClick={handleCopy}>复制</Item>
-        <Item onClick={() => onDel && onDel(messageRef.current!.id)}>删除</Item>
-        <Item
-          onClick={() => onModifyText && onModifyText(messageRef.current!.id)}
-        >
-          修改
-        </Item>
-      </Menu>
-    </div>
+        <Menu id="messageMenu" theme={appStore.isDark ? 'dark' : 'light'}>
+          <Item onClick={handleCopy}>复制</Item>
+          <Item onClick={() => onDel && onDel(messageRef.current!.id)}>
+            删除
+          </Item>
+          <Item
+            onClick={() => onModifyText && onModifyText(messageRef.current!.id)}
+          >
+            修改
+          </Item>
+        </Menu>
+      </div>
+    </Scrollbars>
   ))
 }
 

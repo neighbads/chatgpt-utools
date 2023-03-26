@@ -2,98 +2,102 @@
   height: 100%;
   width: 100%;
   background: var(--gray-0);
-  overflow-x: hidden;
-  overflow-y: auto;
-  .codeBox {
-    position: relative;
-    .copyBtn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 8px;
-      border: 1px solid rgba($color: #fff, $alpha: 0.33);
-      background: rgba($color: #fff, $alpha: 0.18);
-      color: rgba($color: #fff, $alpha: 0.66);
-      opacity: 0;
-      line-height: 1;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    &:hover {
+  .container {
+    .codeBox {
+      position: relative;
+      --scrollbar-thumb--background-color: rgba(255, 255, 255, 0.2);
+      --scrollbar-thumb-active--background-color: rgba(255, 255, 255, 0.5);
       .copyBtn {
-        opacity: 1;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 8px;
+        border: 1px solid rgba($color: #fff, $alpha: 0.33);
+        background: rgba($color: #fff, $alpha: 0.18);
+        color: rgba($color: #fff, $alpha: 0.66);
+        opacity: 0;
+        line-height: 1;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      &:hover {
+        .copyBtn {
+          opacity: 1;
+        }
       }
     }
-  }
-  .inlineCode {
-    font-size: 12px;
-    padding: 2px 4px;
-    background: #f6f7f9;
-    color: #d56161;
-  }
-  .item {
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    .bubble {
-      max-width: 100%;
-      border-radius: 10px;
-      padding: 0 12px;
-      word-break: break-all;
-      p {
-        margin: 8px 0;
-        line-height: 1.8;
-      }
-      img {
-        max-width: 100%;
-      }
-    }
-    .footerBar {
-      display: flex;
-      align-items: center;
+    .inlineCode {
       font-size: 12px;
-      color: var(--gray-2);
-      max-width: 100%;
-      overflow: hidden;
-      gap: 12px;
-      > * {
-        margin: 8px 0;
+      padding: 2px 4px;
+      background: #f6f7f9;
+      color: #d56161;
+    }
+    .item {
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      .bubble {
+        max-width: 100%;
+        border-radius: 10px;
+        padding: 0 12px;
+        word-break: break-all;
+        p {
+          margin: 8px 0;
+          line-height: 1.8;
+        }
+        img {
+          max-width: 100%;
+        }
+      }
+      .footerBar {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        color: var(--gray-2);
+        max-width: 100%;
+        overflow: hidden;
+        gap: 12px;
+        > * {
+          margin: 8px 0;
+        }
       }
     }
-  }
-  .systemMessage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    color: var(--gray-3);
-    font-size: 12px;
-  }
-  .user {
-    .bubble {
-      background: var(--color-primary);
-      color: #fff;
+    .systemMessage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      color: var(--gray-3);
+      font-size: 12px;
     }
-  }
-  .chatgpt {
-    .bubble {
-      background: #fff;
-      color: #333;
+    .user {
+      .bubble {
+        background: var(--color-primary);
+        color: #fff;
+      }
+    }
+    .chatgpt {
+      .bubble {
+        background: #fff;
+        color: #333;
+      }
     }
   }
 }
 
 .dark {
-  .inlineCode {
-    background: rgba($color: #fff, $alpha: 0.08);
-    color: #ff7875;
-  }
-  .chatgpt {
-    .bubble {
+  .container {
+    .inlineCode {
       background: rgba($color: #fff, $alpha: 0.08);
-      color: #fff;
+      color: #ff7875;
+    }
+    .chatgpt {
+      .bubble {
+        background: rgba($color: #fff, $alpha: 0.08);
+        color: #fff;
+      }
     }
   }
 }
