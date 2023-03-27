@@ -163,5 +163,14 @@ export class Storage {
     const value = utools.dbStorage.getItem('autoTranslation')
     return isNil(value) ? DefaultAutoTranslation : value
   }
+
+  static setVersionIgnore(version: string) {
+    utools.dbStorage.setItem(`versionIgnore-${version}`, true)
+  }
+
+  static getVersionIgnore(version: string): boolean {
+    const value = utools.dbStorage.getItem(`versionIgnore-${version}`)
+    return isNil(value) ? false : true
+  }
 }
 

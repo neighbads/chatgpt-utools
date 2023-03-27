@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { Storage } from '../../../shared/storage'
 import { chatStore } from '../../../stores/chat'
 import { homeStore } from '../../home/store'
+import { appStore } from '../../../stores/app'
 
 export class Store {
   constructor() {
@@ -49,6 +50,12 @@ export class Store {
         this.storage.msgs = []
       },
     })
+  }
+
+  checkUpdate = async () => {
+    let needUpdate = await appStore.checkUpdate(true)
+    if (!needUpdate)
+      Modal.success({ title: '提示', content: '当前已是最新版本' })
   }
 }
 

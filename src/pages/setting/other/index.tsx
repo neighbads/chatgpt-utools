@@ -6,6 +6,7 @@ import { withObserver } from '../../../shared/func/withObserver'
 import { appStore } from '../../../stores/app'
 import { Store } from '../store'
 import styles from './index.module.scss'
+import { version } from '../../../../package.json'
 
 const themes = [
   { label: '跟随系统', icon: 'computer-line', value: 'auto' as const },
@@ -61,6 +62,10 @@ export function OtherSetting() {
           <Radio value={true}>开启</Radio>
           <Radio value={false}>关闭</Radio>
         </Radio.Group>
+      </Form.Item>
+
+      <Form.Item label={`当前插件版本：v${version}`}>
+        <Button onClick={store.checkUpdate}>检查更新</Button>
       </Form.Item>
     </Form>
   ))
