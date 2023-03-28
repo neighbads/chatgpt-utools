@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 import { openInput } from '../../components/popups/input'
-import { openTemplatePopup } from '../../components/popups/template'
 import { Conversation } from '../../models/conversation'
 import { chatStore } from '../../stores/chat'
+import { Store as ConversationsStore } from './components/conversations/store'
 import { Store as InputStore } from './components/inputArea/store'
 import { Store as RecommendTopicStore } from './components/recommendTopic/store'
 
@@ -10,6 +10,7 @@ export const homeStore = new (class {
   stores = {
     input: new InputStore(),
     recommendTopic: new RecommendTopicStore(),
+    conversations: new ConversationsStore(),
   }
 
   constructor() {

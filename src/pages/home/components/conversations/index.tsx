@@ -1,4 +1,4 @@
-import { PlusCircleOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { Item, Menu, useContextMenu } from 'react-contexify'
@@ -10,8 +10,11 @@ import { appStore } from '../../../../stores/app'
 import { chatStore } from '../../../../stores/chat'
 import { homeStore } from '../../store'
 import styles from './index.module.scss'
+import { Button, Input, Space } from 'antd'
+import { useStore } from '@libeilong/react-store-provider'
 
 export const Conversations = () => {
+  const store = homeStore.stores.conversations
   const conversationRef = useRef<Conversation>()
   const { show } = useContextMenu({
     id: 'conversationMenu',
@@ -19,12 +22,22 @@ export const Conversations = () => {
 
   return withObserver(() => (
     <div className={styles.index}>
-      <div
-        className={clsx(styles.item, styles.add)}
-        onClick={homeStore.createConversation}
-      >
-        <PlusCircleOutlined />
-        <span style={{ paddingLeft: 4 }}>新建会话</span>
+      <div className={clsx(styles.header)}>
+        <Space size={6}>
+          <Input
+            value={store.keyword}
+            onChange={({ target }) => {
+              store.setKeyword(target.value)
+            }}
+            className={styles.input}
+            placeholder="搜索会话"
+          />
+          <Button
+            className={styles.button}
+            icon={<PlusOutlined />}
+            onClick={homeStore.createConversation}
+          ></Button>
+        </Space>
       </div>
       <Scrollbars
         autoHide
@@ -33,7 +46,7 @@ export const Conversations = () => {
           <div {...props} className="scrollbar" />
         )}
       >
-        {chatStore.sortedConversations.map((it) => {
+        {store.renderConversations.map((it) => {
           return (
             <div
               key={it.id}

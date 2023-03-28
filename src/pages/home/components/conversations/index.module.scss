@@ -7,12 +7,15 @@
   user-select: none;
   color: var(--gray-8);
   .item {
+    margin: 8px;
     padding: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
     line-height: 1;
     min-height: 50px;
+    border-radius: 8px;
+    font-size: 13px;
     span {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -20,8 +23,11 @@
     }
   }
 
-  .add:hover {
-    color: var(--color-primary);
+  .header {
+    padding: 12px;
+    .input {
+      flex: 1;
+    }
   }
 
   .active,
