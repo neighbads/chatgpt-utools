@@ -2,11 +2,12 @@ import {
   DefaultAutoTranslation,
   DefaultConfig,
   DefaultTemplates,
+  defaultMessageShortcutKey,
 } from '../../constance'
 import { Conversation } from '../../models/conversation'
 import { Message } from '../../models/message'
 import { Template } from '../../models/template'
-import { IConfig } from '../../types'
+import { IConfig, MessageShortcutKey } from '../../types'
 import { isNil } from '../func/isNil'
 
 export class Storage {
@@ -171,6 +172,16 @@ export class Storage {
   static getVersionIgnore(version: string): boolean {
     const value = utools.dbStorage.getItem(`versionIgnore-${version}`)
     return isNil(value) ? false : true
+  }
+
+  static setMessageShortcutKey(value: MessageShortcutKey) {
+    utools.dbStorage.setItem(`MessageShortcutKey`, value)
+  }
+
+  static getMessageShortcutKey(): MessageShortcutKey {
+    const value: MessageShortcutKey =
+      utools.dbStorage.getItem(`MessageShortcutKey`)
+    return isNil(value) ? defaultMessageShortcutKey : value
   }
 }
 

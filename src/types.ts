@@ -16,3 +16,7 @@ export interface IConfig {
   }
 }
 
+export enum MessageShortcutKey {
+  CtrlEnter = 'CtrlEnter',
+  Enter = 'Enter',
+}

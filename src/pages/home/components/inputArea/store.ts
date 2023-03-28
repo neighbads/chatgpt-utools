@@ -4,13 +4,17 @@ import React from 'react'
 import { Template } from '../../../../models/template'
 import { Storage } from '../../../../shared/storage'
 import { homeStore } from '../../store'
+import { MessageShortcutKey } from '../../../../types'
 
 export class Store {
   constructor() {
+    this.messageShortcutKey = Storage.getMessageShortcutKey()
     makeAutoObservable(this, {
       inputRef: false,
     })
   }
+
+  messageShortcutKey: MessageShortcutKey
 
   inputRef = React.createRef<HTMLTextAreaElement>()
 
@@ -19,6 +23,11 @@ export class Store {
 
   focus = () => {
     this.inputRef.current?.focus()
+  }
+
+  onChangeMessageShortcutKey = (messageShortcutKey: MessageShortcutKey) => {
+    this.messageShortcutKey = messageShortcutKey
+    Storage.setMessageShortcutKey(messageShortcutKey)
   }
 
   onSubmit = () => {

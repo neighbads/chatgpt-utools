@@ -1,5 +1,7 @@
-import { Button, Dropdown } from 'antd'
+import { CheckOutlined } from '@ant-design/icons'
+import { Dropdown } from 'antd'
 import { withObserver } from '../../../../shared/func/withObserver'
+import { MessageShortcutKey } from '../../../../types'
 import { homeStore } from '../../store'
 import styles from './index.module.scss'
 
@@ -42,9 +44,10 @@ export const InputArea = () => {
                 return
               }
 
-              if (event.shiftKey) {
-                return
-              } else {
+              if (
+                (store.messageShortcutKey === 'CtrlEnter' && event.ctrlKey) ||
+                store.messageShortcutKey === 'Enter'
+              ) {
                 event.preventDefault()
                 store.onSubmit()
               }
@@ -59,9 +62,37 @@ export const InputArea = () => {
         />
         {store.value.length > 0 && (
           <div className={styles.submitWrap}>
-            <Button size="small" type="primary" onClick={store.onSubmit}>
+            <Dropdown.Button
+              type="primary"
+              size="small"
+              style={{ width: 'auto' }}
+              onClick={store.onSubmit}
+              menu={{
+                items: [
+                  {
+                    label: '按 Enter 发送',
+                    key: MessageShortcutKey.Enter,
+                    icon:
+                      store.messageShortcutKey === MessageShortcutKey.Enter ? (
+                        <CheckOutlined />
+                      ) : null,
+                  },
+                  {
+                    label: '按 Ctrl + Enter 发送',
+                    key: MessageShortcutKey.CtrlEnter,
+                    icon:
+                      store.messageShortcutKey ===
+                      MessageShortcutKey.CtrlEnter ? (
+                        <CheckOutlined />
+                      ) : null,
+                  },
+                ],
+                onClick: ({ key }) =>
+                  store.onChangeMessageShortcutKey(key as MessageShortcutKey),
+              }}
+            >
               发送
-            </Button>
+            </Dropdown.Button>
           </div>
         )}
       </div>

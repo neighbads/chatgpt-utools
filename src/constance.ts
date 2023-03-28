@@ -1,4 +1,4 @@
-import { IConfig } from './types'
+import { IConfig, MessageShortcutKey } from './types'
 
 export const Models = ['gpt-3.5-turbo-0301', 'gpt-3.5-turbo']
 
@@ -70,4 +70,6 @@ export const DefaultTemplates = [
 ]
 
 export const dataVersion = 2
+
+export const defaultMessageShortcutKey = MessageShortcutKey.Enter
 
