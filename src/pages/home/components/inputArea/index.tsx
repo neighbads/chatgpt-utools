@@ -46,12 +46,15 @@ export const InputArea = () => {
 
               if (
                 (store.messageShortcutKey === 'CtrlEnter' && event.ctrlKey) ||
-                store.messageShortcutKey === 'Enter'
+                (store.messageShortcutKey === 'Enter' && !event.shiftKey)
               ) {
                 event.preventDefault()
                 store.onSubmit()
               }
-            } else if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
+            } else if (
+              ['ArrowUp', 'ArrowDown'].includes(event.key) &&
+              store.templateVisible
+            ) {
               event.preventDefault()
               store.onArrowKey(event.key as any)
             } else if (event.key === 'Escape' && store.value !== '') {
