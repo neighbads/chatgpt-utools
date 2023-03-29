@@ -1,9 +1,9 @@
+import { PauseCircleFilled } from '@ant-design/icons'
 import { Button } from 'antd'
 import clsx from 'clsx'
 import { useCallback, useEffect, useRef } from 'react'
 import emptyImage from '../../assets/images/undraw_Online_messaging_re_qft3.png'
 import { Chat } from '../../components/chat'
-import { Icon } from '../../components/icon'
 import { Message } from '../../models/message'
 import { withObserver } from '../../shared/func/withObserver'
 import { useQuery } from '../../shared/hooks/useQuery'
@@ -90,11 +90,10 @@ export function Page() {
                 <Button
                   className={styles.stop}
                   icon={
-                    <Icon
+                    <PauseCircleFilled
                       style={{
                         color: 'red',
                       }}
-                      value="stop-fill"
                     />
                   }
                   onClick={homeStore.conversation.stopMessage}
