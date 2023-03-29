@@ -1,5 +1,5 @@
-import { CheckOutlined } from '@ant-design/icons'
-import { Dropdown } from 'antd'
+import { CheckOutlined, SettingOutlined } from '@ant-design/icons'
+import { Dropdown, Space } from 'antd'
 import { withObserver } from '../../../../shared/func/withObserver'
 import { MessageShortcutKey } from '../../../../types'
 import { homeStore } from '../../store'
@@ -63,8 +63,11 @@ export const InputArea = () => {
             }
           }}
         />
-        {store.value.length > 0 && (
-          <div className={styles.submitWrap}>
+        <div className={styles.submitWrap}>
+          <Space size={16}>
+            <div className={styles.setting}>
+              <SettingOutlined />
+            </div>
             <Dropdown.Button
               type="primary"
               size="small"
@@ -96,8 +99,8 @@ export const InputArea = () => {
             >
               发送
             </Dropdown.Button>
-          </div>
-        )}
+          </Space>
+        </div>
       </div>
     </Dropdown>
   ))
