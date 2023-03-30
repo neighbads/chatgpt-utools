@@ -22,7 +22,9 @@ export class Conversation {
     this.createdAt = opts?.createdAt || Date.now()
     this.updatedAt = opts?.updatedAt || opts?.createdAt || Date.now()
 
-    makeAutoObservable(this)
+    makeAutoObservable(this, {
+      abortController: false,
+    })
   }
 
   get renderMessages() {
@@ -81,10 +83,13 @@ export class Conversation {
     this.flushDb()
   }
 
+  abortController?: AbortController
+
   private _sendMessage = async (
     lastMessage: Message,
     responseMessage: Message
   ) => {
+    this.abortController = new AbortController()
     this.updatedAt = Date.now()
     this.flushDb()
     try {
@@ -94,6 +99,7 @@ export class Conversation {
         parentMessageId: lastMessage.parentMessageId,
         messageId: lastMessage.id,
         systemMessage: prompt?.trim() !== '' ? prompt?.trim() : undefined,
+        abortSignal: this.abortController.signal,
         onProgress: ({ text }) => {
           text = text.trim()
           if (!text || !responseMessage.isWaiting) return
@@ -108,8 +114,15 @@ export class Conversation {
       }
     } catch (err: any) {
       if (responseMessage.state === 'done') return
-      responseMessage.state = 'fail'
-      responseMessage.failedReason = err.message
+      if (err.name === 'AbortError') {
+        if (responseMessage.text === '') {
+          responseMessage.text = '中断回复'
+        }
+        responseMessage.state = 'done'
+      } else {
+        responseMessage.state = 'fail'
+        responseMessage.failedReason = err.message
+      }
     } finally {
       responseMessage.flushDb()
     }
@@ -164,14 +177,7 @@ export class Conversation {
   }
 
   stopMessage = () => {
-    const responseMessage = this.messages[this.messages.length - 1]
-    if (responseMessage?.isWaiting) {
-      if (responseMessage.text === '') {
-        responseMessage.text = '中断回复'
-      }
-      responseMessage.state = 'done'
-      responseMessage.flushDb()
-    }
+    this.abortController?.abort()
   }
 
   /**
