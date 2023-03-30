@@ -17,7 +17,7 @@ export const homeStore = new (class {
     makeAutoObservable(this)
   }
 
-  inputAreaHeight = 108
+  inputAreaHeight = 125
 
   conversation?: Conversation
 
