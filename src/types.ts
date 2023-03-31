@@ -20,3 +20,16 @@ export enum MessageShortcutKey {
   CtrlEnter = 'CtrlEnter',
   Enter = 'Enter',
 }
+
+export enum ChatBalance {
+  balance,
+  creation,
+  accuracy,
+}
+
+export const ChatBalanceDict = {
+  [ChatBalance.balance]: '平衡',
+  [ChatBalance.creation]: '创造',
+  [ChatBalance.accuracy]: '精准',
+}
+

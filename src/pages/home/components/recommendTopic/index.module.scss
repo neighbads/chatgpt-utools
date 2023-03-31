@@ -11,30 +11,32 @@
   height: 100%;
   width: 100%;
   padding: 24px 32px;
+  gap: 16px;
   .header {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--title-color);
-    font-weight: bold;
   }
 
   .form {
-    padding: 12px 0;
-    > * + * {
-      margin-top: 8px;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     .content {
       font-size: 13px;
-      color: #999;
+      color: var(--gray-6);
       line-height: 1.5;
     }
   }
 
   .topics {
-    padding: 12px 0;
-    margin: -8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     .item {
-      padding: 8px;
+      padding: 12px;
       line-height: 1.6;
+      background: var(--base-color);
+      border-radius: 8px;
       cursor: pointer;
       .title {
         font-size: 14px;
@@ -50,8 +52,7 @@
         color: #999;
       }
       &:hover {
-        background: var(--hover-background-color);
-        border-radius: 8px;
+        box-shadow: var(--shadow-1-down);
       }
     }
   }

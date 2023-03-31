@@ -26,6 +26,12 @@ export const appStore = new (class {
     )
   }
 
+  openProxyShareUrl = () => {
+    utools.shellOpenExternal(
+      'https://github.com/lblblong/mossgpt-utools/issues/53'
+    )
+  }
+
   setTheme = (theme: 'light' | 'dark' | 'auto') => {
     if (theme === 'auto') {
       Storage.removeTheme()

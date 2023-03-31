@@ -2,6 +2,7 @@ import { ChatGPTAPI, SendMessageOptions } from '@libeilong/chatgpt'
 import { objectPick } from '@libeilong/func'
 import { makeAutoObservable } from 'mobx'
 import { Storage } from '../shared/storage'
+import { ChatBalance } from '../types'
 
 export const chatgptStore = new (class {
   constructor() {
@@ -41,9 +42,36 @@ export const chatgptStore = new (class {
     this.init()
   }
 
-  sendMessage = async (text: string, opts?: SendMessageOptions) => {
+  sendMessage = async (
+    text: string,
+    opts: SendMessageOptions & { balance?: ChatBalance } = {}
+  ) => {
     this.init()
+    const balanceOptions = this.getBalanceOptions(
+      opts.balance ?? ChatBalance.balance
+    )
+
+    opts.completionParams = Object.assign(
+      {},
+      opts.completionParams,
+      balanceOptions
+    )
+
     return this.client?.sendMessage(text, opts)
+  }
+
+  getBalanceOptions = (balance: ChatBalance) => {
+    if (balance === ChatBalance.balance) {
+      return {}
+    } else if (balance === ChatBalance.creation) {
+      return {
+        temperature: 1.3,
+      }
+    } else {
+      return {
+        temperature: 0.5,
+      }
+    }
   }
 
   getTitle = async (

@@ -6,7 +6,6 @@ import { settingRoute } from '../pages/setting/route'
 import { templateRoute } from '../pages/template/route'
 import { templateFormRoute } from '../pages/templateForm/route'
 import { translationRoute } from '../pages/translation/route'
-import { wechatRobotRoute } from '../pages/wechatRobot/route'
 
 export interface Meta {
   mustApiKey?: boolean
@@ -25,7 +24,6 @@ export const routes: RouteObject<Meta>[] = [
       templateRoute,
       translationRoute,
       templateFormRoute,
-      wechatRobotRoute,
       settingRoute,
     ],
   },

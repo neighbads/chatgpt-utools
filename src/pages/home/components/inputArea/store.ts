@@ -1,10 +1,11 @@
 import { message } from 'antd'
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
+import { openConversationSetting } from '../../../../components/popups/conversationSetting'
 import { Template } from '../../../../models/template'
 import { Storage } from '../../../../shared/storage'
+import { ChatBalance, MessageShortcutKey } from '../../../../types'
 import { homeStore } from '../../store'
-import { MessageShortcutKey } from '../../../../types'
 
 export class Store {
   constructor() {
@@ -44,31 +45,39 @@ export class Store {
   onValueChange = (value: string) => {
     this.value = value
     if (this.value === '/') {
-      this.showTemplates()
+      this.showPanel()
     } else {
-      this.templateVisible = false
+      this.panelVisible = false
     }
   }
 
-  showTemplates = () => {
+  showPanel = () => {
     if (this.templates.length === 0) this.templates = Storage.getTemplates()
     if (this.templates.length === 0) return
     this.templateIndex = 0
-    this.templateVisible = true
+    this.panelVisible = true
   }
 
-  templateVisible = false
+  hidePanel = () => {
+    this.panelVisible = false
+  }
+
+  panelVisible = false
 
   templates: Template[] = []
 
   templateIndex = 0
 
-  onArrowKey = (key: 'ArrowUp' | 'ArrowDown') => {
-    if (key === 'ArrowUp') {
-      this.templateIndex = this.templateIndex - 1
+  onArrowKey = (key: 'ArrowUp' | 'ArrowDown' | 'ArrowLeft' | 'ArrowRight') => {
+    if (!this.panelVisible) return
+
+    const step = key === 'ArrowUp' || key === 'ArrowDown' ? 2 : 1
+    if (key === 'ArrowUp' || key === 'ArrowLeft') {
+      this.templateIndex -= step
     } else {
-      this.templateIndex = this.templateIndex + 1
+      this.templateIndex += step
     }
+
     if (this.templateIndex < 0) {
       this.templateIndex = this.templates.length - 1
     }
@@ -78,14 +87,31 @@ export class Store {
   }
 
   onEscape = () => {
-    if (this.templateVisible) this.templateVisible = false
+    if (this.panelVisible) this.panelVisible = false
     else this.value = ''
   }
 
   useTemplate = (template: Template) => {
     this.value = template.template
-    this.templateVisible = false
+    this.panelVisible = false
     this.focus()
+  }
+
+  onOpenSetting = async () => {
+    this.panelVisible = false
+    const conversation = homeStore.conversation
+    if (!conversation) return
+    await openConversationSetting({ name: conversation.name })
+  }
+
+  onClearMessages = () => {
+    this.onValueChange('')
+    homeStore.conversation?.clearMessages()
+  }
+
+  onSetBalance = (balance: ChatBalance) => {
+    this.onValueChange('')
+    homeStore.conversation?.setBalance(balance)
   }
 }
 

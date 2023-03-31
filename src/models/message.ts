@@ -60,6 +60,10 @@ export class Message implements ChatMessage {
     return this
   }
 
+  remove = () => {
+    Storage.removeMessage(this.id)
+  }
+
   onModifyText = async () => {
     const text = await openTextArea({
       title: '修改消息内容',

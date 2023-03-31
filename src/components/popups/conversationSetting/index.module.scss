@@ -1,0 +1,27 @@
+.index {
+  padding: 16px;
+  border-radius: 12px;
+  width: 400px;
+  background: var(--base-color);
+  border: 1px solid var(--gray-1);
+
+  .input {
+    margin: 12px 0;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    > * {
+      flex: 1;
+    }
+    .submit {
+      margin-left: 12px;
+    }
+  }
+}
+

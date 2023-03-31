@@ -1,4 +1,3 @@
-import { ControlOutlined } from '@ant-design/icons'
 import { useStore } from '@libeilong/react-store-provider'
 import { AutoComplete, Button, Col, Form, Input, InputNumber, Row } from 'antd'
 import { Models } from '../../../constance'
@@ -44,6 +43,27 @@ export function BasicSetting() {
         />
       </Form.Item>
 
+      <Form.Item
+        label={
+          <span>
+            API_URL
+            <Button
+              type="link"
+              size="small"
+              onClick={appStore.openProxyShareUrl}
+            >
+              (这里有一些免费的接口代理服务)
+            </Button>
+          </span>
+        }
+        tooltip="适用于使用自建的 openai 接口代理服务，示例：https://api.my-openai.com/v1"
+      >
+        <Input
+          value={root.baseConfig.apiBaseUrl}
+          onChange={({ target }) => (root.baseConfig.apiBaseUrl = target.value)}
+        />
+      </Form.Item>
+
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item label="模型">
@@ -85,89 +105,10 @@ export function BasicSetting() {
         />
       </Form.Item>
 
-      {store.restConfig && (
-        <>
-          <Form.Item
-            label="API_URL"
-            tooltip="适用于使用自建的反向代理服务器，示例：https://api.my-openai.com/v1"
-          >
-            <Input
-              value={root.baseConfig.apiBaseUrl}
-              onChange={({ target }) =>
-                (root.baseConfig.apiBaseUrl = target.value)
-              }
-            />
-          </Form.Item>
-          <Row gutter={16}>
-            <Col span={5}>
-              <Form.Item label="temperature">
-                <InputNumber
-                  min={0}
-                  max={2}
-                  step={0.1}
-                  value={root.baseConfig.temperature}
-                  onChange={(value) => {
-                    root.baseConfig.temperature = value ?? undefined
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={5}>
-              <Form.Item label="top_p">
-                <InputNumber
-                  min={0}
-                  max={1}
-                  step={0.1}
-                  value={root.baseConfig.top_p}
-                  onChange={(value) => {
-                    root.baseConfig.top_p = value ?? undefined
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={5}>
-              <Form.Item label="presence_penalty">
-                <InputNumber
-                  min={-2}
-                  max={2}
-                  step={0.1}
-                  value={root.baseConfig.presence_penalty}
-                  onChange={(value) => {
-                    root.baseConfig.presence_penalty = value ?? undefined
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={5}>
-              <Form.Item label="frequency_penalty">
-                <InputNumber
-                  min={-2}
-                  max={2}
-                  step={0.1}
-                  value={root.baseConfig.frequency_penalty}
-                  onChange={(value) => {
-                    root.baseConfig.frequency_penalty = value ?? undefined
-                  }}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-        </>
-      )}
-
       <Form.Item>
         <Button type="primary" onClick={root.saveBaseConfig}>
           保存
         </Button>
-        {!store.restConfig && (
-          <Button
-            type="link"
-            icon={<ControlOutlined />}
-            onClick={() => (store.restConfig = true)}
-          >
-            高级配置
-          </Button>
-        )}
       </Form.Item>
     </Form>
   ))

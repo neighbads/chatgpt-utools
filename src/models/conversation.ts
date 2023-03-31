@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { makeAutoObservable } from 'mobx'
 import { Storage } from '../shared/storage'
 import { chatgptStore } from '../stores/chatgpt'
+import { ChatBalance } from '../types'
 import { Message } from './message'
 
 export class Conversation {
@@ -10,21 +11,28 @@ export class Conversation {
   name: string
   createdAt: number
   updatedAt: number
+  balance: ChatBalance
 
   constructor(opts?: {
     id?: string
     name?: string
     createdAt?: number
     updatedAt?: number
+    balance?: ChatBalance
   }) {
-    this.id = opts?.id || Date.now() + ''
-    this.name = opts?.name || '新会话'
-    this.createdAt = opts?.createdAt || Date.now()
-    this.updatedAt = opts?.updatedAt || opts?.createdAt || Date.now()
+    this.id = opts?.id ?? Date.now() + ''
+    this.name = opts?.name ?? '新会话'
+    this.createdAt = opts?.createdAt ?? Date.now()
+    this.updatedAt = opts?.updatedAt ?? opts?.createdAt ?? Date.now()
+    this.balance = opts?.balance ?? ChatBalance.balance
 
     makeAutoObservable(this, {
       abortController: false,
     })
+  }
+
+  setBalance = (balance: ChatBalance) => {
+    this.balance = balance
   }
 
   get renderMessages() {
@@ -100,6 +108,7 @@ export class Conversation {
         messageId: lastMessage.id,
         systemMessage: prompt?.trim() !== '' ? prompt?.trim() : undefined,
         abortSignal: this.abortController.signal,
+        balance: this.balance,
         onProgress: ({ text }) => {
           text = text.trim()
           if (!text || !responseMessage.isWaiting) return
@@ -124,6 +133,7 @@ export class Conversation {
         responseMessage.failedReason = err.message
       }
     } finally {
+      this.abortController = undefined
       responseMessage.flushDb()
     }
   }
@@ -195,6 +205,13 @@ export class Conversation {
     message.deletedAt = Date.now()
     message.flushDb()
     this.messages.splice(index, 1)
+  }
+
+  clearMessages = () => {
+    for (const message of this.messages) {
+      message.remove()
+    }
+    this.messages = []
   }
 
   flushDb = () => {

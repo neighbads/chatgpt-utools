@@ -5,27 +5,77 @@
   .input {
     flex: 1;
     width: 100%;
-    resize: none;
-    padding: 12px;
+    position: relative;
+    font-size: 14px;
+    > * {
+      padding: 12px !important;
+    }
+    textarea {
+      resize: none;
+      width: 100%;
+      height: 100%;
+    }
+    .placeholder {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--gray-4);
+      pointer-events: none;
+      .word {
+        padding: 0 8px;
+        height: 18px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 4px;
+        border-radius: 3px;
+        background: var(--gray-0);
+        line-height: 1;
+        font-size: 13px;
+      }
+    }
   }
 
-  .submitWrap {
+  .submitBox {
     display: flex;
     justify-content: flex-end;
     padding: 12px;
-    .setting {
-      padding: 6px;
+  }
+}
+
+.overlay {
+  background: var(--base-color);
+  margin: 0 12px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 16px 0 rgba($color: #000000, $alpha: 0.16);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  .promptBox {
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    flex: 1;
+    overflow: hidden;
+    .item {
+      text-align: center;
+      padding: 5px;
       border-radius: 5px;
       cursor: pointer;
-      line-height: 1;
-      color: rgba($color: #000000, $alpha: 0.6);
-      transition: all 0.3s;
-      background: rgba($color: #000000, $alpha: 0.03);
-      &:hover {
-        background: rgba($color: #000000, $alpha: 0.08);
-        color: var(--color-primary);
-      }
     }
+    .item:hover,
+    .active {
+      background: var(--gray-0);
+    }
+  }
+  .actionBar {
+    padding: 8px 16px;
+    // background: var(--gray-0);
+    border-top: 1px solid rgba($color: #000000, $alpha: 0.06);
+    // border-radius: 8px;
+    display: flex;
+    gap: 8px;
   }
 }
 

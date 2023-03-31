@@ -25,6 +25,7 @@ export class Storage {
       name: it.name,
       createdAt: it.createdAt,
       updatedAt: it.updatedAt,
+      balance: it.balance,
     })
   }
 

@@ -1,4 +1,8 @@
-import { RetweetOutlined } from '@ant-design/icons'
+import {
+  FontSizeOutlined,
+  MessageOutlined,
+  RetweetOutlined,
+} from '@ant-design/icons'
 import { withStore } from '@libeilong/react-store-provider'
 import { Button, Input, Space } from 'antd'
 import 'react-contexify/ReactContexify.css'
@@ -13,7 +17,7 @@ const _RecommendTopic = () => {
   return withObserver(() => (
     <div className={styles.index}>
       <div className={styles.header}>
-        {store.currentTopic?.title || '推荐话题'}
+        <MessageOutlined /> {store.currentTopic?.title || '推荐话题'}
       </div>
       {store.currentTopic ? (
         <div className={styles.form}>

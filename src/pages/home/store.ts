@@ -25,6 +25,7 @@ export const homeStore = new (class {
     this.conversation = conversation
     this.conversation.init()
     this.stores.input.focus()
+    this.stores.input.hidePanel()
   }
 
   createConversation = () => {

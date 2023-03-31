@@ -1,4 +1,4 @@
-import { PlusOutlined } from '@ant-design/icons'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { Item, Menu, useContextMenu } from 'react-contexify'
@@ -70,14 +70,20 @@ export const Conversations = () => {
         <Item
           onClick={() => homeStore.removeConversation(conversationRef.current)}
         >
-          删除会话
+          <Space>
+            <DeleteOutlined />
+            删除会话
+          </Space>
         </Item>
         <Item
           onClick={() =>
             homeStore.changeConversationTitle(conversationRef.current)
           }
         >
-          修改会话名称
+          <Space>
+            <EditOutlined />
+            修改会话名称
+          </Space>
         </Item>
       </Menu>
     </div>
