@@ -8,6 +8,7 @@ import { Conversation } from '../../models/conversation'
 import { Message } from '../../models/message'
 import { Template } from '../../models/template'
 import { IConfig, MessageShortcutKey } from '../../types'
+import { filterSameValue } from '../func/filterSameValue'
 import { isNil } from '../func/isNil'
 
 export class Storage {
@@ -79,6 +80,7 @@ export class Storage {
   }
 
   static setConfig(config: Partial<IConfig>) {
+    config = filterSameValue(DefaultConfig, config)
     utools.dbStorage.setItem('config', config)
   }
 

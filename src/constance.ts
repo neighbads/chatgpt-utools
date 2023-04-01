@@ -1,12 +1,12 @@
 import { IConfig, MessageShortcutKey } from './types'
 
-export const Models = ['gpt-3.5-turbo-0301', 'gpt-3.5-turbo']
+export const Models = ['gpt-3.5-turbo', 'gpt-3.5-turbo-0301']
 
 export const DefaultAutoTranslation = true
 
 export const DefaultConfig: IConfig = {
-  model: undefined,
-  apiBaseUrl: undefined,
+  model: Models[0],
+  apiBaseUrl: 'https://closeai.deno.dev/v1',
   prompt: undefined,
   max_tokens: undefined,
   temperature: undefined,
@@ -72,4 +72,17 @@ export const DefaultTemplates = [
 export const dataVersion = 2
 
 export const defaultMessageShortcutKey = MessageShortcutKey.Enter
+
+export const ApiUrls = [
+  {
+    name: 'OpenAI 官方线路',
+    url: 'https://api.openai.com/v1',
+    needVpn: true,
+  },
+  {
+    name: '免费线路 - justjavac 大佬搭建',
+    url: 'https://closeai.deno.dev/v1',
+    needVpn: false,
+  },
+]
 

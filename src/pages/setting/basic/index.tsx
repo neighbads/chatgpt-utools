@@ -1,6 +1,15 @@
 import { useStore } from '@libeilong/react-store-provider'
-import { AutoComplete, Button, Col, Form, Input, InputNumber, Row } from 'antd'
-import { Models } from '../../../constance'
+import {
+  AutoComplete,
+  Button,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Row,
+  Tag,
+} from 'antd'
+import { ApiUrls, Models } from '../../../constance'
 import { withObserver } from '../../../shared/func/withObserver'
 import { appStore } from '../../../stores/app'
 import { Store } from '../store'
@@ -52,15 +61,32 @@ export function BasicSetting() {
               size="small"
               onClick={appStore.openProxyShareUrl}
             >
-              (这里有一些免费的接口代理服务)
+              (这里有一些免费的接口代理服务和免费搭建代理的教程)
             </Button>
           </span>
         }
         tooltip="适用于使用自建的 openai 接口代理服务，示例：https://api.my-openai.com/v1"
       >
-        <Input
+        <AutoComplete
           value={root.baseConfig.apiBaseUrl}
-          onChange={({ target }) => (root.baseConfig.apiBaseUrl = target.value)}
+          onChange={(val) => (root.baseConfig.apiBaseUrl = val)}
+          options={ApiUrls.map((it) => {
+            return {
+              label: (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <div>{`${it.url} - ${it.name}`}</div>
+                  {!it.needVpn && <Tag color="#87d068">无需梯子</Tag>}
+                </div>
+              ),
+              value: it.url,
+            }
+          })}
         />
       </Form.Item>
 
