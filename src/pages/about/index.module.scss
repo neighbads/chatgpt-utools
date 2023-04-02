@@ -1,0 +1,23 @@
+.index {
+  padding: 80px 66px;
+  color: var(--gray-8);
+  background: var(--gray-0);
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  text-align: center;
+  .title {
+    font-size: 48px;
+    font-weight: bold;
+  }
+
+  .help {
+    text-align: start;
+    line-height: 1.6;
+  }
+
+  .qrcode {
+    width: 260px;
+  }
+}
+

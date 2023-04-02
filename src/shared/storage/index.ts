@@ -7,7 +7,7 @@ import {
 import { Conversation } from '../../models/conversation'
 import { Message } from '../../models/message'
 import { Template } from '../../models/template'
-import { IConfig, MessageShortcutKey } from '../../types'
+import { IConfig, IgnoreType, MessageShortcutKey } from '../../types'
 import { filterSameValue } from '../func/filterSameValue'
 import { isNil } from '../func/isNil'
 
@@ -168,13 +168,13 @@ export class Storage {
     return isNil(value) ? DefaultAutoTranslation : value
   }
 
-  static setVersionIgnore(version: string) {
-    utools.dbStorage.setItem(`versionIgnore-${version}`, true)
+  static setIgnore(type: IgnoreType, value: string) {
+    utools.dbStorage.setItem(`${type}-ignore-${value}`, true)
   }
 
-  static getVersionIgnore(version: string): boolean {
-    const value = utools.dbStorage.getItem(`versionIgnore-${version}`)
-    return isNil(value) ? false : true
+  static getIgnore(type: IgnoreType, value: string): boolean {
+    const ignore = utools.dbStorage.getItem(`${type}-ignore-${value}`)
+    return isNil(ignore) ? false : true
   }
 
   static setMessageShortcutKey(value: MessageShortcutKey) {

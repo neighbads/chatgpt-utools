@@ -1,5 +1,11 @@
-import { CopyOutlined, ReloadOutlined, SyncOutlined } from '@ant-design/icons'
-import { Button, message as AntMessage } from 'antd'
+import {
+  CopyOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  ReloadOutlined,
+  SyncOutlined,
+} from '@ant-design/icons'
+import { message as AntMessage, Button, Space } from 'antd'
 import clsx from 'clsx'
 import 'katex/dist/katex.min.css'
 import { FC, ReactNode, useLayoutEffect, useRef } from 'react'
@@ -203,14 +209,25 @@ export const Chat: FC<ChatProps> = (props) => {
         })}
 
         <Menu id="messageMenu" theme={appStore.isDark ? 'dark' : 'light'}>
-          <Item onClick={handleCopy}>复制</Item>
+          <Item onClick={handleCopy}>
+            <Space>
+              <CopyOutlined />
+              复制内容
+            </Space>
+          </Item>
           <Item onClick={() => onDel && onDel(messageRef.current!.id)}>
-            删除
+            <Space>
+              <DeleteOutlined />
+              删除消息
+            </Space>
           </Item>
           <Item
             onClick={() => onModifyText && onModifyText(messageRef.current!.id)}
           >
-            修改
+            <Space>
+              <EditOutlined />
+              修改内容
+            </Space>
           </Item>
         </Menu>
       </div>

@@ -1,0 +1,27 @@
+.index {
+  padding: 0 16px;
+  border-radius: 12px;
+  min-width: 200px;
+  max-width: 400px;
+  background: var(--base-color);
+  border: 1px solid var(--gray-1);
+
+  .header {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--gray-8);
+    padding: 16px 0;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 16px 0;
+  }
+
+  img {
+    width: 100%;
+  }
+}
+

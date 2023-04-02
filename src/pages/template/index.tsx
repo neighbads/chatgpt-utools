@@ -17,23 +17,27 @@ function _Page() {
           value={store.keyword}
           onChange={({ target }) => store.setKeyword(target.value)}
         />
-        {store.renderTemplates.map((it, i) => {
-          return (
-            <Card
-              key={i}
-              className={styles.item}
-              size="small"
-              hoverable
-              onClick={() => store.onEdit(it)}
-              title={it.title}
-              extra={
-                it.recommendTopic ? <Tag color="blue">推荐话题</Tag> : undefined
-              }
-            >
-              {it.template}
-            </Card>
-          )
-        })}
+        <div className={styles.box}>
+          {store.renderTemplates.map((it, i) => {
+            return (
+              <Card
+                key={i}
+                className={styles.item}
+                size="small"
+                hoverable
+                onClick={() => store.onEdit(it)}
+                title={it.title}
+                extra={
+                  it.recommendTopic ? (
+                    <Tag color="blue">推荐话题</Tag>
+                  ) : undefined
+                }
+              >
+                {it.template}
+              </Card>
+            )
+          })}
+        </div>
       </Space>
       <FloatButton
         tooltip="添加模板"

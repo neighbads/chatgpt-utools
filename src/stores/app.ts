@@ -1,7 +1,11 @@
 import { makeAutoObservable } from 'mobx'
+import semver from 'semver'
 import { version } from '../../package.json'
+import { API } from '../api'
+import { openNotice } from '../components/popups/notice'
 import { openUpdate } from '../components/popups/update'
 import { Storage } from '../shared/storage'
+import { IgnoreType } from '../types'
 
 export const appStore = new (class {
   theme: 'light' | 'dark' = 'light'
@@ -12,8 +16,13 @@ export const appStore = new (class {
 
   constructor() {
     makeAutoObservable(this)
+    this.init()
+  }
+
+  init = async () => {
     this.setTheme(Storage.getTheme())
-    this.checkUpdate()
+    const update = await this.checkUpdate()
+    if (!update) this.checkNotice()
   }
 
   openApiKeyUrl = () => {
@@ -30,6 +39,10 @@ export const appStore = new (class {
     utools.shellOpenExternal(
       'https://github.com/lblblong/mossgpt-utools/issues/53'
     )
+  }
+
+  openGitHub = () => {
+    utools.shellOpenExternal('https://github.com/lblblong/mossgpt-utools')
   }
 
   setTheme = (theme: 'light' | 'dark' | 'auto') => {
@@ -58,9 +71,9 @@ export const appStore = new (class {
       html_url,
     }: { tag_name?: string; body: string; html_url: string } =
       (await res.json()) || {}
-    if (!tag_name) return false
-    if (tag_name.endsWith(version)) return false
-    const ignore = Storage.getVersionIgnore(tag_name)
+    if (!tag_name || semver.valid(tag_name) === null) return false
+    if (semver.gte(tag_name, version)) return false
+    const ignore = Storage.getIgnore(IgnoreType.version, tag_name)
     if (ignore && !force) return false
 
     setTimeout(() => {
@@ -68,7 +81,7 @@ export const appStore = new (class {
         newVersion: tag_name,
         description: body,
         onIgnore() {
-          Storage.setVersionIgnore(tag_name)
+          Storage.setIgnore(IgnoreType.version, tag_name)
         },
         onUpdate() {
           utools.shellOpenExternal(html_url)
@@ -76,6 +89,18 @@ export const appStore = new (class {
       })
     }, 600)
     return true
+  }
+
+  checkNotice = async () => {
+    const { id, data, version: versionLimit } = await API.other.getNotice()
+    const ignore = Storage.getIgnore(IgnoreType.notice, id)
+    if (ignore || !semver.satisfies(version, versionLimit)) return
+    Storage.setIgnore(IgnoreType.notice, id)
+    setTimeout(() => {
+      openNotice({
+        data,
+      })
+    }, 600)
   }
 })()
 

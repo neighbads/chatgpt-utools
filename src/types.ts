@@ -33,3 +33,7 @@ export const ChatBalanceDict = {
   [ChatBalance.accuracy]: '精准',
 }
 
+export enum IgnoreType {
+  version = 'version',
+  notice = 'notice',
+}

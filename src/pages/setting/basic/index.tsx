@@ -53,18 +53,7 @@ export function BasicSetting() {
       </Form.Item>
 
       <Form.Item
-        label={
-          <span>
-            API_URL
-            <Button
-              type="link"
-              size="small"
-              onClick={appStore.openProxyShareUrl}
-            >
-              (这里有一些免费的接口代理服务和免费搭建代理的教程)
-            </Button>
-          </span>
-        }
+        label="API URL"
         tooltip="适用于使用自建的 openai 接口代理服务，示例：https://api.my-openai.com/v1"
       >
         <AutoComplete
