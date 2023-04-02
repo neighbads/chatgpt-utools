@@ -27,6 +27,7 @@ export class Storage {
       createdAt: it.createdAt,
       updatedAt: it.updatedAt,
       balance: it.balance,
+      systemMessage: it.systemMessage,
     })
   }
 

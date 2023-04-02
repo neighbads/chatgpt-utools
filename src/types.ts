@@ -1,7 +1,7 @@
 export interface IConfig {
   model?: string
   apiBaseUrl?: string
-  prompt?: string
+  systemMessage?: string
   max_tokens?: number
   temperature?: number
   top_p?: number

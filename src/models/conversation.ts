@@ -12,6 +12,7 @@ export class Conversation {
   createdAt: number
   updatedAt: number
   balance: ChatBalance
+  systemMessage?: string
 
   constructor(opts?: {
     id?: string
@@ -19,12 +20,14 @@ export class Conversation {
     createdAt?: number
     updatedAt?: number
     balance?: ChatBalance
+    systemMessage?: string
   }) {
     this.id = opts?.id ?? Date.now() + ''
     this.name = opts?.name ?? '新会话'
     this.createdAt = opts?.createdAt ?? Date.now()
     this.updatedAt = opts?.updatedAt ?? opts?.createdAt ?? Date.now()
     this.balance = opts?.balance ?? ChatBalance.balance
+    this.systemMessage = opts?.systemMessage
 
     makeAutoObservable(this, {
       abortController: false,
@@ -101,12 +104,12 @@ export class Conversation {
     this.updatedAt = Date.now()
     this.flushDb()
     try {
-      const { prompt } = Storage.getConfig()
+      const { systemMessage } = Storage.getConfig()
 
       await chatgptStore.sendMessage(lastMessage.text, {
         parentMessageId: lastMessage.parentMessageId,
         messageId: lastMessage.id,
-        systemMessage: prompt?.trim() !== '' ? prompt?.trim() : undefined,
+        systemMessage: this.systemMessage ?? systemMessage,
         abortSignal: this.abortController.signal,
         balance: this.balance,
         onProgress: ({ text }) => {

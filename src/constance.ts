@@ -7,7 +7,7 @@ export const DefaultAutoTranslation = true
 export const DefaultConfig: IConfig = {
   model: Models[0],
   apiBaseUrl: 'https://closeai.deno.dev/v1',
-  prompt: undefined,
+  systemMessage: undefined,
   max_tokens: undefined,
   temperature: undefined,
   top_p: undefined,

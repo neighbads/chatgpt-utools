@@ -23,7 +23,7 @@ export function BasicSetting() {
       <Form.Item
         label={
           <span>
-            API_KEY (
+            API KEY (
             {
               [
                 <Button
@@ -115,13 +115,15 @@ export function BasicSetting() {
       </Row>
 
       <Form.Item
-        label="Prompt"
-        tooltip="用于指定对话要开始的话题或上下文，它可以帮助 AI 更好地理解和回应用户的输入。"
+        label="系统消息(System Message)"
+        tooltip="通常用于给 AI 预置身份或指定对话要开始的话题、上下文。注意：会话级的配置会覆盖此默认值。"
       >
         <Input.TextArea
           autoSize={{ minRows: 1, maxRows: 5 }}
-          value={root.baseConfig.prompt}
-          onChange={({ target }) => (root.baseConfig.prompt = target.value)}
+          value={root.baseConfig.systemMessage}
+          onChange={({ target }) =>
+            (root.baseConfig.systemMessage = target.value)
+          }
         />
       </Form.Item>
 

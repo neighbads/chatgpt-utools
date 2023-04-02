@@ -101,7 +101,12 @@ export class Store {
     this.panelVisible = false
     const conversation = homeStore.conversation
     if (!conversation) return
-    await openConversationSetting({ name: conversation.name })
+    const newConfig = await openConversationSetting({
+      name: conversation.name,
+      systemMessage: conversation.systemMessage,
+    })
+    Object.assign(conversation, newConfig)
+    conversation.flushDb()
   }
 
   onClearMessages = () => {

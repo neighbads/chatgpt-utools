@@ -31,7 +31,7 @@ export class Store {
       [
         'model',
         'apiBaseUrl',
-        'prompt',
+        'systemMessage',
         'max_tokens',
         'temperature',
         'top_p',

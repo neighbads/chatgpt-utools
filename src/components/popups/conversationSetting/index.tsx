@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, InputNumber, Row, Space } from 'antd'
+import { Button, Form, Input, message } from 'antd'
 import { useLocalStore } from 'mobx-react-lite'
 import { useController } from 'oh-popup-react'
 import { FC } from 'react'
@@ -8,20 +8,26 @@ import styles from './index.module.scss'
 
 interface Props {
   name: string
-  temperature?: number
-  top_p?: number
-  presence_penalty?: number
-  frequency_penalty?: number
+  systemMessage?: string
 }
 
 const ConversationSetting: FC<Props> = (props) => {
+  const ctl = useController()
   const store = useLocalStore(() => {
     return {
       name: props.name,
-      temperature: props.temperature,
-      top_p: props.top_p,
-      presence_penalty: props.presence_penalty,
-      frequency_penalty: props.frequency_penalty,
+      systemMessage: props.systemMessage,
+      onSubmit: () => {
+        try {
+          if (!store.name) throw Error('标题不能为空')
+          ctl.close({
+            name: store.name,
+            systemMessage: store.systemMessage,
+          })
+        } catch (err: any) {
+          message.error(err.message)
+        }
+      },
     }
   })
 
@@ -31,28 +37,36 @@ const ConversationSetting: FC<Props> = (props) => {
     }
   }
 
-  const ctl = useController()
-
   return withObserver(() => (
     <div className={styles.index}>
-      <Space direction="vertical">
-        <div>会话设置</div>
-        <Input
-          placeholder="标题"
-          value={store.name}
-          onChange={bindChange('name')}
-        />
-        <div className={styles.actions}>
-          <Button onClick={() => ctl.onlyClose()}>取消</Button>
-          <Button
-            className={styles.submit}
-            type="primary"
-            onClick={() => ctl.close()}
-          >
-            确定
-          </Button>
-        </div>
-      </Space>
+      <div className={styles.title}>会话设置</div>
+      <Form layout="vertical">
+        <Form.Item label="会话名称">
+          <Input
+            placeholder="请输入会话名称"
+            value={store.name}
+            onChange={bindChange('name')}
+          />
+        </Form.Item>
+        <Form.Item label="系统消息(System Message)">
+          <Input.TextArea
+            rows={3}
+            placeholder="通常用于给 AI 预置身份或指定对话要开始的话题、上下文。"
+            value={store.systemMessage}
+            onChange={bindChange('systemMessage')}
+          />
+        </Form.Item>
+      </Form>
+      <div className={styles.actions}>
+        <Button onClick={() => ctl.onlyClose()}>取消</Button>
+        <Button
+          className={styles.submit}
+          type="primary"
+          onClick={store.onSubmit}
+        >
+          确定
+        </Button>
+      </div>
     </div>
   ))
 }

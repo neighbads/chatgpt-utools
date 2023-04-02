@@ -1,6 +1,7 @@
 import {
   CheckOutlined,
   CommentOutlined,
+  ControlOutlined,
   DeleteOutlined,
   RadarChartOutlined,
 } from '@ant-design/icons'
@@ -72,14 +73,14 @@ export const InputArea = () => {
               总结会话
             </Button>
 
-            {/* <Button
-            icon={<ControlOutlined />}
-            type="text"
-            block
-            onClick={store.onOpenSetting}
-          >
-            设置
-          </Button> */}
+            <Button
+              icon={<ControlOutlined />}
+              type="text"
+              block
+              onClick={store.onOpenSetting}
+            >
+              设置
+            </Button>
           </div>
         )}
       </div>
