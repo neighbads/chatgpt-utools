@@ -45,6 +45,10 @@ export const appStore = new (class {
     utools.shellOpenExternal('https://github.com/lblblong/mossgpt-utools')
   }
 
+  openOpenAIUsage = () => {
+    utools.shellOpenExternal('https://platform.openai.com/account/usage')
+  }
+
   setTheme = (theme: 'light' | 'dark' | 'auto') => {
     if (theme === 'auto') {
       Storage.removeTheme()

@@ -49,6 +49,11 @@ export function BasicSetting() {
         <Input.Password
           value={root.baseConfig.apiKey}
           onChange={({ target }) => (root.baseConfig.apiKey = target.value)}
+          addonAfter={
+            <Button type="link" size="small" onClick={appStore.openOpenAIUsage}>
+              查看用量
+            </Button>
+          }
         />
       </Form.Item>
 
