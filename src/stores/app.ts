@@ -82,7 +82,7 @@ export const appStore = new (class {
     }: { tag_name?: string; body: string; html_url: string } =
       (await res.json()) || {}
     if (!tag_name || semver.valid(tag_name) === null) return false
-    if (semver.gte(tag_name, version)) return false
+    if (semver.gte(version, tag_name)) return false
     const ignore = Storage.getIgnore(IgnoreType.version, tag_name)
     if (ignore && !force) return false
 
