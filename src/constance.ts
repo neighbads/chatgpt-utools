@@ -84,5 +84,15 @@ export const ApiUrls = [
     url: 'https://closeai.deno.dev/v1',
     needVpn: false,
   },
+  {
+    name: '免费线路 - 来自群友盛先生',
+    url: 'https://cold-crow-90.deno.dev/v1',
+    needVpn: false,
+  },
+  {
+    name: '免费线路 - 来自Moss作者',
+    url: 'https://xuxmei-openai-proxy.deno.dev/v1',
+    needVpn: false,
+  },
 ]
 

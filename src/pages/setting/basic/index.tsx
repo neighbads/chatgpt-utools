@@ -81,7 +81,19 @@ export function BasicSetting() {
               value: it.url,
             }
           })}
-        />
+        >
+          <Input
+            addonAfter={
+              <Button
+                type="link"
+                size="small"
+                onClick={appStore.openOneClickDeploy}
+              >
+                一键部署自己的免费代理
+              </Button>
+            }
+          ></Input>
+        </AutoComplete>
       </Form.Item>
 
       <Row gutter={16}>

@@ -49,6 +49,12 @@ export const appStore = new (class {
     utools.shellOpenExternal('https://platform.openai.com/account/usage')
   }
 
+  openOneClickDeploy = () => {
+    utools.shellOpenExternal(
+      'https://dash.deno.com/new?url=https://raw.githubusercontent.com/justjavac/openai-proxy/main/main.ts'
+    )
+  }
+
   setTheme = (theme: 'light' | 'dark' | 'auto') => {
     if (theme === 'auto') {
       Storage.removeTheme()
