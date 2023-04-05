@@ -75,7 +75,11 @@
     }
     .user {
       .bubble {
-        background: var(--color-primary);
+        background: linear-gradient(
+          to bottom right,
+          var(--color-primary) 66%,
+          #40a9ff
+        );
         color: #fff;
       }
     }
