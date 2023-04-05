@@ -1,22 +1,14 @@
 import { ConfigProvider, theme } from 'antd'
-import { configure } from 'mobx'
 import { Observer } from 'mobx-react-lite'
 import { ManagerProvider } from 'oh-popup-react'
-import 'oh-popup-react/dist/style.css'
 import { RouterView } from 'oh-router-react'
 import ReactDOM from 'react-dom/client'
-import './assets/css/index.scss'
-import './assets/css/var.css'
 import { router } from './router'
+import { setup } from './shared/core'
 import { popupManager } from './shared/popupManager'
-import { registerHooks } from './shared/registerHooks'
-import { update } from './shared/update'
 import { stores } from './stores'
 
-update()
-registerHooks()
-
-configure({ enforceActions: 'never' })
+setup()
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Observer>

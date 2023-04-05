@@ -133,7 +133,8 @@ export const InputArea = () => {
           {store.value.length === 0 && (
             <div className={styles.placeholder}>
               键入<span className={styles.word}>/</span>
-              获取消息模板、设置等更多功能
+              打开控制面板、<span className={styles.word}>Ctrl + T</span>{' '}
+              新建会话
             </div>
           )}
         </div>

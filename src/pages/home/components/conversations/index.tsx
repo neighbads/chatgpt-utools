@@ -1,5 +1,5 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
-import { Button, Input, Space } from 'antd'
+import { Button, Input, Space, Tooltip } from 'antd'
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { Item, Menu, useContextMenu } from 'react-contexify'
@@ -30,11 +30,13 @@ export const Conversations = () => {
             className={styles.input}
             placeholder="搜索会话"
           />
-          <Button
-            className={styles.button}
-            icon={<PlusOutlined />}
-            onClick={homeStore.createConversation}
-          ></Button>
+          <Tooltip title="Ctrl + T" placement="right">
+            <Button
+              className={styles.button}
+              icon={<PlusOutlined />}
+              onClick={homeStore.createConversation}
+            ></Button>
+          </Tooltip>
         </Space>
       </div>
       <Scrollbars
