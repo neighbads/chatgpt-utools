@@ -39,6 +39,7 @@
       border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
       height: 125px;
       position: relative;
+      background: var(--chat-input-background);
       .dragLine {
         cursor: n-resize;
         position: absolute;
@@ -56,6 +57,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      background: #ffffff;
       img {
         width: 200px;
       }
@@ -75,6 +77,9 @@
   .main {
     .bottom {
       border-top: 1px solid rgba($color: #fff, $alpha: 0.1);
+    }
+    .empty {
+      background: var(--page-background);
     }
   }
 }

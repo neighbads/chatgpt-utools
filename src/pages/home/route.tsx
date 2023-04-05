@@ -4,6 +4,8 @@ import { navigate, Options } from '../../router'
 
 export type IQuery = {
   text?: string
+  conversationId?: string
+  messageId?: string
 }
 
 export const homeRoute: RouteObject = {

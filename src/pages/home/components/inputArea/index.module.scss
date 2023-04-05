@@ -72,9 +72,7 @@
   }
   .actionBar {
     padding: 8px 16px;
-    // background: var(--gray-0);
-    border-top: 1px solid rgba($color: #000000, $alpha: 0.06);
-    // border-radius: 8px;
+    border-top: 1px solid var(--gray-0);
     display: flex;
     gap: 8px;
   }

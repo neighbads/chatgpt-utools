@@ -56,10 +56,6 @@ export const Chat: FC<ChatProps> = (props) => {
     AntMessage.success('已复制到剪贴板')
   }
 
-  // const { show } = useContextMenu({
-  //   id: 'messageMenu',
-  // })
-
   useLayoutEffect(() => {
     const record = recordRef.current
     const scroll = scrollRef.current
@@ -167,7 +163,9 @@ export const Chat: FC<ChatProps> = (props) => {
                               style={theme as any}
                               customStyle={{
                                 borderRadius: 8,
-                                background: '#24272E',
+                                background: stores.app.isDark
+                                  ? '#1E1E1E'
+                                  : '#24272E',
                               }}
                               language={match[1] || 'javascript'}
                               PreTag="div"

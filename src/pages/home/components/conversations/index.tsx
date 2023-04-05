@@ -20,14 +20,16 @@ export const Conversations = () => {
     <div className={styles.index}>
       <div className={clsx(styles.header)}>
         <Space size={6}>
-          <Input
-            value={store.keyword}
-            onChange={({ target }) => {
-              store.setKeyword(target.value)
-            }}
-            className={styles.input}
-            placeholder="搜索会话"
-          />
+          <Tooltip title="Ctrl + P 打开全局搜索" placement="right">
+            <Input
+              value={store.keyword}
+              onChange={({ target }) => {
+                store.setKeyword(target.value)
+              }}
+              className={styles.input}
+              placeholder="搜索会话"
+            />
+          </Tooltip>
           <Tooltip title="Ctrl + T" placement="right">
             <Button
               className={styles.button}

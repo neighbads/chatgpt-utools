@@ -8,9 +8,8 @@ import { templateRoute, toTemplate } from '../../pages/template/route'
 import { templateFormRoute } from '../../pages/templateForm/route'
 import { toTranslation, translationRoute } from '../../pages/translation/route'
 import { withObserver } from '../../shared/func/withObserver'
-import { stores} from '../../stores'
+import { stores } from '../../stores'
 import styles from './index.module.scss'
-import { QuestionCircleFilled } from '@ant-design/icons'
 
 export const BasicLayout = () => {
   const location = useLocation()
@@ -51,7 +50,7 @@ export const BasicLayout = () => {
                 menu.active ? styles.active : undefined
               )}
               onClick={() => menu.onClick()}
-              key={menu.icon}
+              key={i}
             >
               <Icon value={menu.icon} />
             </div>

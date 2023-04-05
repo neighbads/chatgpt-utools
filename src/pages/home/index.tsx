@@ -25,10 +25,7 @@ export function Page() {
   }, [])
 
   useEffect(() => {
-    if (query.text) {
-      homeStore.createConversation()
-      homeStore.conversation?.sendMessage(query.text)
-    }
+    homeStore.onQueryChange(query)
   }, [query])
 
   const onMove = useCallback((event: MouseEvent) => {
