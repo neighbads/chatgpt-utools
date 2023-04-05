@@ -1,7 +1,7 @@
 {
   "name": "mossgpt",
   "private": true,
-  "version": "1.15.0",
+  "version": "1.16.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
