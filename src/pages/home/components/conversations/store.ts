@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx'
-import { chatStore } from '../../../../stores/chat'
+import { stores } from '../../../../stores'
 
 export class Store {
   constructor() {
@@ -23,7 +23,7 @@ export class Store {
   }
 
   get renderConversations() {
-    return chatStore.sortedConversations.filter((it) =>
+    return stores.chat.sortedConversations.filter((it) =>
       it.name.includes(this._keyword)
     )
   }

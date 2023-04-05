@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { Conversation } from '../models/conversation'
 import { Storage } from '../shared/storage'
 
-export const chatStore = new (class {
+export class ChatStore {
   constructor() {
     makeAutoObservable(this)
   }
@@ -39,5 +39,5 @@ export const chatStore = new (class {
     this.initialized = false
     this.conversations = []
   }
-})()
+}
 

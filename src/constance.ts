@@ -2,8 +2,6 @@ import { IConfig, MessageShortcutKey } from './types'
 
 export const Models = ['gpt-3.5-turbo', 'gpt-3.5-turbo-0301']
 
-export const DefaultAutoTranslation = true
-
 export const DefaultConfig: IConfig = {
   model: Models[0],
   apiBaseUrl: 'https://closeai.deno.dev/v1',
@@ -19,6 +17,13 @@ export const DefaultConfig: IConfig = {
     port: undefined,
     username: undefined,
     password: undefined,
+  },
+
+  setting: {
+    autoTranslation: true,
+    autoTitle: false,
+    textSpacing: false,
+    messageShortcutKey: MessageShortcutKey.Enter,
   },
 }
 
@@ -70,8 +75,6 @@ export const DefaultTemplates = [
 ]
 
 export const dataVersion = 2
-
-export const defaultMessageShortcutKey = MessageShortcutKey.Enter
 
 export const ApiUrls = [
   {

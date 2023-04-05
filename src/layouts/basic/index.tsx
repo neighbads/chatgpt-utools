@@ -8,7 +8,7 @@ import { templateRoute, toTemplate } from '../../pages/template/route'
 import { templateFormRoute } from '../../pages/templateForm/route'
 import { toTranslation, translationRoute } from '../../pages/translation/route'
 import { withObserver } from '../../shared/func/withObserver'
-import { appStore } from '../../stores/app'
+import { stores} from '../../stores'
 import styles from './index.module.scss'
 import { QuestionCircleFilled } from '@ant-design/icons'
 
@@ -41,7 +41,7 @@ export const BasicLayout = () => {
   ]
 
   return withObserver(() => (
-    <div className={clsx(styles.index, appStore.isDark && styles.dark)}>
+    <div className={clsx(styles.index, stores.app.isDark && styles.dark)}>
       <div className={styles.navbar}>
         <div>
           {menus.map((menu, i) => (

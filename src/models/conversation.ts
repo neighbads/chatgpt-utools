@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { makeAutoObservable } from 'mobx'
 import { Storage } from '../shared/storage'
-import { chatgptStore } from '../stores/chatgpt'
+import { stores } from '../stores'
 import { ChatBalance } from '../types'
 import { Message } from './message'
 
@@ -86,7 +86,7 @@ export class Conversation {
   }
 
   generateTitle = async (text: string) => {
-    await chatgptStore.getTitle(text, ({ text }) => {
+    await stores.chatgpt.getTitle(text, ({ text }) => {
       text = text.trim()
       if (!text) return
       this.name = text
@@ -106,7 +106,7 @@ export class Conversation {
     try {
       const { systemMessage } = Storage.getConfig()
 
-      await chatgptStore.sendMessage(lastMessage.text, {
+      await stores.chatgpt.sendMessage(lastMessage.text, {
         parentMessageId: lastMessage.parentMessageId,
         messageId: lastMessage.id,
         systemMessage: this.systemMessage ?? systemMessage,

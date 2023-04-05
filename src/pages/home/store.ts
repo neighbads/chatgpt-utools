@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { openInput } from '../../components/popups/input'
 import { Conversation } from '../../models/conversation'
-import { chatStore } from '../../stores/chat'
+import { stores } from '../../stores'
 import { Store as ConversationsStore } from './components/conversations/store'
 import { Store as InputStore } from './components/inputArea/store'
 import { Store as RecommendTopicStore } from './components/recommendTopic/store'
@@ -29,7 +29,7 @@ export const homeStore = new (class {
   }
 
   createConversation = () => {
-    const conversation = chatStore.createConversation()
+    const conversation = stores.chat.createConversation()
     this.setConversation(conversation)
   }
 
@@ -38,7 +38,7 @@ export const homeStore = new (class {
     if (this.conversation === conversation) {
       this.conversation = undefined
     }
-    chatStore.removeConversation(conversation)
+    stores.chat.removeConversation(conversation)
   }
 
   changeConversationTitle = async (conversation?: Conversation) => {

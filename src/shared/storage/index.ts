@@ -1,13 +1,8 @@
-import {
-  DefaultAutoTranslation,
-  DefaultConfig,
-  DefaultTemplates,
-  defaultMessageShortcutKey,
-} from '../../constance'
+import { DefaultConfig, DefaultTemplates } from '../../constance'
 import { Conversation } from '../../models/conversation'
 import { Message } from '../../models/message'
 import { Template } from '../../models/template'
-import { IConfig, IgnoreType, MessageShortcutKey } from '../../types'
+import { IConfig, IgnoreType } from '../../types'
 import { filterSameValue } from '../func/filterSameValue'
 import { isNil } from '../func/isNil'
 
@@ -77,7 +72,8 @@ export class Storage {
   static getConfig(): IConfig {
     const config = utools.dbStorage.getItem('config')
     const proxy = Object.assign({}, DefaultConfig.proxy, config?.proxy)
-    return Object.assign({}, DefaultConfig, config, { proxy })
+    const setting = Object.assign({}, DefaultConfig.setting, config?.setting)
+    return Object.assign({}, DefaultConfig, config, { proxy, setting })
   }
 
   static setConfig(config: Partial<IConfig>) {
@@ -150,25 +146,6 @@ export class Storage {
     utools.dbStorage.removeItem('theme')
   }
 
-  static setAotuTitle(value: boolean) {
-    utools.dbStorage.setItem('autoTitle', value)
-  }
-
-  static getAotuTitle() {
-    const value = utools.dbStorage.getItem('autoTitle')
-    if (isNil(value)) return true
-    return value
-  }
-
-  static setAutoTranslation(value: boolean) {
-    utools.dbStorage.setItem('autoTranslation', value)
-  }
-
-  static getAutoTranslation(): boolean {
-    const value = utools.dbStorage.getItem('autoTranslation')
-    return isNil(value) ? DefaultAutoTranslation : value
-  }
-
   static setIgnore(type: IgnoreType, value: string) {
     utools.dbStorage.setItem(`${type}-ignore-${value}`, true)
   }
@@ -176,16 +153,6 @@ export class Storage {
   static getIgnore(type: IgnoreType, value: string): boolean {
     const ignore = utools.dbStorage.getItem(`${type}-ignore-${value}`)
     return isNil(ignore) ? false : true
-  }
-
-  static setMessageShortcutKey(value: MessageShortcutKey) {
-    utools.dbStorage.setItem(`MessageShortcutKey`, value)
-  }
-
-  static getMessageShortcutKey(): MessageShortcutKey {
-    const value: MessageShortcutKey =
-      utools.dbStorage.getItem(`MessageShortcutKey`)
-    return isNil(value) ? defaultMessageShortcutKey : value
   }
 }
 

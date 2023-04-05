@@ -1,9 +1,8 @@
 import { Modal } from 'antd'
 import { makeAutoObservable } from 'mobx'
-import { Storage } from '../../../shared/storage'
-import { chatStore } from '../../../stores/chat'
+import { stores } from '../../../stores'
+import { IConfig } from '../../../types'
 import { homeStore } from '../../home/store'
-import { appStore } from '../../../stores/app'
 
 export class Store {
   constructor() {
@@ -15,15 +14,13 @@ export class Store {
       convs,
       msgs,
     }
-
-    this.autoTitle = Storage.getAotuTitle()
   }
 
-  autoTitle: boolean
-
-  setAutoTitle = (value: boolean) => {
-    this.autoTitle = value
-    Storage.setAotuTitle(value)
+  bindChange = (name: keyof IConfig['setting'], autoSave = true) => {
+    return ({ target }: { target: any }) => {
+      ;(stores.config.config.setting as any)[name] = target.value
+      if (autoSave) stores.config.flushDb()
+    }
   }
 
   storage: {
@@ -41,7 +38,7 @@ export class Store {
       title: '提示',
       content: '这将清除所有的会话和消息，确定这么做吗？',
       onOk: () => {
-        chatStore.destory()
+        stores.chat.destory()
         homeStore.destory()
         for (const id of ids) {
           utools.db.remove(id)
@@ -53,7 +50,7 @@ export class Store {
   }
 
   checkUpdate = async () => {
-    let needUpdate = await appStore.checkUpdate(true)
+    let needUpdate = await stores.app.checkUpdate(true)
     if (!needUpdate)
       Modal.success({ title: '提示', content: '当前已是最新版本' })
   }

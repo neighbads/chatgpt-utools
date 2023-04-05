@@ -1,4 +1,5 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
+import { Button, Input, Space } from 'antd'
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { Item, Menu, useContextMenu } from 'react-contexify'
@@ -6,12 +7,9 @@ import 'react-contexify/ReactContexify.css'
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Conversation } from '../../../../models/conversation'
 import { withObserver } from '../../../../shared/func/withObserver'
-import { appStore } from '../../../../stores/app'
-import { chatStore } from '../../../../stores/chat'
+import { stores } from '../../../../stores'
 import { homeStore } from '../../store'
 import styles from './index.module.scss'
-import { Button, Input, Space } from 'antd'
-import { useStore } from '@libeilong/react-store-provider'
 
 export const Conversations = () => {
   const store = homeStore.stores.conversations
@@ -66,7 +64,7 @@ export const Conversations = () => {
         })}
       </Scrollbars>
 
-      <Menu id="conversationMenu" theme={appStore.isDark ? 'dark' : 'light'}>
+      <Menu id="conversationMenu" theme={stores.app.isDark ? 'dark' : 'light'}>
         <Item
           onClick={() => homeStore.removeConversation(conversationRef.current)}
         >

@@ -1,5 +1,5 @@
 import { Middleware, MiddlewareContext } from 'oh-router'
-import { chatStore } from '../../stores/chat'
+import { stores } from '../../stores'
 import { Meta } from '../routes'
 
 export class ChatInit implements Middleware {
@@ -11,7 +11,7 @@ export class ChatInit implements Middleware {
     ctx: MiddlewareContext<Meta>,
     next: () => Promise<any>
   ): Promise<void> {
-    chatStore.init()
+    stores.chat.init()
     next()
   }
 }

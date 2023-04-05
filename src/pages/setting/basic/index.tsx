@@ -11,7 +11,7 @@ import {
 } from 'antd'
 import { ApiUrls, Models } from '../../../constance'
 import { withObserver } from '../../../shared/func/withObserver'
-import { appStore } from '../../../stores/app'
+import { stores } from '../../../stores'
 import { Store } from '../store'
 
 export function BasicSetting() {
@@ -29,14 +29,14 @@ export function BasicSetting() {
                 <Button
                   size="small"
                   type="link"
-                  onClick={appStore.openApiKeyUrl}
+                  onClick={stores.app.openApiKeyUrl}
                 >
                   重新获取API_KEY
                 </Button>,
                 <Button
                   size="small"
                   type="link"
-                  onClick={appStore.openShareUrl}
+                  onClick={stores.app.openShareUrl}
                 >
                   好耶！这些网站免费提供 ChatGPT 服务！
                 </Button>,
@@ -47,10 +47,14 @@ export function BasicSetting() {
         }
       >
         <Input.Password
-          value={root.baseConfig.apiKey}
-          onChange={({ target }) => (root.baseConfig.apiKey = target.value)}
+          value={store.apiKey}
+          onChange={({ target }) => (store.apiKey = target.value)}
           addonAfter={
-            <Button type="link" size="small" onClick={appStore.openOpenAIUsage}>
+            <Button
+              type="link"
+              size="small"
+              onClick={stores.app.openOpenAIUsage}
+            >
               查看用量
             </Button>
           }
@@ -62,8 +66,8 @@ export function BasicSetting() {
         tooltip="适用于使用自建的 openai 接口代理服务，示例：https://api.my-openai.com/v1"
       >
         <AutoComplete
-          value={root.baseConfig.apiBaseUrl}
-          onChange={(val) => (root.baseConfig.apiBaseUrl = val)}
+          value={store.fields.apiBaseUrl}
+          onChange={(val) => (store.fields.apiBaseUrl = val)}
           options={ApiUrls.map((it) => {
             return {
               label: (
@@ -87,7 +91,7 @@ export function BasicSetting() {
               <Button
                 type="link"
                 size="small"
-                onClick={appStore.openOneClickDeploy}
+                onClick={stores.app.openOneClickDeploy}
               >
                 一键部署自己的免费代理
               </Button>
@@ -100,7 +104,7 @@ export function BasicSetting() {
         <Col span={12}>
           <Form.Item label="模型">
             <AutoComplete
-              value={root.baseConfig.model}
+              value={store.fields.model}
               options={Models.map((it) => {
                 return {
                   label: it,
@@ -108,7 +112,7 @@ export function BasicSetting() {
                 }
               })}
               defaultValue={Models[0]}
-              onChange={(val) => (root.baseConfig.model = val)}
+              onChange={(val) => (store.fields.model = val)}
             />
           </Form.Item>
         </Col>
@@ -117,9 +121,9 @@ export function BasicSetting() {
             <InputNumber
               min={1}
               max={4090}
-              value={root.baseConfig.max_tokens}
+              value={store.fields.max_tokens}
               onChange={(value) => {
-                root.baseConfig.max_tokens = value ?? undefined
+                store.fields.max_tokens = value ?? undefined
               }}
             />
           </Form.Item>
@@ -132,15 +136,13 @@ export function BasicSetting() {
       >
         <Input.TextArea
           autoSize={{ minRows: 1, maxRows: 5 }}
-          value={root.baseConfig.systemMessage}
-          onChange={({ target }) =>
-            (root.baseConfig.systemMessage = target.value)
-          }
+          value={store.fields.systemMessage}
+          onChange={({ target }) => (store.fields.systemMessage = target.value)}
         />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" onClick={root.saveBaseConfig}>
+        <Button type="primary" onClick={store.onSubmit}>
           保存
         </Button>
       </Form.Item>

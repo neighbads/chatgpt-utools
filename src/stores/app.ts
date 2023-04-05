@@ -7,7 +7,7 @@ import { openUpdate } from '../components/popups/update'
 import { Storage } from '../shared/storage'
 import { IgnoreType } from '../types'
 
-export const appStore = new (class {
+export class AppStore {
   theme: 'light' | 'dark' = 'light'
 
   get isDark() {
@@ -112,5 +112,5 @@ export const appStore = new (class {
       })
     }, 600)
   }
-})()
+}
 

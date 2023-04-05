@@ -7,7 +7,7 @@ import { Chat } from '../../components/chat'
 import { Message } from '../../models/message'
 import { withObserver } from '../../shared/func/withObserver'
 import { useQuery } from '../../shared/hooks/useQuery'
-import { appStore } from '../../stores/app'
+import { stores } from '../../stores'
 import { Conversations } from './components/conversations'
 import { InputArea } from './components/inputArea'
 import { RecommendTopic } from './components/recommendTopic'
@@ -49,7 +49,7 @@ export function Page() {
   }, [])
 
   return withObserver(() => (
-    <div className={clsx(styles.index, appStore.isDark && styles.dark)}>
+    <div className={clsx(styles.index, stores.app.isDark && styles.dark)}>
       <div className={styles.conversations}>
         <Conversations />
       </div>
@@ -69,7 +69,7 @@ export function Page() {
                       id: it.id,
                       self: it.self,
                       state: it.state,
-                      text: it.text,
+                      text: it.renderText,
                       role: it.role,
                       createdAt: it.createdAt,
                       failedReason: it.failedReason,

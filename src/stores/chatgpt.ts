@@ -3,8 +3,9 @@ import { objectPick } from '@libeilong/func'
 import { makeAutoObservable } from 'mobx'
 import { Storage } from '../shared/storage'
 import { ChatBalance } from '../types'
+import { stores } from './'
 
-export const chatgptStore = new (class {
+export class ChatgptStore {
   constructor() {
     makeAutoObservable(this, {
       client: false,
@@ -16,8 +17,8 @@ export const chatgptStore = new (class {
   init = async () => {
     if (this.client) return
 
-    const apiKey = Storage.getApiKey()
-    const config = Storage.getConfig()
+    const config = stores.config.config
+    const apiKey = stores.config.apiKey
 
     const completionParams = objectPick(config, [
       'model',
@@ -78,7 +79,7 @@ export const chatgptStore = new (class {
     content: string,
     onProgress: (opts: { text: string }) => void
   ) => {
-    const autoTitle = Storage.getAotuTitle()
+    const autoTitle = stores.config.config.setting.autoTitle
     if (!autoTitle) {
       onProgress({ text: content.slice(0, 12) })
       return
@@ -101,5 +102,5 @@ export const chatgptStore = new (class {
   destory = () => {
     this.client = undefined
   }
-})()
+}
 

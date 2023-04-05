@@ -2,7 +2,7 @@ import { useStore, withStore } from '@libeilong/react-store-provider'
 import { Button, Input } from 'antd'
 import logo from '../../assets/images/logo.png'
 import { withObserver } from '../../shared/func/withObserver'
-import { appStore } from '../../stores/app'
+import { stores} from '../../stores'
 import styles from './index.module.scss'
 import { Store } from './store'
 
@@ -22,13 +22,13 @@ function _Page() {
           <Button type="primary" onClick={store.submit}>
             立即进入
           </Button>
-          <Button type="link" onClick={appStore.openApiKeyUrl}>
+          <Button type="link" onClick={stores.app.openApiKeyUrl}>
             获取 API_KEY?
           </Button>
         </div>
       </div>
       <div className={styles.footer}>
-        <Button type="link" onClick={appStore.openApiKeyUrl}>
+        <Button type="link" onClick={stores.app.openApiKeyUrl}>
           好耶！这些网站免费提供 ChatGPT 服务！
         </Button>
       </div>

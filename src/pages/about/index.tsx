@@ -2,7 +2,7 @@ import { GithubFilled, WechatFilled } from '@ant-design/icons'
 import { useStore, withStore } from '@libeilong/react-store-provider'
 import { Button, Divider, Space } from 'antd'
 import { withObserver } from '../../shared/func/withObserver'
-import { appStore } from '../../stores/app'
+import { stores} from '../../stores'
 import styles from './index.module.scss'
 import { Store } from './store'
 
@@ -21,7 +21,7 @@ const _Page = () => {
           >
             交流群
           </Button>
-          <Button icon={<GithubFilled />} onClick={appStore.openGitHub}>
+          <Button icon={<GithubFilled />} onClick={stores.app.openGitHub}>
             GitHub
           </Button>
         </Space>
@@ -41,10 +41,10 @@ const _Page = () => {
         </div>
 
         <Divider>其他</Divider>
-        <Button size="small" type="link" onClick={appStore.openShareUrl}>
+        <Button size="small" type="link" onClick={stores.app.openShareUrl}>
           好耶！这些网站免费提供 ChatGPT 服务！
         </Button>
-        <Button type="link" size="small" onClick={appStore.openProxyShareUrl}>
+        <Button type="link" size="small" onClick={stores.app.openProxyShareUrl}>
           这里有一些免费的接口代理服务！
         </Button>
       </Space>

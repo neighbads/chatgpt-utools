@@ -1,10 +1,10 @@
 import { makeAutoObservable } from 'mobx'
 import { Storage } from '../../shared/storage'
-import { chatgptStore } from '../../stores/chatgpt'
+import { stores } from '../../stores'
 
 export const translationStore = new (class {
   constructor() {
-    this.autoMode = Storage.getAutoTranslation()
+    this.autoMode = Storage.getConfig().setting.autoTranslation
     makeAutoObservable(this)
   }
 
@@ -42,7 +42,7 @@ export const translationStore = new (class {
     this.err = undefined
     try {
       const { targetLang } = this.config
-      await chatgptStore.sendMessage(
+      await stores.chatgpt.sendMessage(
         `下面我让你来充当翻译家，你的目标是把任何语言翻译成${targetLang}，请翻译时不要带翻译腔，而是要翻译得自然、流畅和地道，使用优美和高雅的表达方式。请翻译下面的内容：\n${this.source}`,
         {
           onProgress: ({ text }) => {
@@ -63,7 +63,8 @@ export const translationStore = new (class {
 
   setAutoMode = (value: boolean) => {
     this.autoMode = value
-    Storage.setAutoTranslation(value)
+    stores.config.config.setting.autoTranslation = value
+    stores.config.flushDb()
   }
 })()
 

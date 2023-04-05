@@ -1,12 +1,12 @@
 import { DeleteOutlined } from '@ant-design/icons'
 import { useStore } from '@libeilong/react-store-provider'
 import { Button, Form, Radio, Space, Tooltip } from 'antd'
+import { version } from '../../../../package.json'
 import { Icon } from '../../../components/icon'
 import { withObserver } from '../../../shared/func/withObserver'
-import { appStore } from '../../../stores/app'
+import { stores } from '../../../stores'
 import { Store } from '../store'
 import styles from './index.module.scss'
-import { version } from '../../../../package.json'
 
 const themes = [
   { label: '跟随系统', icon: 'computer-line', value: 'auto' as const },
@@ -27,7 +27,7 @@ export function OtherSetting() {
               <Tooltip title={it.label} key={it.value}>
                 <span
                   className={styles.icon}
-                  onClick={() => appStore.setTheme(it.value)}
+                  onClick={() => stores.app.setTheme(it.value)}
                 >
                   <Icon value={it.icon} />
                 </span>
@@ -56,8 +56,21 @@ export function OtherSetting() {
         tooltip="开启此项将会产生对话以外的 Token 消耗"
       >
         <Radio.Group
-          value={store.autoTitle}
-          onChange={({ target }) => store.setAutoTitle(target.value)}
+          value={stores.config.config.setting.autoTitle}
+          onChange={store.bindChange('autoTitle')}
+        >
+          <Radio value={true}>开启</Radio>
+          <Radio value={false}>关闭</Radio>
+        </Radio.Group>
+      </Form.Item>
+
+      <Form.Item
+        label="盘古之白（优化文本可读性）"
+        tooltip="在中英文、符号与数字之间增加空格，这将优化文本的可读性。注意：此功能可能会影响 Markdown 与代码的排版，请确认你的使用场景后选择是否开启。"
+      >
+        <Radio.Group
+          value={stores.config.config.setting.textSpacing}
+          onChange={store.bindChange('textSpacing')}
         >
           <Radio value={true}>开启</Radio>
           <Radio value={false}>关闭</Radio>

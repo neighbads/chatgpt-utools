@@ -11,7 +11,7 @@ import { router } from './router'
 import { popupManager } from './shared/popupManager'
 import { registerHooks } from './shared/registerHooks'
 import { update } from './shared/update'
-import { appStore } from './stores/app'
+import { stores } from './stores'
 
 update()
 registerHooks()
@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             colorPrimary: '#1890ff',
           },
           algorithm:
-            appStore.theme === 'dark'
+            stores.app.theme === 'dark'
               ? theme.darkAlgorithm
               : theme.defaultAlgorithm,
         }}

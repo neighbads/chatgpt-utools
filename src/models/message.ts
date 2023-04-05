@@ -1,7 +1,9 @@
 import { ChatMessage } from '@libeilong/chatgpt'
 import { makeAutoObservable } from 'mobx'
+import pangu from 'pangu'
 import { openTextArea } from '../components/popups/textarea'
 import { Storage } from '../shared/storage'
+import { stores } from '../stores'
 
 export type MessageState = 'sending' | 'fail' | 'done'
 
@@ -26,6 +28,12 @@ export class Message implements ChatMessage {
 
   get isWaiting() {
     return this.state === 'sending' && this.isDeleted === false
+  }
+
+  get renderText() {
+    return stores.config.config.setting.textSpacing
+      ? pangu.spacing(this.text)
+      : this.text
   }
 
   constructor(

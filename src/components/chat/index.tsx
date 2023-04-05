@@ -19,7 +19,7 @@ import RemarkMathPlugin from 'remark-math'
 import { Message } from '../../models/message'
 import { copyToClipboard } from '../../shared/func/copyToClipboard'
 import { withObserver } from '../../shared/func/withObserver'
-import { appStore } from '../../stores/app'
+import { stores} from '../../stores'
 import styles from './index.module.scss'
 
 type _Message = Pick<
@@ -89,10 +89,10 @@ export const Chat: FC<ChatProps> = (props) => {
     <Scrollbars
       ref={scrollRef}
       autoHide
-      className={clsx(styles.index, appStore.isDark && styles.dark)}
+      className={clsx(styles.index, stores.app.isDark && styles.dark)}
       renderThumbVertical={(props) => <div {...props} className="scrollbar" />}
     >
-      <div className={styles.container}>
+      <div className={styles.container} id="chat-container">
         {messages.map((message, i) => {
           if (message.role === 'system') {
             return (
@@ -151,7 +151,7 @@ export const Chat: FC<ChatProps> = (props) => {
                               style={theme as any}
                               customStyle={{
                                 borderRadius: 8,
-                                background: appStore.isDark
+                                background: stores.app.isDark
                                   ? '#000000'
                                   : '#1E1E1E',
                               }}
@@ -208,7 +208,7 @@ export const Chat: FC<ChatProps> = (props) => {
           )
         })}
 
-        <Menu id="messageMenu" theme={appStore.isDark ? 'dark' : 'light'}>
+        <Menu id="messageMenu" theme={stores.app.isDark ? 'dark' : 'light'}>
           <Item onClick={handleCopy}>
             <Space>
               <CopyOutlined />

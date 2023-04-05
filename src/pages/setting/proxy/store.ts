@@ -11,13 +11,7 @@ export class Store {
     clearInterval(time)
     makeAutoObservable(this)
 
-    this.fields = objectPick(stores.config.config, [
-      'apiBaseUrl',
-      'model',
-      'max_tokens',
-      'systemMessage',
-    ])
-    this.apiKey = stores.config.apiKey
+    this.fields = objectPick(stores.config.config.proxy, 'all')
 
     time = setInterval(() => {
       this.currentLink = this.currentLink === 1 ? 0 : 1
@@ -26,18 +20,15 @@ export class Store {
 
   currentLink = 0
 
-  fields: Pick<IConfig, 'apiBaseUrl' | 'model' | 'max_tokens' | 'systemMessage'>
-
-  apiKey: string
+  fields: IConfig['proxy']
 
   onSubmit = () => {
     Object.assign(stores.config.config, this.fields)
-    stores.config.apiKey = this.apiKey
-    // configStore.config.apiBaseUrl = this.fields.apiBaseUrl
-    // configStore.config.model = this.fields.model
-    // configStore.config.max_tokens = this.fields.max_tokens
-    // configStore.config.systemMessage = this.fields.systemMessage
-    // configStore.apiKey = this.apiKey
+    // stores.config.config.proxy.host = this.fields.host
+    // stores.config.config.proxy.port = this.fields.port
+    // stores.config.config.proxy.open = this.fields.open
+    // stores.config.config.proxy.username = this.fields.username
+    // stores.config.config.proxy.password = this.fields.password
     stores.config.flushDb()
     stores.chatgpt.reinit()
     message.success('成功')

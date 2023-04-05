@@ -4,31 +4,33 @@ import React from 'react'
 import { openConversationSetting } from '../../../../components/popups/conversationSetting'
 import { Template } from '../../../../models/template'
 import { Storage } from '../../../../shared/storage'
+import { stores } from '../../../../stores'
 import { ChatBalance, MessageShortcutKey } from '../../../../types'
 import { homeStore } from '../../store'
 
 export class Store {
   constructor() {
-    this.messageShortcutKey = Storage.getMessageShortcutKey()
     makeAutoObservable(this, {
       inputRef: false,
     })
   }
-
-  messageShortcutKey: MessageShortcutKey
 
   inputRef = React.createRef<HTMLTextAreaElement>()
 
   value = ''
   isCompositionStarted = false
 
+  get messageShortcutKey() {
+    return stores.config.config.setting.messageShortcutKey
+  }
+
   focus = () => {
     this.inputRef.current?.focus()
   }
 
   onChangeMessageShortcutKey = (messageShortcutKey: MessageShortcutKey) => {
-    this.messageShortcutKey = messageShortcutKey
-    Storage.setMessageShortcutKey(messageShortcutKey)
+    stores.config.config.setting.messageShortcutKey = messageShortcutKey
+    stores.config.flushDb()
   }
 
   onSubmit = () => {
