@@ -1,7 +1,6 @@
 import { message } from 'antd'
 import { makeAutoObservable } from 'mobx'
 import React from 'react'
-import { openConversationSetting } from '../../../../components/popups/conversationSetting'
 import { Template } from '../../../../models/template'
 import { Storage } from '../../../../shared/storage'
 import { stores } from '../../../../stores'
@@ -103,12 +102,7 @@ export class Store {
     this.panelVisible = false
     const conversation = homeStore.conversation
     if (!conversation) return
-    const newConfig = await openConversationSetting({
-      name: conversation.name,
-      systemMessage: conversation.systemMessage,
-    })
-    Object.assign(conversation, newConfig)
-    conversation.flushDb()
+    conversation.openSetting()
   }
 
   onClearMessages = () => {

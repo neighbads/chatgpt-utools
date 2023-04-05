@@ -1,7 +1,7 @@
 .index {
   height: 100%;
   width: 100%;
-  background: var(--gray-0);
+  background: var(--page-background);
   .container {
     .codeBox {
       position: relative;
@@ -41,7 +41,7 @@
       .bubble {
         max-width: 100%;
         border-radius: 12px;
-        padding: 0 12px;
+        padding: 0 16px;
         word-break: break-all;
         box-shadow: var(--shadow-1-down);
         p {
@@ -56,7 +56,6 @@
         display: flex;
         align-items: center;
         font-size: 12px;
-        color: var(--gray-2);
         max-width: 100%;
         overflow: hidden;
         gap: 12px;
@@ -80,13 +79,13 @@
           var(--color-primary) 66%,
           #40a9ff
         );
-        color: #fff;
+        color: rgba($color: #fff, $alpha: 0.96);
       }
     }
     .chatgpt {
       .bubble {
         background: #fff;
-        color: #333;
+        color: var(--gray-8);
       }
     }
   }
@@ -101,7 +100,6 @@
     .chatgpt {
       .bubble {
         background: rgba($color: #fff, $alpha: 0.08);
-        color: #fff;
       }
     }
   }

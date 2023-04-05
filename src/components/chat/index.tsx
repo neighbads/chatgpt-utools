@@ -5,11 +5,10 @@ import {
   ReloadOutlined,
   SyncOutlined,
 } from '@ant-design/icons'
-import { message as AntMessage, Button, Space } from 'antd'
+import { message as AntMessage, Button } from 'antd'
 import clsx from 'clsx'
 import 'katex/dist/katex.min.css'
 import { FC, ReactNode, useLayoutEffect, useRef } from 'react'
-import { Item, Menu, useContextMenu } from 'react-contexify'
 import { Scrollbars } from 'react-custom-scrollbars'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -17,9 +16,10 @@ import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/esm/styles/p
 import rehypeKatex from 'rehype-katex'
 import RemarkMathPlugin from 'remark-math'
 import { Message } from '../../models/message'
+import { ContextMenu } from '../../shared/contextMenu'
 import { copyToClipboard } from '../../shared/func/copyToClipboard'
 import { withObserver } from '../../shared/func/withObserver'
-import { stores} from '../../stores'
+import { stores } from '../../stores'
 import styles from './index.module.scss'
 
 type _Message = Pick<
@@ -38,14 +38,13 @@ interface ChatProps {
 
 export const Chat: FC<ChatProps> = (props) => {
   const { messages, onRetry, onDel, onModifyText } = props
-  const messageRef = useRef<_Message>()
   const scrollRef = useRef<Scrollbars>(null)
   const recordRef = useRef({
     first: true,
     lastMessageLength: messages.length,
   })
 
-  const handleCopy = () => {
+  const handleCopy = (message: _Message) => {
     const selectionText = window.getSelection()?.toString()
     if (selectionText?.trim()) {
       copyToClipboard(selectionText?.trim())
@@ -53,14 +52,13 @@ export const Chat: FC<ChatProps> = (props) => {
       return
     }
 
-    if (messageRef.current === undefined) return
-    copyToClipboard(messageRef.current.text || '')
+    copyToClipboard(message.text || '')
     AntMessage.success('已复制到剪贴板')
   }
 
-  const { show } = useContextMenu({
-    id: 'messageMenu',
-  })
+  // const { show } = useContextMenu({
+  //   id: 'messageMenu',
+  // })
 
   useLayoutEffect(() => {
     const record = recordRef.current
@@ -120,8 +118,26 @@ export const Chat: FC<ChatProps> = (props) => {
               <div
                 className={styles.bubble}
                 onContextMenu={(event) => {
-                  messageRef.current = message
-                  show({ event })
+                  ContextMenu.open({
+                    event,
+                    items: [
+                      {
+                        label: '复制内容',
+                        icon: <CopyOutlined />,
+                        onClick: () => handleCopy(message),
+                      },
+                      {
+                        label: '删除消息',
+                        icon: <DeleteOutlined />,
+                        onClick: () => onDel && onDel(message.id),
+                      },
+                      {
+                        label: '修改内容',
+                        icon: <EditOutlined />,
+                        onClick: () => onModifyText && onModifyText(message.id),
+                      },
+                    ],
+                  })
                 }}
               >
                 {typeof text !== 'string' ? (
@@ -151,9 +167,7 @@ export const Chat: FC<ChatProps> = (props) => {
                               style={theme as any}
                               customStyle={{
                                 borderRadius: 8,
-                                background: stores.app.isDark
-                                  ? '#000000'
-                                  : '#1E1E1E',
+                                background: '#24272E',
                               }}
                               language={match[1] || 'javascript'}
                               PreTag="div"
@@ -207,29 +221,6 @@ export const Chat: FC<ChatProps> = (props) => {
             </div>
           )
         })}
-
-        <Menu id="messageMenu" theme={stores.app.isDark ? 'dark' : 'light'}>
-          <Item onClick={handleCopy}>
-            <Space>
-              <CopyOutlined />
-              复制内容
-            </Space>
-          </Item>
-          <Item onClick={() => onDel && onDel(messageRef.current!.id)}>
-            <Space>
-              <DeleteOutlined />
-              删除消息
-            </Space>
-          </Item>
-          <Item
-            onClick={() => onModifyText && onModifyText(messageRef.current!.id)}
-          >
-            <Space>
-              <EditOutlined />
-              修改内容
-            </Space>
-          </Item>
-        </Menu>
       </div>
     </Scrollbars>
   ))

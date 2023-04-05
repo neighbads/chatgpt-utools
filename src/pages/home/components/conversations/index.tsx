@@ -1,22 +1,20 @@
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
+import {
+  ControlOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from '@ant-design/icons'
+import '@szhsin/react-menu/dist/index.css'
 import { Button, Input, Space, Tooltip } from 'antd'
 import clsx from 'clsx'
-import { useRef } from 'react'
-import { Item, Menu, useContextMenu } from 'react-contexify'
-import 'react-contexify/ReactContexify.css'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Conversation } from '../../../../models/conversation'
+import { ContextMenu } from '../../../../shared/contextMenu'
 import { withObserver } from '../../../../shared/func/withObserver'
-import { stores } from '../../../../stores'
 import { homeStore } from '../../store'
 import styles from './index.module.scss'
 
 export const Conversations = () => {
   const store = homeStore.stores.conversations
-  const conversationRef = useRef<Conversation>()
-  const { show } = useContextMenu({
-    id: 'conversationMenu',
-  })
 
   return withObserver(() => (
     <div className={styles.index}>
@@ -55,9 +53,34 @@ export const Conversations = () => {
                 it === homeStore.conversation && styles.active
               )}
               onClick={() => homeStore.setConversation(it)}
-              onContextMenu={(event) => {
-                conversationRef.current = it
-                show({ event })
+              onContextMenu={(e) => {
+                e.preventDefault()
+                ContextMenu.open({
+                  event: e,
+                  items: [
+                    {
+                      label: '删除会话',
+                      icon: <DeleteOutlined />,
+                      onClick: () => {
+                        homeStore.removeConversation(it)
+                      },
+                    },
+                    {
+                      label: '修改名称',
+                      icon: <EditOutlined />,
+                      onClick: () => {
+                        homeStore.changeConversationTitle(it)
+                      },
+                    },
+                    {
+                      label: '更多设置',
+                      icon: <ControlOutlined />,
+                      onClick: () => {
+                        it.openSetting()
+                      },
+                    },
+                  ],
+                })
               }}
             >
               <span>{it.name}</span>
@@ -65,27 +88,6 @@ export const Conversations = () => {
           )
         })}
       </Scrollbars>
-
-      <Menu id="conversationMenu" theme={stores.app.isDark ? 'dark' : 'light'}>
-        <Item
-          onClick={() => homeStore.removeConversation(conversationRef.current)}
-        >
-          <Space>
-            <DeleteOutlined />
-            删除会话
-          </Space>
-        </Item>
-        <Item
-          onClick={() =>
-            homeStore.changeConversationTitle(conversationRef.current)
-          }
-        >
-          <Space>
-            <EditOutlined />
-            修改会话名称
-          </Space>
-        </Item>
-      </Menu>
     </div>
   ))
 }

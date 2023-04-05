@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { makeAutoObservable } from 'mobx'
+import { openConversationSetting } from '../components/popups/conversationSetting'
 import { Storage } from '../shared/storage'
 import { stores } from '../stores'
 import { ChatBalance } from '../types'
@@ -215,6 +216,15 @@ export class Conversation {
       message.remove()
     }
     this.messages = []
+  }
+
+  openSetting = async () => {
+    const newConfig = await openConversationSetting({
+      name: this.name,
+      systemMessage: this.systemMessage,
+    })
+    Object.assign(this, newConfig)
+    this.flushDb()
   }
 
   flushDb = () => {

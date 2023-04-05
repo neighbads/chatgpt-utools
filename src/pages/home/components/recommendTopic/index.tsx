@@ -1,11 +1,9 @@
 import {
-  FontSizeOutlined,
   MessageOutlined,
-  RetweetOutlined,
+  RetweetOutlined
 } from '@ant-design/icons'
 import { withStore } from '@libeilong/react-store-provider'
 import { Button, Input, Space } from 'antd'
-import 'react-contexify/ReactContexify.css'
 import { withObserver } from '../../../../shared/func/withObserver'
 import { homeStore } from '../../store'
 import styles from './index.module.scss'
