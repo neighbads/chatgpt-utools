@@ -23,9 +23,9 @@
   --scrollbar-thumb-active--background-color: rgba(0, 0, 0, 0.3);
   --scrollbar-track-piece--background-color: transparent;
 
-  --page-background: #f1f1f1;
-  --popup-background: #fff;
-  --nav-bar-background: #fff;
+  --page-background: #ffffff;
+  --popup-background: #ffffff;
+  --nav-bar-background: #ffffff;
   --chat-input-background: #ffffff;
 }
 

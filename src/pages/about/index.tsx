@@ -2,7 +2,7 @@ import { GithubFilled, WechatFilled } from '@ant-design/icons'
 import { useStore, withStore } from '@libeilong/react-store-provider'
 import { Button, Divider, Space } from 'antd'
 import { withObserver } from '../../shared/func/withObserver'
-import { stores} from '../../stores'
+import { stores } from '../../stores'
 import styles from './index.module.scss'
 import { Store } from './store'
 
@@ -26,6 +26,16 @@ const _Page = () => {
           </Button>
         </Space>
 
+        <Divider>使用帮助</Divider>
+        <div className={styles.help}>
+          <p>1. 点击左上角消息图标可收缩与展开会话列表</p>
+          <p>
+            2.
+            右键左侧会话列表项可展开会话操作菜单、右键消息列表项可展开消息操作菜单
+          </p>
+          <p>3. Ctrl + P 可全局呼出命令面板、Ctrl + T 可快速创建会话</p>
+        </div>
+
         <Divider>说明</Divider>
         <div className={styles.help}>
           <p>1. 本插件需要 OpenAI 官网生成的 API KEY 才能使用。</p>
@@ -39,14 +49,6 @@ const _Page = () => {
             大佬搭建的免费代理线路，因此，你不需要额外的翻墙也可以使用。如果你觉得代理线路不稳定，可以加入交流群来学习如何免费搭建自己的代理线路。
           </p>
         </div>
-
-        <Divider>其他</Divider>
-        <Button size="small" type="link" onClick={stores.app.openShareUrl}>
-          好耶！这些网站免费提供 ChatGPT 服务！
-        </Button>
-        <Button type="link" size="small" onClick={stores.app.openProxyShareUrl}>
-          这里有一些免费的接口代理服务！
-        </Button>
       </Space>
     </div>
   ))

@@ -47,9 +47,11 @@ export function Page() {
 
   return withObserver(() => (
     <div className={clsx(styles.index, stores.app.isDark && styles.dark)}>
-      <div className={styles.conversations}>
-        <Conversations />
-      </div>
+      {homeStore.conversationsOpen && (
+        <div className={styles.conversations}>
+          <Conversations />
+        </div>
+      )}
       <div
         className={styles.main}
         onMouseMove={(e) => onMove(e.nativeEvent)}

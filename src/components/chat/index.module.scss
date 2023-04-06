@@ -1,7 +1,7 @@
 .index {
   height: 100%;
   width: 100%;
-  background: var(--page-background);
+  background: #f1f1f1;
   .container {
     .codeBox {
       position: relative;
@@ -92,6 +92,7 @@
 }
 
 .dark {
+  background: var(--page-background);
   .container {
     .inlineCode {
       background: rgba($color: #fff, $alpha: 0.08);

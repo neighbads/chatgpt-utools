@@ -22,6 +22,16 @@ export const homeStore = new (class {
 
   conversation?: Conversation
 
+  conversationsOpen = true
+
+  toggleConversationOpen = () => {
+    this.conversationsOpen = !this.conversationsOpen
+  }
+
+  setConversationOpen = (open: boolean) => {
+    this.conversationsOpen = open
+  }
+
   setConversation = (conversation: Conversation | string) => {
     if (typeof conversation === 'string') {
       const _conversation = stores.chat.conversations.find(

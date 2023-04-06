@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'oh-router-react'
 import { Icon } from '../../components/icon'
 import { aboutRoute, toAbout } from '../../pages/about/route'
 import { homeRoute, toHome } from '../../pages/home/route'
+import { homeStore } from '../../pages/home/store'
 import { toSetting } from '../../pages/setting/route'
 import { templateRoute, toTemplate } from '../../pages/template/route'
 import { templateFormRoute } from '../../pages/templateForm/route'
@@ -17,7 +18,14 @@ export const BasicLayout = () => {
   const menus = [
     {
       icon: 'chat',
-      onClick: () => toHome(),
+      onClick: () => {
+        if (location.pathname === homeRoute.path) {
+          homeStore.toggleConversationOpen()
+        } else {
+          homeStore.setConversationOpen(true)
+          toHome()
+        }
+      },
       active: location.pathname === homeRoute.path,
     },
     {
