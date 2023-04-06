@@ -1,4 +1,4 @@
-import { openSearch } from '../../components/popups/search'
+import { openCommandPanel } from '../../components/popups/commandPanel'
 import { homeRoute } from '../../pages/home/route'
 import { homeStore } from '../../pages/home/store'
 import { router } from '../../router'
@@ -12,7 +12,7 @@ export function registerKeyboard() {
     ) {
       homeStore.createConversation()
     } else if (e.key === 'p' && e.ctrlKey) {
-      openSearch()
+      openCommandPanel()
     }
   })
 }

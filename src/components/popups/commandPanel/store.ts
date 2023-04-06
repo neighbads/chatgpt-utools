@@ -1,10 +1,10 @@
 import Fuse from 'fuse.js'
 import { makeAutoObservable } from 'mobx'
-import { stores } from '../../../stores'
 import { toHome } from '../../../pages/home/route'
+import { stores } from '../../../stores'
 import { FuseDoc, FuseItem } from './type'
 
-export const searchStore = new (class {
+export const commandPanelStore = new (class {
   constructor() {
     makeAutoObservable(this, {
       fuse: false,
@@ -29,6 +29,7 @@ export const searchStore = new (class {
   fuse?: Fuse<FuseDoc>
 
   init = () => {
+    if (this.fuse) return
     const convs = utools.db.allDocs('c-').map(({ value }) => {
       return {
         id: value.id,
@@ -47,12 +48,24 @@ export const searchStore = new (class {
     const opts = { keys: ['text'] }
     // TODO: 模板、设置项
     const docs = [...convs, ...msgs]
-    const index = Fuse.createIndex(opts.keys, docs)
-    this.fuse = new Fuse<FuseDoc>(docs, opts, index)
+    this.fuse = new Fuse<FuseDoc>(docs, opts)
+  }
+
+  removeDoc = (doc: FuseDoc) => {
+    if (!this.fuse) return
+    this.fuse!.remove((_doc) => {
+      return _doc.type === doc.type && _doc.id === doc.id
+    })
+  }
+
+  setDoc = (doc: FuseDoc) => {
+    if (!this.fuse) return
+    this.removeDoc(doc)
+    this.fuse!.add(doc)
   }
 
   search = () => {
-    if (!this.fuse) this.init()
+    if (!this.fuse) return
     const docs = this.fuse?.search(this.keyword) || []
 
     const result: FuseItem[] = []
@@ -105,6 +118,7 @@ export const searchStore = new (class {
   list: FuseItem[] = []
 
   onItemClick = (it: FuseItem) => {
+    console.log(it)
     if (it.type === 'conversation') {
       toHome({
         query: {

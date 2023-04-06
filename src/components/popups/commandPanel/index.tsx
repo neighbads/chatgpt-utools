@@ -1,12 +1,17 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { useController } from 'oh-popup-react'
+import { useEffect } from 'react'
 import { withObserver } from '../../../shared/func/withObserver'
 import { popupManager } from '../../../shared/popupManager'
 import styles from './index.module.scss'
-import { searchStore } from './store'
+import { commandPanelStore } from './store'
 
-const Search = () => {
+const CommandPanel = () => {
   const ctl = useController()
+
+  useEffect(() => {
+    commandPanelStore.init()
+  }, [])
 
   return withObserver(() => (
     <div
@@ -14,8 +19,8 @@ const Search = () => {
       onKeyDown={(e) => {
         if (e.key === 'Escape') {
           e.stopPropagation()
-          if (searchStore.keyword) {
-            searchStore.setKeyword('')
+          if (commandPanelStore.keyword) {
+            commandPanelStore.setKeyword('')
           } else {
             ctl.close()
           }
@@ -29,21 +34,21 @@ const Search = () => {
         <input
           placeholder="搜索任何内容"
           type="text"
-          value={searchStore.keyword}
+          value={commandPanelStore.keyword}
           autoFocus
           onChange={(e) => {
-            searchStore.setKeyword(e.target.value)
+            commandPanelStore.setKeyword(e.target.value)
           }}
         />
       </header>
       <main>
-        {searchStore.list.map((it, i) => {
+        {commandPanelStore.list.map((it, i) => {
           return (
             <div
               key={i}
               className={styles.item}
               onClick={() => {
-                searchStore.onItemClick(it)
+                commandPanelStore.onItemClick(it)
                 ctl.close()
               }}
             >
@@ -52,9 +57,13 @@ const Search = () => {
             </div>
           )
         })}
-        {searchStore.list.length === 0 && (
+        {commandPanelStore.list.length === 0 && (
           <div className={styles.notFound}>
-            <div>将陆续支持模板、设置等内容搜索</div>
+            <div>
+              {commandPanelStore.fuse
+                ? '将陆续支持模板、设置等内容搜索'
+                : '正在建立索引...'}
+            </div>
           </div>
         )}
       </main>
@@ -63,10 +72,11 @@ const Search = () => {
   ))
 }
 
-export function openSearch() {
+export function openCommandPanel() {
   return popupManager.open({
-    el: <Search />,
-    position: 'center',
+    el: <CommandPanel />,
+    position: 'top',
+    key: 'commandPanel',
   })
 }
 

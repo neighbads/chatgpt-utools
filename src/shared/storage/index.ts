@@ -1,3 +1,4 @@
+import { commandPanelStore } from '../../components/popups/commandPanel/store'
 import { DefaultConfig, DefaultTemplates } from '../../constance'
 import { Conversation } from '../../models/conversation'
 import { Message } from '../../models/message'
@@ -23,6 +24,11 @@ export class Storage {
       updatedAt: it.updatedAt,
       balance: it.balance,
       systemMessage: it.systemMessage,
+    })
+    commandPanelStore.setDoc({
+      id: it.id,
+      text: it.name,
+      type: 'conversation',
     })
   }
 
@@ -51,6 +57,12 @@ export class Storage {
       parentMessageId: it.parentMessageId,
       conversationId: it.conversationId,
       failedReason: it.failedReason,
+    })
+    commandPanelStore.setDoc({
+      id: it.id,
+      text: it.text,
+      type: 'message',
+      conversationId: it.conversationId,
     })
   }
 
