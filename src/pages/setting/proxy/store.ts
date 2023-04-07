@@ -23,12 +23,7 @@ export class Store {
   fields: IConfig['proxy']
 
   onSubmit = () => {
-    Object.assign(stores.config.config, this.fields)
-    // stores.config.config.proxy.host = this.fields.host
-    // stores.config.config.proxy.port = this.fields.port
-    // stores.config.config.proxy.open = this.fields.open
-    // stores.config.config.proxy.username = this.fields.username
-    // stores.config.config.proxy.password = this.fields.password
+    Object.assign(stores.config.config.proxy, this.fields)
     stores.config.flushDb()
     stores.chatgpt.reinit()
     message.success('成功')
