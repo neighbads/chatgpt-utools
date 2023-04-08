@@ -6,7 +6,9 @@ export class Template {
   template: string
   recommendTopic?: boolean
 
-  constructor(opts: Template) {
+  constructor(
+    opts: Pick<Template, 'id' | 'title' | 'template' | 'recommendTopic'>
+  ) {
     this.id = opts.id
     this.title = opts.title
     this.template = opts.template
