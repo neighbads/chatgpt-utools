@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from 'mobx'
 
 export class Template {
   id?: string
@@ -12,6 +12,15 @@ export class Template {
     this.template = opts.template
     this.recommendTopic = opts.recommendTopic
     makeAutoObservable(this)
+  }
+
+  toJSON = () => {
+    return {
+      id: this.id,
+      title: this.title,
+      template: this.template,
+      recommendTopic: this.recommendTopic,
+    }
   }
 }
 

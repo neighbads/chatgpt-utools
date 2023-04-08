@@ -16,18 +16,13 @@ export class Message implements ChatMessage {
   failedReason?: string
   parentMessageId?: string
   conversationId!: string
-  deletedAt?: number
 
   get self() {
     return this.role === 'user'
   }
 
-  get isDeleted() {
-    return this.deletedAt !== undefined
-  }
-
   get isWaiting() {
-    return this.state === 'sending' && this.isDeleted === false
+    return this.state === 'sending'
   }
 
   get renderText() {
@@ -60,11 +55,7 @@ export class Message implements ChatMessage {
   }
 
   flushDb = () => {
-    if (this.isDeleted) {
-      Storage.removeMessage(this.id)
-    } else {
-      Storage.setMessage(this)
-    }
+    Storage.setMessage(this)
     return this
   }
 
@@ -80,6 +71,19 @@ export class Message implements ChatMessage {
     if (text) {
       this.text = text
       this.flushDb()
+    }
+  }
+
+  toJSON = () => {
+    return {
+      id: this.id,
+      text: this.text,
+      createdAt: this.createdAt,
+      role: this.role,
+      state: this.state,
+      parentMessageId: this.parentMessageId,
+      conversationId: this.conversationId,
+      failedReason: this.failedReason,
     }
   }
 }

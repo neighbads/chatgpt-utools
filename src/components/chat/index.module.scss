@@ -3,67 +3,7 @@
   width: 100%;
   background: #f1f1f1;
   .container {
-    .codeBox {
-      position: relative;
-      --scrollbar-thumb--background-color: rgba(255, 255, 255, 0.2);
-      --scrollbar-thumb-active--background-color: rgba(255, 255, 255, 0.5);
-      .copyBtn {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        padding: 8px;
-        border: 1px solid rgba($color: #fff, $alpha: 0.33);
-        background: rgba($color: #fff, $alpha: 0.18);
-        color: rgba($color: #fff, $alpha: 0.66);
-        opacity: 0;
-        line-height: 1;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s;
-      }
-      &:hover {
-        .copyBtn {
-          opacity: 1;
-        }
-      }
-    }
-    .inlineCode {
-      font-size: 12px;
-      padding: 2px 4px;
-      background: #f6f7f9;
-      color: #d56161;
-    }
-    .item {
-      padding: 8px 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      .bubble {
-        max-width: 100%;
-        border-radius: 12px;
-        padding: 0 16px;
-        word-break: break-all;
-        box-shadow: var(--shadow-1-down);
-        p {
-          margin: 8px 0;
-          line-height: 1.8;
-        }
-        img {
-          max-width: 100%;
-        }
-      }
-      .footerBar {
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-        max-width: 100%;
-        overflow: hidden;
-        gap: 12px;
-        > * {
-          margin: 8px 0;
-        }
-      }
-    }
+    padding-bottom: 8px;
     .systemMessage {
       display: flex;
       justify-content: center;
@@ -72,37 +12,25 @@
       color: var(--gray-3);
       font-size: 12px;
     }
-    .user {
-      .bubble {
-        background: linear-gradient(
-          to bottom right,
-          var(--color-primary) 66%,
-          #40a9ff
-        );
-        color: rgba($color: #fff, $alpha: 0.96);
-      }
+
+    .message {
+      margin: 14px 12px;
     }
-    .chatgpt {
-      .bubble {
-        background: #fff;
-        color: var(--gray-8);
-      }
+
+    .footerBar {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      max-width: 100%;
+      overflow: hidden;
+      gap: 12px;
+      margin: 8px 12px;
+      margin-top: -6px;
     }
   }
 }
 
 .dark {
   background: var(--page-background);
-  .container {
-    .inlineCode {
-      background: rgba($color: #fff, $alpha: 0.08);
-      color: #ff7875;
-    }
-    .chatgpt {
-      .bubble {
-        background: rgba($color: #fff, $alpha: 0.08);
-      }
-    }
-  }
 }
 

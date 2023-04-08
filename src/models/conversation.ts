@@ -76,12 +76,8 @@ export class Conversation {
     this.initialized = true
   }
 
-  check = () => {
-    if (!this.lastMessage) return
-    if (this.lastMessage.state === 'sending') {
-      throw Error('请等待上一条消息回复完成')
-    } else if (this.lastMessage.state === 'fail') {
-      this.resendMessage()
+  checkSendNewMessage = () => {
+    if (this.lastMessage?.state === 'sending') {
       throw Error('请等待上一条消息回复完成')
     }
   }
@@ -97,7 +93,7 @@ export class Conversation {
 
   abortController?: AbortController
 
-  private _sendMessage = async (
+  private sendMessage = async (
     lastMessage: Message,
     responseMessage: Message
   ) => {
@@ -126,7 +122,6 @@ export class Conversation {
         this.generateTitle(lastMessage.text)
       }
     } catch (err: any) {
-      if (responseMessage.state === 'done') return
       if (err.name === 'AbortError') {
         if (responseMessage.text === '') {
           responseMessage.text = '中断回复'
@@ -142,7 +137,8 @@ export class Conversation {
     }
   }
 
-  sendMessage = async (text: string) => {
+  sendNewMessage = async (text: string) => {
+    this.checkSendNewMessage()
     const lastMessage = this.lastMessage
     const now = Date.now()
     const userMessage = new Message({
@@ -162,32 +158,28 @@ export class Conversation {
       conversationId: this.id,
     }).flushDb()
     this.messages.push(userMessage, responseMessage)
-    this._sendMessage(userMessage, responseMessage)
+    this.sendMessage(userMessage, responseMessage)
   }
 
-  resendMessage = async () => {
-    let lastMessage = this.messages[this.messages.length - 2]
-    let responseMessage = this.messages[this.messages.length - 1]
-    if (lastMessage === undefined) {
-      lastMessage = responseMessage
-      responseMessage = new Message({
-        role: 'assistant',
-        state: 'sending',
-        text: '',
-        createdAt: Date.now(),
-        parentMessageId: lastMessage.id,
-        conversationId: this.id,
-      })
-      this.messages.push(responseMessage)
-    } else {
-      responseMessage.state = 'sending'
-      responseMessage.text = ''
-      responseMessage.createdAt = Date.now()
-      responseMessage.failedReason = undefined
-    }
-
-    responseMessage.flushDb()
-    this._sendMessage(lastMessage, responseMessage)
+  resendMessage = async (opts: { id: string } | { index: number }) => {
+    const index =
+      'index' in opts
+        ? opts.index
+        : this.messages.findIndex((m) => m.id === opts.id)
+    if (index < 0) return
+    const lastMessage = this.messages[index]
+    this.messages.slice(index + 1).forEach((m) => m.remove())
+    this.messages = this.messages.slice(0, index + 1)
+    const responseMessage = new Message({
+      role: 'assistant',
+      state: 'sending',
+      text: '',
+      createdAt: Date.now(),
+      parentMessageId: lastMessage.id,
+      conversationId: this.id,
+    }).flushDb()
+    this.messages.push(responseMessage)
+    this.sendMessage(lastMessage, responseMessage)
   }
 
   stopMessage = () => {
@@ -206,8 +198,7 @@ export class Conversation {
       nextMessage.parentMessageId = message.parentMessageId
       nextMessage.flushDb()
     }
-    message.deletedAt = Date.now()
-    message.flushDb()
+    message.remove()
     this.messages.splice(index, 1)
   }
 
@@ -230,6 +221,17 @@ export class Conversation {
   flushDb = () => {
     Storage.setConversation(this)
     return this
+  }
+
+  toJSON = ()=>{
+    return {
+      id: this.id,
+      name: this.name,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      balance: this.balance,
+      systemMessage: this.systemMessage,
+    }
   }
 }
 

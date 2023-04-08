@@ -74,7 +74,7 @@ export const homeStore = new (class {
   onQueryChange = (query: IQuery) => {
     if (query.text) {
       homeStore.createConversation()
-      homeStore.conversation?.sendMessage(query.text)
+      homeStore.conversation?.sendNewMessage(query.text)
       return
     }
 

@@ -17,14 +17,7 @@ export class Storage {
   }
 
   static setConversation(it: Conversation) {
-    utools.dbStorage.setItem(`c-${it.id}`, {
-      id: it.id,
-      name: it.name,
-      createdAt: it.createdAt,
-      updatedAt: it.updatedAt,
-      balance: it.balance,
-      systemMessage: it.systemMessage,
-    })
+    utools.dbStorage.setItem(`c-${it.id}`, it.toJSON())
     commandPanelStore.setDoc({
       id: it.id,
       text: it.name,
@@ -48,16 +41,7 @@ export class Storage {
   }
 
   static setMessage(it: Message) {
-    utools.dbStorage.setItem(`m-${it.id}`, {
-      id: it.id,
-      text: it.text,
-      createdAt: it.createdAt,
-      role: it.role,
-      state: it.state,
-      parentMessageId: it.parentMessageId,
-      conversationId: it.conversationId,
-      failedReason: it.failedReason,
-    })
+    utools.dbStorage.setItem(`m-${it.id}`, it.toJSON())
     commandPanelStore.setDoc({
       id: it.id,
       text: it.text,
@@ -120,12 +104,7 @@ export class Storage {
   }
 
   static setTemplate(it: Template) {
-    utools.dbStorage.setItem(`t-${it.id}`, {
-      id: it.id,
-      title: it.title,
-      template: it.template,
-      recommendTopic: it.recommendTopic,
-    })
+    utools.dbStorage.setItem(`t-${it.id}`, it.toJSON())
   }
 
   static removeTemplate(id: string) {

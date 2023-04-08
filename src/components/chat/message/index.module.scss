@@ -1,0 +1,79 @@
+.index {
+  display: flex;
+
+  .codeBox {
+    position: relative;
+    --scrollbar-thumb--background-color: rgba(255, 255, 255, 0.2);
+    --scrollbar-thumb-active--background-color: rgba(255, 255, 255, 0.5);
+    .copyBtn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 8px;
+      border: 1px solid rgba($color: #fff, $alpha: 0.33);
+      background: rgba($color: #fff, $alpha: 0.18);
+      color: rgba($color: #fff, $alpha: 0.66);
+      opacity: 0;
+      line-height: 1;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    &:hover {
+      .copyBtn {
+        opacity: 1;
+      }
+    }
+  }
+
+  .inlineCode {
+    font-size: 12px;
+    padding: 2px 4px;
+    background: #f6f7f9;
+    color: #d56161;
+  }
+
+  .bubble {
+    max-width: 100%;
+    border-radius: 12px;
+    padding: 0 16px;
+    word-break: break-all;
+    box-shadow: var(--shadow-1-down);
+    p {
+      margin: 8px 0;
+      line-height: 1.8;
+    }
+    img {
+      max-width: 100%;
+    }
+  }
+}
+
+.chatgpt {
+  .bubble {
+    background: #fff;
+    color: var(--gray-8);
+  }
+}
+
+.dark {
+  .inlineCode {
+    background: rgba($color: #fff, $alpha: 0.08);
+    color: #ff7875;
+  }
+  .bubble {
+    background: rgba($color: #fff, $alpha: 0.08);
+  }
+}
+
+.user {
+  .bubble {
+    background: linear-gradient(
+      to bottom right,
+      var(--color-primary) 66%,
+      #40a9ff
+    );
+    color: rgba($color: #fff, $alpha: 0.96);
+  }
+}
+

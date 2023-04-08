@@ -4,7 +4,6 @@ import clsx from 'clsx'
 import { useCallback, useEffect, useRef } from 'react'
 import emptyImage from '../../assets/images/undraw_Online_messaging_re_qft3.png'
 import { Chat } from '../../components/chat'
-import { Message } from '../../models/message'
 import { withObserver } from '../../shared/func/withObserver'
 import { useQuery } from '../../shared/hooks/useQuery'
 import { stores } from '../../stores'
@@ -60,31 +59,7 @@ export function Page() {
         {homeStore.conversation ? (
           <>
             <div className={styles.top}>
-              <Chat
-                key={homeStore.conversation.id}
-                messages={homeStore.conversation.renderMessages.map((it) => {
-                  if (it instanceof Message) {
-                    return {
-                      id: it.id,
-                      self: it.self,
-                      state: it.state,
-                      text: it.renderText,
-                      role: it.role,
-                      createdAt: it.createdAt,
-                      failedReason: it.failedReason,
-                    }
-                  } else {
-                    return it
-                  }
-                })}
-                onRetry={homeStore.conversation.resendMessage}
-                onDel={homeStore.conversation.removeMessage}
-                onModifyText={(id) =>
-                  homeStore.conversation?.messages
-                    .find((m) => m.id === id)
-                    ?.onModifyText()
-                }
-              />
+              <Chat conversation={homeStore.conversation} />
               {homeStore.conversation?.lastMessage?.isWaiting && (
                 <Button
                   className={styles.stop}

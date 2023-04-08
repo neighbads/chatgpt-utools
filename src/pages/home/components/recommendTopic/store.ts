@@ -50,7 +50,7 @@ export class Store {
           throw Error(`请输入${this.fields[i]}`)
         }
       }
-      homeStore.conversation?.sendMessage(this.text)
+      homeStore.conversation?.sendNewMessage(this.text)
       this.setCurrentTopic()
     } catch (err: any) {
       message.error(err.message)
