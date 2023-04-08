@@ -11,7 +11,8 @@ import { useObserver } from 'mobx-react-lite'
 import ReactMarkdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import rehypeKatex from 'rehype-katex'
+import RehypeKatex from 'rehype-katex'
+import RemarkGFM from 'remark-gfm'
 import RemarkMathPlugin from 'remark-math'
 import { Conversation } from '../../../models/conversation'
 import { Message as MessageModel } from '../../../models/message'
@@ -88,8 +89,8 @@ export const Message = (props: Props) => {
           ></div>
         ) : (
           <ReactMarkdown
-            remarkPlugins={[RemarkMathPlugin]}
-            rehypePlugins={[rehypeKatex]}
+            remarkPlugins={[RemarkMathPlugin, RemarkGFM]}
+            rehypePlugins={[RehypeKatex]}
             components={{
               code({ node, inline, className, children, ...props }) {
                 const match = /language-(\w+)/.exec(className || '') || []
