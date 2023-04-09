@@ -1,6 +1,6 @@
 本应用需要自备 `API KEY` 才能使用，请 [点我进入设置页](/setting) 配置 `API KEY`。如没有 `API KEY` ，请 [点我搜索相关教程](https://search.bilibili.com/all?keyword=openai注册) 自行注册获取，这非常简单
 
-本应用是开源项目，如果你喜欢并愿意帮助作者持续维护该项目，可以 [在Github 给该项目点个 ★Star](https://github.com/lblblong/mossgpt-utools) 或者 [点我赞赏作者一杯咖啡](!qrcodePay)
+本应用是开源项目，如果你喜欢并愿意帮助作者持续维护该项目，可以 [在 Github 给该项目点个 ★Star](https://github.com/lblblong/mossgpt-utools) 或者 [点我赞赏作者一杯咖啡](!qrcodePay)
 
 如果你有功能、Bug 相关的建议、或是想要找到关于 AI 志同道合的好友，请加入我们的交流群 [点我获取交流群二维码](!qrcode)
 
