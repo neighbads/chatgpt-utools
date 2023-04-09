@@ -22,6 +22,11 @@
   }
 }
 
+.scrollbarFix > div:first-of-type {
+  margin-right: -8px !important;
+  margin-bottom: -8px !important;
+}
+
 textarea {
   border: none;
   outline: none;

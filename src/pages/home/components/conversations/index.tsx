@@ -41,7 +41,7 @@ export const Conversations = () => {
       </div>
       <Scrollbars
         autoHide
-        className={styles.list}
+        className={clsx(styles.list, 'scrollbarFix')}
         renderThumbVertical={(props) => (
           <div {...props} className="scrollbar" />
         )}

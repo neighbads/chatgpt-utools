@@ -88,7 +88,11 @@ export const Chat: FC<ChatProps> = (props) => {
     <Scrollbars
       ref={scrollRef}
       autoHide
-      className={clsx(styles.index, stores.app.isDark && styles.dark)}
+      className={clsx(
+        styles.index,
+        'scrollbarFix',
+        stores.app.isDark && styles.dark
+      )}
       renderThumbVertical={(props) => <div {...props} className="scrollbar" />}
     >
       <div className={styles.container} id="chat-container">
