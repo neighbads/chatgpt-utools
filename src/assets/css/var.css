@@ -1,7 +1,7 @@
 :root {
   --color-primary: #1890ff;
   --color-primary-rgb: 24, 144, 255;
-  --shadow-1-down: 0px 3px 16px 0px rgba(0, 0, 0, 0.03);
+  --shadow-1-down: 0px 3px 4px 0px rgba(0, 0, 0, 0.08);
 
   --base-color: #fff;
 

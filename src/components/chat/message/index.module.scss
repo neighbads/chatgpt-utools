@@ -7,6 +7,10 @@
     padding: 0 16px;
     box-shadow: var(--shadow-1-down);
     word-break: break-word;
+    p {
+      margin: 8px 0;
+      line-height: 1.8;
+    }
   }
 }
 
@@ -25,11 +29,7 @@
 
 .user {
   .bubble {
-    background: linear-gradient(
-      to bottom right,
-      var(--color-primary) 66%,
-      #40a9ff
-    );
+    background: linear-gradient(to right, #40a9ff 8%, var(--color-primary));
     color: rgba($color: #fff, $alpha: 0.96);
   }
 }
