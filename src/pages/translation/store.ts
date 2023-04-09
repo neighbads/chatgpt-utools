@@ -69,6 +69,10 @@ export const translationStore = new (class {
     this.target = ''
   }
 
+  get autoMode() {
+    return stores.config.config.setting.autoTranslation
+  }
+
   setAutoMode = (value: boolean) => {
     stores.config.config.setting.autoTranslation = value
     stores.config.flushDb()
