@@ -6,9 +6,7 @@ import { FuseDoc, FuseItem } from './type'
 
 export const commandPanelStore = new (class {
   constructor() {
-    makeAutoObservable(this, {
-      fuse: false,
-    })
+    makeAutoObservable(this)
   }
 
   keyword = ''
