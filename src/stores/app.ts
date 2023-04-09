@@ -1,9 +1,14 @@
+import { message } from 'antd'
 import { makeAutoObservable } from 'mobx'
+import React from 'react'
 import semver from 'semver'
 import { version } from '../../package.json'
 import { API } from '../api'
+import { openBasePopup } from '../components/popups/basePopup'
 import { openNotice } from '../components/popups/notice'
 import { openUpdate } from '../components/popups/update'
+import { Qrcode } from '../components/qrcode'
+import { Urls } from '../constance'
 import { Storage } from '../shared/storage'
 import { IgnoreType } from '../types'
 
@@ -42,7 +47,7 @@ export class AppStore {
   }
 
   openGitHub = () => {
-    utools.shellOpenExternal('https://github.com/lblblong/mossgpt-utools')
+    utools.shellOpenExternal(Urls.repo)
   }
 
   openOpenAIUsage = () => {
@@ -111,6 +116,38 @@ export class AppStore {
         data,
       })
     }, 600)
+  }
+
+  openQrcode = async () => {
+    try {
+      message.loading('请稍等...')
+      const qrcode = await API.other.getQrcode()
+      openBasePopup({
+        children: React.createElement(Qrcode, {
+          src: qrcode,
+          text: '请使用微信扫码备注 “mossgpt” 加群',
+        }),
+      })
+    } catch (err) {
+    } finally {
+      message.destroy()
+    }
+  }
+
+  openQrcodePay = async () => {
+    try {
+      message.loading('请稍等...')
+      const qrcode = await API.other.getQrcodePay()
+      openBasePopup({
+        children: React.createElement(Qrcode, {
+          src: qrcode,
+          text: '请使用微信扫码支付',
+        }),
+      })
+    } catch (err) {
+    } finally {
+      message.destroy()
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 import { PauseCircleFilled } from '@ant-design/icons'
 import { Button } from 'antd'
 import clsx from 'clsx'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 import emptyImage from '../../assets/images/undraw_Online_messaging_re_qft3.png'
 import { Chat } from '../../components/chat'
 import { withObserver } from '../../shared/func/withObserver'
@@ -26,6 +26,10 @@ export function Page() {
   useEffect(() => {
     homeStore.onQueryChange(query)
   }, [query])
+
+  useLayoutEffect(() => {
+    homeStore.onShow()
+  })
 
   const onMove = useCallback((event: MouseEvent) => {
     if (!downingRef.current) return

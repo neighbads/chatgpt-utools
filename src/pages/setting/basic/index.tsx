@@ -31,7 +31,7 @@ export function BasicSetting() {
                   type="link"
                   onClick={stores.app.openApiKeyUrl}
                 >
-                  重新获取API_KEY
+                  获取 API KEY
                 </Button>,
                 <Button
                   size="small"
@@ -49,6 +49,7 @@ export function BasicSetting() {
         <Input.Password
           value={store.apiKey}
           onChange={({ target }) => (store.apiKey = target.value)}
+          placeholder="请输入 API KEY"
           addonAfter={
             <Button
               type="link"
@@ -137,6 +138,7 @@ export function BasicSetting() {
         <Input.TextArea
           autoSize={{ minRows: 1, maxRows: 5 }}
           value={store.fields.systemMessage}
+          placeholder="通常用于给 AI 预置身份或指定对话要开始的话题、上下文"
           onChange={({ target }) => (store.fields.systemMessage = target.value)}
         />
       </Form.Item>

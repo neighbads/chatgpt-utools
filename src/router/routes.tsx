@@ -2,7 +2,6 @@ import { RouteObject } from 'oh-router'
 import { BasicLayout } from '../layouts/basic'
 import { aboutRoute } from '../pages/about/route'
 import { homeRoute } from '../pages/home/route'
-import { launchRoute } from '../pages/launch/route'
 import { settingRoute } from '../pages/setting/route'
 import { templateRoute } from '../pages/template/route'
 import { templateFormRoute } from '../pages/templateForm/route'
@@ -13,7 +12,6 @@ export interface Meta {
 }
 
 export const routes: RouteObject<Meta>[] = [
-  launchRoute,
   {
     element: <BasicLayout />,
     meta: {

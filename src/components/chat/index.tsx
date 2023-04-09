@@ -32,6 +32,11 @@ export const Chat: FC<ChatProps> = (props) => {
         scroll.scrollToBottom()
       })
     }
+    const scrollToTop = () => {
+      requestAnimationFrame(() => {
+        scroll.scrollToTop()
+      })
+    }
 
     const checkScroll = () => {
       requestAnimationFrame(() => {
@@ -49,7 +54,11 @@ export const Chat: FC<ChatProps> = (props) => {
       conversation.lastMessage?.text.length
       if (lastMessageLength < conversation.messages.length) {
         lastMessageLength = conversation.messages.length
-        scrollToBottom()
+        if (lastMessageLength > 1) {
+          scrollToBottom()
+        } else {
+          scrollToTop()
+        }
       } else {
         checkScroll()
       }

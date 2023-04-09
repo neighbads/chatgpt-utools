@@ -64,7 +64,7 @@ export class Conversation {
     }, [] as (Message | { role: 'system'; text: string })[])
   }
 
-  private initialized = false
+  initialized = false
 
   get lastMessage() {
     return this.messages[this.messages.length - 1] as Message | undefined
@@ -138,6 +138,7 @@ export class Conversation {
   }
 
   sendNewMessage = async (text: string) => {
+    await stores.config.checkApiKey()
     this.checkSendNewMessage()
     const lastMessage = this.lastMessage
     const now = Date.now()
@@ -162,6 +163,7 @@ export class Conversation {
   }
 
   resendMessage = async (opts: { id: string } | { index: number }) => {
+    await stores.config.checkApiKey()
     const index =
       'index' in opts
         ? opts.index
@@ -223,7 +225,7 @@ export class Conversation {
     return this
   }
 
-  toJSON = ()=>{
+  toJSON = () => {
     return {
       id: this.id,
       name: this.name,

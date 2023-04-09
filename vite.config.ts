@@ -3,6 +3,8 @@ import copy from 'rollup-plugin-copy'
 import { defineConfig } from 'vite'
 import { viteDelDev } from './vite.del-dev'
 import { vitePluginPreload } from './vite.preload'
+import { replaceCodePlugin } from 'vite-plugin-replace'
+import fs from 'fs'
 
 export default defineConfig(({ command }) => {
   const prePlugins =
@@ -20,6 +22,11 @@ export default defineConfig(({ command }) => {
           }),
         ]
       : [viteDelDev()]
+
+  const introduction = fs.readFileSync('./introduction.md', {
+    encoding: 'utf-8',
+  })
+
   return {
     base: './',
     resolve: {
@@ -32,6 +39,14 @@ export default defineConfig(({ command }) => {
     },
     plugins: [
       ...prePlugins,
+      replaceCodePlugin({
+        replacements: [
+          {
+            from: '__INTRODUCTION__',
+            to: `\`${introduction.replace(/`/g, '\\`')}\``,
+          },
+        ],
+      }),
       vitePluginPreload(
         './src/preload.ts',
         command === 'serve' ? 'buildStart' : 'writeBundle'

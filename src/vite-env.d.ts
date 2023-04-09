@@ -5,6 +5,8 @@ declare module 'uTools' {
   export = Utools
 }
 
+declare const __INTRODUCTION__: string
+
 declare interface Window {
   preload: {
     getChatGPTClient: (

@@ -1,6 +1,8 @@
 import { isNil, objectPick } from '@libeilong/func'
+import { message } from 'antd'
 import { makeAutoObservable, toJS } from 'mobx'
 import { DefaultConfig } from '../constance'
+import { toSetting } from '../pages/setting/route'
 import { filterSameValue } from '../shared/func/filterSameValue'
 import { Storage } from '../shared/storage'
 import { IConfig } from '../types'
@@ -14,6 +16,15 @@ export class ConfigStore {
 
   apiKey: string
   config: IConfig
+
+  checkApiKey = async () => {
+    if (!this.apiKey) {
+      message.info('检测到您还未设置 API Key，请先设置 API Key')
+      toSetting()
+      // 通过空 Promise 来阻止后续的操作
+      return new Promise(() => {})
+    }
+  }
 
   flushDb = () => {
     const config = objectPick(

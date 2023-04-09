@@ -17,8 +17,8 @@ export class ChatgptStore {
   init = async () => {
     if (this.client) return
 
-    const config = stores.config.config
     const apiKey = stores.config.apiKey
+    const config = stores.config.config
 
     const completionParams = objectPick(config, [
       'model',
@@ -45,9 +45,8 @@ export class ChatgptStore {
     })
   }
 
-  reinit = () => {
+  reset = () => {
     this.client = undefined
-    this.init()
   }
 
   sendMessage = async (

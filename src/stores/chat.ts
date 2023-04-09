@@ -1,10 +1,13 @@
 import { makeAutoObservable } from 'mobx'
+import { HelperConversation } from '../constance'
 import { Conversation } from '../models/conversation'
+import { mockMessages } from '../shared/func/mockMessages'
 import { Storage } from '../shared/storage'
 
 export class ChatStore {
   constructor() {
     makeAutoObservable(this)
+    this.init()
   }
 
   private initialized = false
@@ -15,6 +18,18 @@ export class ChatStore {
     this.initialized = true
   }
 
+  createHelperConversation = () => {
+    const conversation = this.createConversation({
+      name: HelperConversation.name,
+    })
+    conversation.messages = mockMessages({
+      messages: HelperConversation.messages,
+      conversationId: conversation.id,
+    }).map((it) => it.flushDb())
+    conversation.initialized = true
+    return conversation
+  }
+
   conversations: Conversation[] = []
 
   get sortedConversations() {
@@ -23,8 +38,10 @@ export class ChatStore {
     })
   }
 
-  createConversation = () => {
-    const conversation = new Conversation().flushDb()
+  createConversation = (
+    opts?: ConstructorParameters<typeof Conversation>[0]
+  ) => {
+    const conversation = new Conversation(opts).flushDb()
     this.conversations.unshift(conversation)
     return conversation
   }

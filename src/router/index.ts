@@ -1,7 +1,6 @@
 import { Router, createHashHistory } from 'oh-router'
 import qs from 'qs'
-import { ApiKeyCheck } from './middlewares/ApiKeyCheck'
-import { ChatInit } from './middlewares/ChatInit'
+import { routeCommands } from './commands'
 import { routes } from './routes'
 
 export interface Options<Q = any, P = any> {
@@ -13,7 +12,6 @@ export interface Options<Q = any, P = any> {
 export const router = new Router({
   routes,
   history: createHashHistory(),
-  middlewares: [new ApiKeyCheck(), new ChatInit()],
 })
 
 export function navigate(
@@ -26,6 +24,10 @@ export function navigate(
   if (typeof to === 'number') {
     router.navigate(to, options)
   } else {
+    if (to in routeCommands) {
+      return routeCommands[to as keyof typeof routeCommands]()
+    }
+
     if (options?.query) {
       to = to + '?' + qs.stringify(options.query)
     }

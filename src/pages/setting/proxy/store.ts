@@ -25,7 +25,7 @@ export class Store {
   onSubmit = () => {
     Object.assign(stores.config.config.proxy, this.fields)
     stores.config.flushDb()
-    stores.chatgpt.reinit()
+    stores.chatgpt.reset()
     message.success('成功')
   }
 }

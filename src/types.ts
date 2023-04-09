@@ -43,4 +43,5 @@ export const ChatBalanceDict = {
 export enum IgnoreType {
   version = 'version',
   notice = 'notice',
+  system = 'system',
 }

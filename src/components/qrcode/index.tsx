@@ -2,9 +2,10 @@ import { FC } from 'react'
 
 interface Props {
   src: string
+  text?: string
 }
 
-export const Qrcode: FC<Props> = ({ src }) => {
+export const Qrcode: FC<Props> = ({ src, text }) => {
   return (
     <div
       style={{
@@ -12,7 +13,7 @@ export const Qrcode: FC<Props> = ({ src }) => {
       }}
     >
       <img src={src} alt="" style={{ width: 260 }} />
-      <p>请使用微信扫码备注 “mossgpt” 加群</p>
+      {text && <p>{text}</p>}
     </div>
   )
 }

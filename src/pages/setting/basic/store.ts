@@ -33,13 +33,8 @@ export class Store {
   onSubmit = () => {
     Object.assign(stores.config.config, this.fields)
     stores.config.apiKey = this.apiKey
-    // configStore.config.apiBaseUrl = this.fields.apiBaseUrl
-    // configStore.config.model = this.fields.model
-    // configStore.config.max_tokens = this.fields.max_tokens
-    // configStore.config.systemMessage = this.fields.systemMessage
-    // configStore.apiKey = this.apiKey
     stores.config.flushDb()
-    stores.chatgpt.reinit()
+    stores.chatgpt.reset()
     message.success('成功')
   }
 }

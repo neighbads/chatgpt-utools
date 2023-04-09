@@ -1,3 +1,4 @@
+import { Message } from './models/message'
 import { IConfig, MessageShortcutKey } from './types'
 
 export const Models = ['gpt-3.5-turbo', 'gpt-3.5-turbo-0301']
@@ -98,4 +99,24 @@ export const ApiUrls = [
     needVpn: false,
   },
 ]
+
+export const Introduction = __INTRODUCTION__
+
+export const HelperConversation: {
+  name: string
+  messages: Pick<Message, 'text' | 'role' | 'state' | 'failedReason'>[]
+} = {
+  name: '欢迎使用 Moss',
+  messages: [
+    {
+      role: 'assistant',
+      text: '## 初次见面，我是 Moss\n' + Introduction,
+      state: 'done',
+    },
+  ],
+}
+
+export const Urls = {
+  repo: 'https://github.com/lblblong/mossgpt-utools',
+}
 
