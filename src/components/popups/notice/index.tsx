@@ -1,9 +1,9 @@
 import { Button } from 'antd'
 import { useController } from 'oh-popup-react'
 import { FC } from 'react'
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { withObserver } from '../../../shared/func/withObserver'
 import { popupManager } from '../../../shared/popupManager'
+import { Markdown } from '../../markdown'
 import styles from './index.module.scss'
 
 interface Props {
@@ -17,7 +17,7 @@ const Notice: FC<Props> = ({ data }) => {
     <div className={styles.index}>
       <div className={styles.header}>通知</div>
       <div>
-        <ReactMarkdown>{data}</ReactMarkdown>
+        <Markdown>{data}</Markdown>
       </div>
       <div className={styles.footer}>
         <Button size="small" type="primary" onClick={() => ctl.close()}>
