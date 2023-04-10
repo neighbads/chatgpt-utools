@@ -1,4 +1,5 @@
-import { Button, Form, Input, message } from 'antd'
+import { isNil } from '@libeilong/func'
+import { Button, Form, Input, InputNumber, Space, message } from 'antd'
 import { useLocalStore } from 'mobx-react-lite'
 import { useController } from 'oh-popup-react'
 import { FC } from 'react'
@@ -9,6 +10,7 @@ import styles from './index.module.scss'
 interface Props {
   name: string
   systemMessage?: string
+  contextMessageCount?: number
 }
 
 const ConversationSetting: FC<Props> = (props) => {
@@ -17,12 +19,14 @@ const ConversationSetting: FC<Props> = (props) => {
     return {
       name: props.name,
       systemMessage: props.systemMessage,
+      contextMessageCount: props.contextMessageCount,
       onSubmit: () => {
         try {
           if (!store.name) throw Error('标题不能为空')
           ctl.close({
             name: store.name,
             systemMessage: store.systemMessage,
+            contextMessageCount: store.contextMessageCount,
           })
         } catch (err: any) {
           message.error(err.message)
@@ -47,6 +51,28 @@ const ConversationSetting: FC<Props> = (props) => {
             value={store.name}
             onChange={bindChange('name')}
           />
+        </Form.Item>
+        <Form.Item label="上下文数量">
+          <Space.Compact>
+            <InputNumber
+              placeholder="数量"
+              value={store.contextMessageCount}
+              min={1}
+              onChange={(val) => (store.contextMessageCount = val ?? undefined)}
+            />
+            <Button
+              onClick={() => (store.contextMessageCount = undefined)}
+              type={isNil(store.contextMessageCount) ? 'primary' : 'default'}
+            >
+              不做限制
+            </Button>
+            <Button
+              onClick={() => (store.contextMessageCount = 1)}
+              type={store.contextMessageCount === 1 ? 'primary' : 'default'}
+            >
+              不带上下文
+            </Button>
+          </Space.Compact>
         </Form.Item>
         <Form.Item label="系统消息(System Message)">
           <Input.TextArea

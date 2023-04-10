@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 import { viteDelDev } from './vite.del-dev'
 import { vitePluginPreload } from './vite.preload'
 import { replaceCodePlugin } from 'vite-plugin-replace'
+import wasm from 'vite-plugin-wasm'
+import topLevelAwait from 'vite-plugin-top-level-await'
 import fs from 'fs'
 
 export default defineConfig(({ command }) => {
@@ -39,6 +41,8 @@ export default defineConfig(({ command }) => {
     },
     plugins: [
       ...prePlugins,
+      wasm(),
+      topLevelAwait(),
       replaceCodePlugin({
         replacements: [
           {

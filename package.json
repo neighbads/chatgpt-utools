@@ -1,7 +1,7 @@
 {
   "name": "mossgpt",
   "private": true,
-  "version": "2.3.3",
+  "version": "2.4.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
-    "@libeilong/chatgpt": "5.1.1",
+    "@libeilong/chatgpt": "5.3.1",
     "@libeilong/func": "^0.6.3",
     "@libeilong/react-store-provider": "^0.2.3",
     "@szhsin/react-menu": "^3.5.2",
@@ -61,6 +61,8 @@
     "utools-api-types": "^3.0.0",
     "vite": "^4.2.1",
     "vite-plugin-plain-text": "^1.4.2",
-    "vite-plugin-replace": "^0.1.1"
+    "vite-plugin-replace": "^0.1.1",
+    "vite-plugin-top-level-await": "^1.3.0",
+    "vite-plugin-wasm": "^3.2.2"
   }
 }

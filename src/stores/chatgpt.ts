@@ -28,12 +28,11 @@ export class ChatgptStore {
       'frequency_penalty',
     ])
 
-    this.client = window.preload.getChatGPTClient({
+    this.client = new ChatGPTAPI({
       apiKey,
       apiBaseUrl: config.apiBaseUrl,
       completionParams: completionParams,
       maxModelTokens: config.max_tokens,
-      proxy: config.proxy?.open ? config.proxy : undefined,
       getMessageById: async (id: string) => {
         const message = Storage.getMessage(id).toJSON()
         // 当消息发送失败时，message.text 为空，此时使用 failedReason 作为消息内容

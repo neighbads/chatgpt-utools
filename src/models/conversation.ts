@@ -14,6 +14,7 @@ export class Conversation {
   updatedAt: number
   balance: ChatBalance
   systemMessage?: string
+  contextMessageCount?: number
 
   constructor(opts?: {
     id?: string
@@ -22,6 +23,7 @@ export class Conversation {
     updatedAt?: number
     balance?: ChatBalance
     systemMessage?: string
+    contextMessageCount?: number
   }) {
     this.id = opts?.id ?? Date.now() + ''
     this.name = opts?.name ?? '新会话'
@@ -29,6 +31,7 @@ export class Conversation {
     this.updatedAt = opts?.updatedAt ?? opts?.createdAt ?? Date.now()
     this.balance = opts?.balance ?? ChatBalance.balance
     this.systemMessage = opts?.systemMessage
+    this.contextMessageCount = opts?.contextMessageCount
 
     makeAutoObservable(this, {
       abortController: false,
@@ -106,9 +109,10 @@ export class Conversation {
       await stores.chatgpt.sendMessage(lastMessage.text, {
         parentMessageId: lastMessage.parentMessageId,
         messageId: lastMessage.id,
-        systemMessage: this.systemMessage ?? systemMessage,
+        systemMessage: this.systemMessage ?? systemMessage ?? '',
         abortSignal: this.abortController.signal,
         balance: this.balance,
+        messageCount: this.contextMessageCount,
         onProgress: ({ text }) => {
           text = text.trim()
           if (!text || !responseMessage.isWaiting) return
@@ -215,6 +219,7 @@ export class Conversation {
     const newConfig = await openConversationSetting({
       name: this.name,
       systemMessage: this.systemMessage,
+      contextMessageCount: this.contextMessageCount,
     })
     Object.assign(this, newConfig)
     this.flushDb()
@@ -233,6 +238,7 @@ export class Conversation {
       updatedAt: this.updatedAt,
       balance: this.balance,
       systemMessage: this.systemMessage,
+      contextMessageCount: this.contextMessageCount,
     }
   }
 }

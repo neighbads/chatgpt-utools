@@ -8,17 +8,6 @@ declare module 'uTools' {
 declare const __INTRODUCTION__: string
 
 declare interface Window {
-  preload: {
-    getChatGPTClient: (
-      opts: ChatGPTAPIOptions & {
-        proxy?: {
-          host?: string
-          port?: string | number
-          username?: string
-          password?: string
-        }
-      }
-    ) => ChatGPTAPI
-  }
+  preload: {}
 }
 

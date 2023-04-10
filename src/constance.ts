@@ -12,13 +12,6 @@ export const DefaultConfig: IConfig = {
   top_p: undefined,
   presence_penalty: undefined,
   frequency_penalty: undefined,
-  proxy: {
-    open: false,
-    host: undefined,
-    port: undefined,
-    username: undefined,
-    password: undefined,
-  },
 
   setting: {
     autoTranslation: true,
